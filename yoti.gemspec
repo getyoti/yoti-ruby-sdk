@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
     application in a secure and trusted way.
   EOF
 
-  spec.homepage      = 'https://github.com/lampkicking/yoti-sdk-server-ruby'
+  spec.homepage      = 'https://github.com/getyoti/ruby'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|examples)/}) }

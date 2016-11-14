@@ -215,7 +215,7 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
 
 See recent changes in the [release notes][release notes] or the [changelog](CHANGELOG.md).
 
-[release notes]: https://github.com/lampkicking/yoti-sdk-server-ruby/releases
+[release notes]: https://github.com/getyoti/ruby/releases
 
 ## License
 

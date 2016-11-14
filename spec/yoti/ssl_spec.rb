@@ -42,7 +42,7 @@ describe 'Yoti::SSL' do
 
     context 'when the encrypted_connect_token is missing' do
       it 'raises an SslError' do
-        error = 'Encrypted token cannot be nil'
+        error = 'Encrypted token cannot be nil.'
         expect { Yoti::SSL.decrypt_token(nil) }.to raise_error(Yoti::SslError, error)
       end
     end

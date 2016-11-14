@@ -63,7 +63,7 @@ describe 'Yoti::Configuration' do
       it 'raises Yoti::ConfigurationError' do
         configuration.client_sdk_id = 'client_sdk_id'
 
-        error = 'At least one of the configuration values has to be set: `key_file_path`, `key`'
+        error = 'At least one of the configuration values has to be set: `key_file_path`, `key`.'
         expect { configuration.validate }.to raise_error(Yoti::ConfigurationError, error)
       end
     end

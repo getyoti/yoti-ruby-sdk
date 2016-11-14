@@ -6,7 +6,7 @@ describe 'Yoti::Protobuf' do
 
     context 'when the receipt is missing the other_party_profile_content key' do
       it 'raises a ProtobufError' do
-        error = 'The receipt has invalid data'
+        error = 'The receipt has invalid data.'
         expect { Yoti::Protobuf.current_user({}) }.to raise_error(Yoti::ProtobufError, error)
       end
     end
@@ -27,7 +27,7 @@ describe 'Yoti::Protobuf' do
       let(:content_type) { 0 }
 
       it 'raises a ProtobufError' do
-        error = 'Wrong content type'
+        error = 'The content type is invalid.'
         expect { subject }.to raise_error(Yoti::ProtobufError, error)
       end
     end

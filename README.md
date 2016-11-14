@@ -219,6 +219,6 @@ See recent changes in the [release notes][release notes] or the [changelog](CHAN
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License][].
+The gem is available under the following terms.
 
-[MIT License]: http://opensource.org/licenses/MIT
+[License]: https://github.com/getyoti/ruby/blob/master/LICENSE.txt

@@ -219,6 +219,4 @@ See recent changes in the [release notes][release notes] or the [changelog](CHAN
 
 ## License
 
-The gem is available under the following terms.
-
-[License]: https://github.com/getyoti/ruby/blob/master/LICENSE.txt
+The gem is available under the following [terms](LICENSE.txt).

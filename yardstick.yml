@@ -1,0 +1,9 @@
+rules:
+  ApiTag::Presence:
+    enabled: false
+  ApiTag::Inclusion:
+    enabled: false
+  ApiTag::PrivateMethod:
+    enabled: false
+  ExampleTag:
+    enabled: false

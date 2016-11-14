@@ -1,0 +1,27 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'examples/rails/config/**/*'
+
+Metrics/AbcSize:
+  Max: 15
+  Exclude:
+    - examples/rails/app/controllers/yoti_controller.rb
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 15
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false

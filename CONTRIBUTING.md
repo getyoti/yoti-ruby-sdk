@@ -100,6 +100,17 @@ Commit messages should ideally start with one of the following verbs:
 [Yard]:        http://yardoc.org/
 [Yardstick]:   https://github.com/dkubb/yardstick
 
+## Publishing a new release
+
+* Create a new release on [GitHub](https://github.com/getyoti/ruby/releases)
+* Update the [changelog](CHANGELOG.md) and the [lib/yoti/version.rb](lib/yoti/version.rb) file
+* Build the gem and push it to [RubyGems](https://rubygems.org/gems/yoti)
+
+```shell
+rake build
+gem push pkg/yoti-[version].gem
+```
+
 ## Submitting a pull request
 1. [Fork the repository.][fork]
 2. [Create a topic branch.][branch]

@@ -102,8 +102,8 @@ Commit messages should ideally start with one of the following verbs:
 
 ## Publishing a new release
 
-* Create a new release on [GitHub](https://github.com/getyoti/ruby/releases)
 * Update the [changelog](CHANGELOG.md) and the [lib/yoti/version.rb](lib/yoti/version.rb) file
+* Create a new release on [GitHub](https://github.com/getyoti/ruby/releases)
 * Build the gem and push it to [RubyGems](https://rubygems.org/gems/yoti)
 
 ```shell

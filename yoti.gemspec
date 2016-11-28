@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   EOF
 
   spec.homepage      = 'https://github.com/getyoti/ruby'
-  spec.license       = 'MIT'
+  spec.license       = 'Proprietary'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|examples)/}) }
   spec.require_paths = ['lib']

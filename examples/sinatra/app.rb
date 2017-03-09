@@ -30,8 +30,9 @@ get '/profile' do
       given_names: user_profile['given_names'],
       family_name: user_profile['family_name'],
       mobile_number: user_profile['phone_number'],
+      email_address: user_profile['email_address'],
       date_of_birth: user_profile['date_of_birth'],
-      address: user_profile['post_code'],
+      address: user_profile['postal_address'],
       gender: user_profile['gender'],
       nationality: user_profile['nationality']
     }

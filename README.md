@@ -200,14 +200,15 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
 ## API coverage
 
 * Activity Details
-    * [X] User ID
+    * [X] User ID `user_id`
     * [X] Profile
         * [X] Photo `selfie`
         * [X] Given Names `given_names`
         * [X] Family Name `family_name`
         * [X] Mobile Number `phone_number`
+        * [X] Email address `email_address`
         * [X] Date of Birth `date_of_birth`
-        * [X] Address `post_code`
+        * [X] Address `postal_address`
         * [X] Gender `gender`
         * [X] Nationality `nationality`
 

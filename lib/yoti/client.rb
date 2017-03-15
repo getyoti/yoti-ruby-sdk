@@ -8,6 +8,9 @@ module Yoti
     def self.get_activity_details(encrypted_connect_token)
       receipt = Yoti::Request.new(encrypted_connect_token).receipt
       encrypted_data = Protobuf.current_user(receipt)
+
+      return ActivityDetails.new(receipt) if encrypted_data.nil?
+
       unwrapped_key = Yoti::SSL.decrypt_token(receipt['wrapped_receipt_key'])
       decrypted_data = Yoti::SSL.decipher(unwrapped_key, encrypted_data.iv, encrypted_data.cipher_text)
       decrypted_profile = Protobuf.attribute_list(decrypted_data)

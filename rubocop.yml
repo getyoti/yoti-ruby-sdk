@@ -1,7 +1,7 @@
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
   Exclude:
     - 'examples/rails/config/**/*'
 
@@ -10,12 +10,18 @@ Metrics/AbcSize:
   Exclude:
     - examples/rails/app/controllers/yoti_controller.rb
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/**/*.rb
+
 Metrics/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
   CountComments: false
   Max: 15
+  Exclude:
+    - examples/rails/app/controllers/yoti_controller.rb
 
 Style/Documentation:
   Enabled: false

@@ -7,8 +7,8 @@ require 'webmock/rspec'
 
 require 'yoti'
 
-def stub_api_requests_v1
-  response = File.read('spec/fixtures/payload_v1.json')
+def stub_api_requests_v1(payload = 'payload_v1')
+  response = File.read("spec/fixtures/#{payload}.json")
   stub_request(:get, %r{https:\/\/api.yoti.com\/api\/v1\/profile\/(.)*})
     .to_return(
       status: 200,
@@ -18,8 +18,20 @@ def stub_api_requests_v1
 end
 
 RSpec.configure do |config|
-  config.before(:each) do
+  config.before(:each, type: :api_with_profile) do
     stub_api_requests_v1
+  end
+
+  config.before(:each, type: :api_with_empty_profile) do
+    stub_api_requests_v1('payload_v1_empty_profile')
+  end
+
+  config.before(:each, type: :api_with_null_profile) do
+    stub_api_requests_v1('payload_v1_null_profile')
+  end
+
+  config.before(:each, type: :api_without_profile) do
+    stub_api_requests_v1('payload_v1_no_profile')
   end
 
   config.before do

@@ -12,7 +12,8 @@ module Yoti
       CT_PNG = 4 # standard .png image
 
       def current_user(receipt)
-        raise ProtobufError, 'The receipt has invalid data.' unless valid_recepit?(receipt)
+        return nil unless valid_receipt?(receipt)
+
         profile_content = receipt['other_party_profile_content']
         decoded_profile_content = Base64.decode64(profile_content)
         V1::Compubapi::EncryptedData.decode(decoded_profile_content)
@@ -41,8 +42,10 @@ module Yoti
 
       private
 
-      def valid_recepit?(receipt)
-        receipt.key?('other_party_profile_content') && !receipt['other_party_profile_content'].nil?
+      def valid_receipt?(receipt)
+        receipt.key?('other_party_profile_content') &&
+          !receipt['other_party_profile_content'].nil? &&
+          receipt['other_party_profile_content'] != ''
       end
     end
   end

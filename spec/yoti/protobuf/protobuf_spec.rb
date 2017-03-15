@@ -2,19 +2,44 @@ require 'spec_helper'
 
 describe 'Yoti::Protobuf' do
   describe '.current_user' do
-    let(:receipt) { { 'other_party_profile_content' => 'test text' } }
+    context 'when the receipt has a nil other_party_profile_content key' do
+      let(:receipt) { { 'other_party_profile_content' => nil } }
+
+      it 'returns nil' do
+        expect(Yoti::Protobuf.current_user(receipt)).to be_nil
+      end
+    end
+
+    context 'when the receipt has an empty other_party_profile_content key' do
+      let(:receipt) { { 'other_party_profile_content' => '' } }
+
+      it 'returns nil' do
+        expect(Yoti::Protobuf.current_user(receipt)).to be_nil
+      end
+    end
 
     context 'when the receipt is missing the other_party_profile_content key' do
-      it 'raises a ProtobufError' do
-        error = 'The receipt has invalid data.'
-        expect { Yoti::Protobuf.current_user({}) }.to raise_error(Yoti::ProtobufError, error)
+      let(:receipt) { {} }
+
+      it 'returns nil' do
+        expect(Yoti::Protobuf.current_user(receipt)).to be_nil
       end
     end
 
     context 'when the receipt is valid' do
+      let(:receipt) { { 'other_party_profile_content' => 'test text' } }
+
       it 'returns a Yoti::Protobuf::V1::EncryptedData object' do
         expect(Yoti::Protobuf.current_user(receipt)).to be_a(Yoti::Protobuf::V1::Compubapi::EncryptedData)
       end
+    end
+  end
+
+  describe '.attribute_list' do
+    let(:data) { '' }
+
+    it 'returns a Yoti::Protobuf::V1::Attrpubapi::AttributeList object' do
+      expect(Yoti::Protobuf.attribute_list(data)).to be_a(Yoti::Protobuf::V1::Attrpubapi::AttributeList)
     end
   end
 

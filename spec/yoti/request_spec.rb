@@ -10,7 +10,7 @@ describe 'Yoti::Request' do
     end
   end
 
-  describe '#receipt' do
+  describe '#receipt', type: :api_with_profile do
     it 'returns a Hash with the required keys' do
       expect(request.receipt.key?('other_party_profile_content')).to be true
       expect(request.receipt.key?('remember_me_id')).to be true

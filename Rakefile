@@ -36,7 +36,7 @@ end
 
 require 'yardstick/rake/verify'
 Yardstick::Rake::Verify.new(:verify_measurements, yardstick_options) do |verify|
-  verify.threshold = 88.5
+  verify.threshold = 88.9
 end
 
 ################################

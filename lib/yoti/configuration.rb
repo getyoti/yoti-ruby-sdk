@@ -54,7 +54,7 @@ module Yoti
     end
 
     # Raises an error if the setting receives an invalid value
-    # @param value [String] the value to be assigned
+    # @param config [String] the value to be assigned
     # @param allowed_values [Array] an array of allowed values for the variable
     # @return [nil]
     def validate_value(config, allowed_values)
@@ -75,7 +75,7 @@ module Yoti
     end
 
     # Checks if a configuration has been set as a instance variable
-    # @param name [String] the name of the configuration
+    # @param config [String] the name of the configuration
     # @return [Boolean]
     def config_set?(config)
       instance_variable_get("@#{config}").to_s != ''

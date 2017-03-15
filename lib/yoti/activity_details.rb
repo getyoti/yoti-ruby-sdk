@@ -14,11 +14,11 @@ module Yoti
 
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
-    def initialize(receipt, decrypted_profile)
+    def initialize(receipt, decrypted_profile = nil)
       @decrypted_profile = decrypted_profile
       @user_profile = {}
 
-      if @decrypted_profile.respond_to_has_and_present?(:attributes)
+      if !@decrypted_profile.nil? && @decrypted_profile.respond_to_has_and_present?(:attributes)
         @decrypted_profile.attributes.each do |field|
           @user_profile[field.name] = Yoti::Protobuf.value_based_on_content_type(field.value, field.content_type)
         end

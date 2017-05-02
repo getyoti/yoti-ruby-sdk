@@ -1,19 +1,58 @@
 # Yoti Ruby SDK
 
+Welcome to the Yoti Ruby SDK. This repository contains the tools you need to quickly integrate your Ruby back-end with Yoti so that your users can share their identity details with your application in a secure and trusted way.
 
-Welcome to the Yoti Ruby SDK. This repository contains the tools you need to quickly integrate your Ruby back-end with Yoti, so that your users can share their identity details with your application in a secure and trusted way.    
+## Table of Contents
 
-## An architectural view
+1) [An Architectural view](#an-architectural-view) -
+High level overview of integration
+
+2) [References](#references)-
+Guides before you start
+
+3) [Requirements](#requirements)-
+Everything you need to get started
+
+4) [Installing the SDK](#installing-the-sdk)-
+How to install our SDK
+
+5) [SDK Project import](#sdk-project-import)-
+How to install the SDK to your project
+
+6) [Configuration](#configuration)-
+entry point explanation
+
+7) [Profile Retrieval](#profile-retrieval)-
+How to retrieve a Yoti profile using the token
+
+8) [Handling users](#handling-users)-
+How to manage users
+
+9) [API Coverage](#api-coverage)-
+Attributes defined
+
+10) [Running the examples](running-the-examples)-
+Attributes defined
+
+11) [Support](#support)-
+Please feel free to reach out
+
+12) [Change Log](#change-log)
+
+13) [License](#license)
+
+## An Architectural view
+
 To integrate your application with Yoti, your back-end must expose a GET endpoint that Yoti will use to forward tokens.
 The endpoint can be configured in your Yoti Dashboard when you create/update your application. It can be found in the Integration section under the Callback URL name.
 
-The image below shows how your application back-end and Yoti integrate in the context of a Login flow.
+The image below shows how your application back-end and Yoti integrate into the context of a Login flow.
 Yoti SDK carries out for you steps 6, 7, 8 and the profile decryption in step 9.
 
 ![alt text](login_flow.png "Login flow")
 
 
-Yoti also allows you to enable user details verification from your mobile app by means of the Android (TBA) and iOS (TBA) SDKs. In that scenario, your Yoti-enabled mobile app is playing both the role of the browser and the Yoti app. Your back-end doesn't need to handle these cases in a significantly different way, but you might decide to handle the `User-Agent` header in order to provide different responses for web and mobile clients.
+Yoti also allows you to enable user details verification from your mobile app by means of the Android (TBA) and iOS (TBA) SDKs. In that scenario, your Yoti-enabled mobile app is playing both the role of the browser and the Yoti app. Your back-end doesn't need to handle these cases in a significantly different way, but you might decide to handle the `User-Agent` header in order to provide different responses for desktop and mobile clients.
 
 ## References
 
@@ -36,15 +75,15 @@ If you're using a version of Ruby lower than 2.2.2 you might encounter issues wh
 gem activesupport '~> 4.2'
 ```
 
-The 1.13 version of [Bundler][] (currently in release candidate stage) will sort this dependency issue automatically. More info in this [comment][] by André Arko.
+Versions of [Bundler][] > 1.13 will sort this dependency issue automatically. More info in this [comment][] by André Arko.
 
 [comment]: https://github.com/bundler/bundler-features/issues/120#issuecomment-214514847
 [Bundler]: http://bundler.io/
 [Active Support]: https://rubygems.org/gems/activesupport/
 
-## Installation
+## Installing the SDK
 
-Add this line to your application's Gemfile:
+To import the Yoti SDK inside your project, add this line to your application's Gemfile:
 
 ```ruby
 gem 'yoti'
@@ -56,13 +95,13 @@ And then execute:
 $ bundle install
 ```
 
-Or install it yourself as:
+Or simply run the following command from your terminal:
 
 ```shell
 $ [sudo] gem install yoti
 ```
 
-### Ruby on Rails
+## SDK Project import
 
 The gem provides a generator for the initialization file:
 
@@ -71,12 +110,6 @@ $ rails generate yoti:install
 ```
 
 The generated initialisation file can be found in `config/initializers/yoti.rb`.
-
-Make sure the following environment variables can be accessed by your app:
-
-`YOTI_CLIENT_SDK_ID` - found on the *Integrations* settings page
-
-`YOTI_KEY_FILE_PATH` - the full path to your security key downloaded from the *Keys* settings page (e.g. /Users/developer/access-security.pem)
 
 ## Configuration
 
@@ -88,6 +121,12 @@ Yoti.configure do |config|
   config.key_file_path = ENV['YOTI_KEY_FILE_PATH']
 end
 ```
+Make sure the following environment variables can be accessed by your app:
+
+`YOTI_CLIENT_SDK_ID` - found on the Key settings page on your application dashboard
+
+`YOTI_KEY_FILE_PATH` - the full path to your security key downloaded from the *Keys* settings page (e.g. /Users/developer/access-security.pem)
+
 The following options are available:
 
 Config               | Required | Default              | Note
@@ -130,9 +169,9 @@ heroku config:add YOTI_KEY ="$(cat your-access-security.pem)"
 
 [Heroku Command Line]: https://devcenter.heroku.com/articles/heroku-command-line
 
-## Usage
 
-### Profile retrieval
+
+## Profile retrieval
 
 When your application receives a token via the exposed endpoint (it will be assigned to a query string parameter named `token`), you can easily retrieve the user profile:
 
@@ -211,6 +250,17 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
         * [X] Address `postal_address`
         * [X] Gender `gender`
         * [X] Nationality `nationality`
+
+## Support
+
+For any questions or support please email [sdksupport@yoti.com](mailto:sdksupport@yoti.com).
+Please provide the following the get you up and working as quick as possible:
+
+- Computer Type
+- OS Version
+- Version of Go being used
+- Screenshot
+
 
 ## Changelog
 

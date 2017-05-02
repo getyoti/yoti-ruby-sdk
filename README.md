@@ -1,6 +1,6 @@
 # Yoti Ruby SDK
 
-Welcome to the Yoti Ruby SDK. This repository contains the tools you need to quickly integrate your Ruby back-end with Yoti, so that your users can share their identity details with your application in a secure and trusted way.
+Welcome to the Yoti Ruby SDK. This repository contains the tools you need to quickly integrate your Ruby back-end with Yoti so that your users can share their identity details with your application in a secure and trusted way.
 
 ## Table of Contents
 
@@ -31,7 +31,7 @@ How to manage users
 9) [API Coverage](#api-coverage)-
 Attributes defined
 
-10) [Running the tests](running-the-tests)-
+10) [Running the examples](running-the-examples)-
 Attributes defined
 
 11) [Support](#support)-
@@ -46,13 +46,13 @@ Please feel free to reach out
 To integrate your application with Yoti, your back-end must expose a GET endpoint that Yoti will use to forward tokens.
 The endpoint can be configured in your Yoti Dashboard when you create/update your application. It can be found in the Integration section under the Callback URL name.
 
-The image below shows how your application back-end and Yoti integrate in the context of a Login flow.
+The image below shows how your application back-end and Yoti integrate into the context of a Login flow.
 Yoti SDK carries out for you steps 6, 7, 8 and the profile decryption in step 9.
 
 ![alt text](login_flow.png "Login flow")
 
 
-Yoti also allows you to enable user details verification from your mobile app by means of the Android (TBA) and iOS (TBA) SDKs. In that scenario, your Yoti-enabled mobile app is playing both the role of the browser and the Yoti app. Your back-end doesn't need to handle these cases in a significantly different way, but you might decide to handle the `User-Agent` header in order to provide different responses for web and mobile clients.
+Yoti also allows you to enable user details verification from your mobile app by means of the Android (TBA) and iOS (TBA) SDKs. In that scenario, your Yoti-enabled mobile app is playing both the role of the browser and the Yoti app. Your back-end doesn't need to handle these cases in a significantly different way, but you might decide to handle the `User-Agent` header in order to provide different responses for desktop and mobile clients.
 
 ## References
 
@@ -75,7 +75,7 @@ If you're using a version of Ruby lower than 2.2.2 you might encounter issues wh
 gem activesupport '~> 4.2'
 ```
 
-The 1.13 version of [Bundler][] (currently in release candidate stage) will sort this dependency issue automatically. More info in this [comment][] by André Arko.
+Versions of [Bundler][] > 1.13 will sort this dependency issue automatically. More info in this [comment][] by André Arko.
 
 [comment]: https://github.com/bundler/bundler-features/issues/120#issuecomment-214514847
 [Bundler]: http://bundler.io/
@@ -83,7 +83,7 @@ The 1.13 version of [Bundler][] (currently in release candidate stage) will sort
 
 ## Installing the SDK
 
-To import the Yoti SDK inside your project, simply run the following command from your terminal:
+To import the Yoti SDK inside your project, add this line to your application's Gemfile:
 
 ```ruby
 gem 'yoti'
@@ -95,7 +95,7 @@ And then execute:
 $ bundle install
 ```
 
-Or install it yourself as:
+Or simply run the following command from your terminal:
 
 ```shell
 $ [sudo] gem install yoti
@@ -108,6 +108,9 @@ The gem provides a generator for the initialization file:
 ```shell
 $ rails generate yoti:install
 ```
+
+The generated initialisation file can be found in `config/initializers/yoti.rb`.
+
 ## Configuration
 
 A minimal Yoti client initialisation looks like this:
@@ -123,8 +126,6 @@ Make sure the following environment variables can be accessed by your app:
 `YOTI_CLIENT_SDK_ID` - found on the Key settings page on your application dashboard
 
 `YOTI_KEY_FILE_PATH` - the full path to your security key downloaded from the *Keys* settings page (e.g. /Users/developer/access-security.pem)
-
-The generated initialisation file can be found in `config/initializers/yoti.rb`.
 
 The following options are available:
 
@@ -210,7 +211,7 @@ end
 
 Where `your_user_search_function` is a piece of logic in your app that is supposed to find a user, given a user_id. Regardless of wether the user is a new or an existing one, Yoti will always provide their profile, so you don't necessarily need to store it.
 
-## Running the tests
+## Running the examples
 
 The examples can be found in the [examples folder](examples).
 For them to work you will need a working callback URL that your browser can redirect to. A good way of doing this is to use [ngrok][] to expose the local development URL. The callback URL for both examples will be: `http://your-local-url.domain/profile`.

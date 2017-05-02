@@ -1,9 +1,48 @@
 # Yoti Ruby SDK
 
+Welcome to the Yoti Ruby SDK. This repository contains the tools you need to quickly integrate your Ruby back-end with Yoti, so that your users can share their identity details with your application in a secure and trusted way.
 
-Welcome to the Yoti Ruby SDK. This repository contains the tools you need to quickly integrate your Ruby back-end with Yoti, so that your users can share their identity details with your application in a secure and trusted way.    
+## Table of Contents
 
-## An architectural view
+1) [An Architectural view](#an-architectural-view) -
+High level overview of integration
+
+2) [References](#references)-
+Guides before you start
+
+3) [Requirements](#requirements)-
+Everything you need to get started
+
+4) [Installing the SDK](#installing-the-sdk)-
+How to install our SDK
+
+5) [SDK Project import](#sdk-project-import)-
+How to install the SDK to your project
+
+6) [Configuration](#configuration)-
+entry point explanation
+
+7) [Profile Retrieval](#profile-retrieval)-
+How to retrieve a Yoti profile using the token
+
+8) [Handling users](#handling-users)-
+How to manage users
+
+9) [API Coverage](#api-coverage)-
+Attributes defined
+
+10) [Running the tests](running-the-tests)-
+Attributes defined
+
+11) [Support](#support)-
+Please feel free to reach out
+
+12) [Change Log](#change-log)
+
+13) [License](#license)
+
+## An Architectural view
+
 To integrate your application with Yoti, your back-end must expose a GET endpoint that Yoti will use to forward tokens.
 The endpoint can be configured in your Yoti Dashboard when you create/update your application. It can be found in the Integration section under the Callback URL name.
 
@@ -42,9 +81,9 @@ The 1.13 version of [Bundler][] (currently in release candidate stage) will sort
 [Bundler]: http://bundler.io/
 [Active Support]: https://rubygems.org/gems/activesupport/
 
-## Installation
+## Installing the SDK
 
-Add this line to your application's Gemfile:
+To import the Yoti SDK inside your project, simply run the following command from your terminal:
 
 ```ruby
 gem 'yoti'
@@ -62,22 +101,13 @@ Or install it yourself as:
 $ [sudo] gem install yoti
 ```
 
-### Ruby on Rails
+## SDK Project import
 
 The gem provides a generator for the initialization file:
 
 ```shell
 $ rails generate yoti:install
 ```
-
-The generated initialisation file can be found in `config/initializers/yoti.rb`.
-
-Make sure the following environment variables can be accessed by your app:
-
-`YOTI_CLIENT_SDK_ID` - found on the *Integrations* settings page
-
-`YOTI_KEY_FILE_PATH` - the full path to your security key downloaded from the *Keys* settings page (e.g. /Users/developer/access-security.pem)
-
 ## Configuration
 
 A minimal Yoti client initialisation looks like this:
@@ -88,6 +118,14 @@ Yoti.configure do |config|
   config.key_file_path = ENV['YOTI_KEY_FILE_PATH']
 end
 ```
+Make sure the following environment variables can be accessed by your app:
+
+`YOTI_CLIENT_SDK_ID` - found on the Key settings page on your application dashboard
+
+`YOTI_KEY_FILE_PATH` - the full path to your security key downloaded from the *Keys* settings page (e.g. /Users/developer/access-security.pem)
+
+The generated initialisation file can be found in `config/initializers/yoti.rb`.
+
 The following options are available:
 
 Config               | Required | Default              | Note
@@ -130,9 +168,9 @@ heroku config:add YOTI_KEY ="$(cat your-access-security.pem)"
 
 [Heroku Command Line]: https://devcenter.heroku.com/articles/heroku-command-line
 
-## Usage
 
-### Profile retrieval
+
+## Profile retrieval
 
 When your application receives a token via the exposed endpoint (it will be assigned to a query string parameter named `token`), you can easily retrieve the user profile:
 
@@ -172,7 +210,7 @@ end
 
 Where `your_user_search_function` is a piece of logic in your app that is supposed to find a user, given a user_id. Regardless of wether the user is a new or an existing one, Yoti will always provide their profile, so you don't necessarily need to store it.
 
-## Running the examples
+## Running the tests
 
 The examples can be found in the [examples folder](examples).
 For them to work you will need a working callback URL that your browser can redirect to. A good way of doing this is to use [ngrok][] to expose the local development URL. The callback URL for both examples will be: `http://your-local-url.domain/profile`.
@@ -211,6 +249,17 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
         * [X] Address `postal_address`
         * [X] Gender `gender`
         * [X] Nationality `nationality`
+
+## Support
+
+For any questions or support please email [sdksupport@yoti.com](mailto:sdksupport@yoti.com).
+Please provide the following the get you up and working as quick as possible:
+
+- Computer Type
+- OS Version
+- Version of Go being used
+- Screenshot
+
 
 ## Changelog
 

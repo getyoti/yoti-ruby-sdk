@@ -216,7 +216,7 @@ Where `your_user_search_function` is a piece of logic in your app that is suppos
 The examples can be found in the [examples folder](examples).
 For them to work you will need a working callback URL that your browser can redirect to. A good way of doing this is to use [ngrok][] to expose the local development URL. The callback URL for both examples will be: `http://your-local-url.domain/profile`.
 
-The examples also use the `YOTI_APPLICATION_ID` environment variable to display the Yoti Connect button. This value can be found in your Yoti account, on the *Integrations* page, under the *Login button* section.
+The examples also use the `YOTI_APPLICATION_ID` environment variable to display the Yoti Connect button. This value can be found in your Yoti account, on the *Keys* settings page.
 
 ### Ruby on Rails
 

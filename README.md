@@ -258,7 +258,7 @@ Please provide the following the get you up and working as quick as possible:
 
 - Computer Type
 - OS Version
-- Version of Go being used
+- Version of Ruby being used
 - Screenshot
 
 

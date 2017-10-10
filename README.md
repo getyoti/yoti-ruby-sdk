@@ -266,7 +266,7 @@ Please provide the following the get you up and working as quick as possible:
 
 See recent changes in the [release notes][release notes] or the [changelog](CHANGELOG.md).
 
-[release notes]: https://github.com/getyoti/ruby/releases
+[release notes]: https://github.com/getyoti/yoti-ruby-sdk/releases
 
 ## License
 

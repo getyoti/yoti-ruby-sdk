@@ -1,7 +1,7 @@
 module Yoti
   class Configuration
-    attr_accessor :client_sdk_id, :key_file_path, :key, :api_url,
-                  :api_port, :api_version, :api_endpoint
+    attr_accessor :client_sdk_id, :key_file_path, :key, :sdk_identifier,
+                  :api_url, :api_port, :api_version, :api_endpoint
 
     # Set config variables by using a configuration block
     def initialize

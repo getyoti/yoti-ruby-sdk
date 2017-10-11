@@ -26,6 +26,7 @@ module Yoti
       http_req = Net::HTTP::Get.new(uri)
       http_req['X-Yoti-Auth-Key'] = @auth_key
       http_req['X-Yoti-Auth-Digest'] = message_signature
+      http_req['X-Yoti-SDK'] = @sdk_identifier
       http_req['Content-Type'] = 'application/json'
       http_req['Accept'] = 'application/json'
       http_req

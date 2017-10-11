@@ -7,6 +7,7 @@ describe 'Yoti::Configuration' do
     it 'sets the instance variables' do
       configuration.client_sdk_id = 'client_sdk_id'
       configuration.key_file_path = 'key_file_path'
+      configuration.sdk_identifier = 'sdk_identifier'
       configuration.key = 'key'
       configuration.api_url = 'https://api_url.com'
       configuration.api_port = 'api_port'
@@ -14,6 +15,7 @@ describe 'Yoti::Configuration' do
 
       expect(configuration.client_sdk_id).to eql('client_sdk_id')
       expect(configuration.key_file_path).to eql('key_file_path')
+      expect(configuration.sdk_identifier).to eql('sdk_identifier')
       expect(configuration.key).to eql('key')
       expect(configuration.api_url).to eql('https://api_url.com')
       expect(configuration.api_port).to eql('api_port')
@@ -24,6 +26,7 @@ describe 'Yoti::Configuration' do
       expect(configuration.api_url).to eql('https://api.yoti.com')
       expect(configuration.api_port).to eql(443)
       expect(configuration.api_version).to eql('v1')
+      expect(configuration.sdk_identifier).to eql('Ruby')
     end
   end
 

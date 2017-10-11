@@ -8,6 +8,7 @@ module Yoti
       @client_sdk_id = ''
       @key_file_path = ''
       @key = ''
+      @sdk = 'Ruby'
       @api_url = 'https://api.yoti.com'
       @api_port = 443
       @api_version = 'v1'

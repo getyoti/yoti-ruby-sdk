@@ -6,8 +6,8 @@ require 'yoti/version'
 Gem::Specification.new do |spec|
   spec.name          = 'yoti'
   spec.version       = Yoti::VERSION
-  spec.authors       = ['Vasile Zaremba']
-  spec.email         = ['vasile.zaremba@yoti.com']
+  spec.authors       = ['Sebastian Zaremba']
+  spec.email         = ['tech@yoti.com']
 
   spec.summary       = 'Yoti Ruby SDK for back-end integration.'
   spec.description = <<-EOF
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   EOF
 
   spec.homepage      = 'https://github.com/getyoti/yoti-ruby-sdk'
-  spec.license       = 'Proprietary'
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|examples)/}) }
   spec.require_paths = ['lib']

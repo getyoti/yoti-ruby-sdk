@@ -22,8 +22,8 @@ module Yoti
     # Validates the configuration values set in instance variables
     # @return [nil]
     def validate
-      validate_required_all(%w(client_sdk_id))
-      validate_required_any(%w(key_file_path key))
+      validate_required_all(%w[client_sdk_id])
+      validate_required_any(%w[key_file_path key])
       validate_value('api_version', ['v1'])
     end
 

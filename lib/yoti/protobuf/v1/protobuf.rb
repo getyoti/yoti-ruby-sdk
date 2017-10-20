@@ -7,9 +7,7 @@ module Yoti
     class << self
       CT_UNDEFINED = 0 # should not be seen, and is used as an error placeholder
       CT_STRING = 1 # UTF-8 encoded text.
-      CT_JPEG = 2 # standard .jpeg image.
       CT_DATE = 3 # string in RFC3339 format (YYYY-MM-DD)
-      CT_PNG = 4 # standard .png image
 
       def current_user(receipt)
         return nil unless valid_receipt?(receipt)
@@ -29,12 +27,8 @@ module Yoti
           raise ProtobufError, 'The content type is invalid.'
         when CT_STRING
           value.encode('utf-8')
-        when CT_JPEG
-          'data:image/jpeg;base64,'.concat(Base64.strict_encode64(value))
         when CT_DATE
           value.encode('utf-8')
-        when CT_PNG
-          'data:image/png;base64,'.concat(Base64.strict_encode64(value))
         else
           value
         end

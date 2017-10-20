@@ -12,6 +12,9 @@ module Yoti
     # @return [Hash] the decoded profile attributes
     attr_reader :user_profile
 
+    # @return [String] the selfie in base64 format
+    attr_reader :base64_selfie
+
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
     def initialize(receipt, decrypted_profile = nil)
@@ -26,6 +29,7 @@ module Yoti
 
       @user_id = receipt['remember_me_id']
       @outcome = receipt['sharing_outcome']
+      @base64_selfie = 'data:image/png;base64,'.concat(Base64.strict_encode64(@user_profile['selfie'])) if @user_profile['selfie']
     end
   end
 end

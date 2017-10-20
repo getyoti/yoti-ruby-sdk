@@ -45,7 +45,12 @@ describe 'Yoti::Client' do
 
       it 'contains the decrypted selfie value' do
         selfie = File.read('spec/fixtures/selfie.txt', encoding: 'utf-8')
-        expect(profile['selfie']).to eql(selfie)
+        expect('data:image/jpeg;base64,'.concat(Base64.strict_encode64(profile['selfie']))).to eql(selfie)
+      end
+
+      it 'contains the base64_selfie value' do
+        base64_selfie = 'data:image/png;base64,'.concat(File.read('spec/fixtures/selfie.txt', encoding: 'utf-8')[23..-1])
+        expect(activity_details.base64_selfie).to eql(base64_selfie)
       end
     end
 

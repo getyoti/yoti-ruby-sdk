@@ -65,27 +65,12 @@ describe 'Yoti::Protobuf' do
       end
     end
 
-    context 'when the content type is 2' do
-      let(:content_type) { 2 }
-      it 'encodes the string to JPEG format' do
-        is_expected.to eql('data:image/jpeg;base64,dGVzdCBzdHJpbmc=')
-      end
-    end
-
     context 'when the content type is 3' do
       let(:content_type) { 3 }
 
       it 'encodes the string to UTF8' do
         expect(value_encoded.encoding.name).to_not eql('UTF-8')
         expect(subject.encoding.name).to eql('UTF-8')
-      end
-    end
-
-    context 'when the content type is 4' do
-      let(:content_type) { 4 }
-
-      it 'encodes the string to PNG format' do
-        is_expected.to eql('data:image/png;base64,dGVzdCBzdHJpbmc=')
       end
     end
 

@@ -24,12 +24,15 @@ module Yoti
       if !@decrypted_profile.nil? && @decrypted_profile.respond_to_has_and_present?(:attributes)
         @decrypted_profile.attributes.each do |field|
           @user_profile[field.name] = Yoti::Protobuf.value_based_on_content_type(field.value, field.content_type)
+
+          if field.name == 'selfie'
+            @base64_selfie = Yoti::Protobuf.image_uri_based_on_content_type(field.value, field.content_type)
+          end
         end
       end
 
       @user_id = receipt['remember_me_id']
       @outcome = receipt['sharing_outcome']
-      @base64_selfie = 'data:image/png;base64,'.concat(Base64.strict_encode64(@user_profile['selfie'])) if @user_profile['selfie']
     end
   end
 end

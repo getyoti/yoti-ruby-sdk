@@ -7,7 +7,9 @@ module Yoti
     class << self
       CT_UNDEFINED = 0 # should not be seen, and is used as an error placeholder
       CT_STRING = 1 # UTF-8 encoded text.
+      CT_JPEG = 2 # standard .jpeg image.
       CT_DATE = 3 # string in RFC3339 format (YYYY-MM-DD)
+      CT_PNG = 4 # standard .png image
 
       def current_user(receipt)
         return nil unless valid_receipt?(receipt)
@@ -31,6 +33,15 @@ module Yoti
           value.encode('utf-8')
         else
           value
+        end
+      end
+
+      def image_uri_based_on_content_type(value, content_type = nil)
+        case content_type
+        when CT_JPEG
+          'data:image/jpeg;base64,'.concat(Base64.strict_encode64(value))
+        when CT_PNG
+          'data:image/png;base64,'.concat(Base64.strict_encode64(value))
         end
       end
 

@@ -10,7 +10,7 @@ class YotiController < ApplicationController
       @user_id = yoti_activity_details.user_id
 
       user_profile = yoti_activity_details.user_profile
-      @photo = user_profile['selfie']
+      @selfie = user_profile['selfie']
       @given_names = user_profile['given_names']
       @family_name = user_profile['family_name']
       @mobile_number = user_profile['phone_number']

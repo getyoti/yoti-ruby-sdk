@@ -234,14 +234,12 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
 
 Visiting the `http://your-local-url.domain` should show a Yoti Connect button
 
-[ngrok]:          https://ngrok.com/
-
 ## API coverage
 
 * Activity Details
     * [X] User ID `user_id`
     * [X] Profile
-        * [X] Photo `selfie`
+        * [X] Selfie `selfie`
         * [X] Given Names `given_names`
         * [X] Family Name `family_name`
         * [X] Mobile Number `phone_number`

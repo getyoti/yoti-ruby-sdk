@@ -26,7 +26,7 @@ get '/profile' do
     user_profile = yoti_activity_details.user_profile
     erb :profile, locals: {
       user_id: yoti_activity_details.user_id,
-      photo: user_profile['selfie'],
+      selfie: user_profile['selfie'],
       given_names: user_profile['given_names'],
       family_name: user_profile['family_name'],
       mobile_number: user_profile['phone_number'],

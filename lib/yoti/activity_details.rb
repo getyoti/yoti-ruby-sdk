@@ -13,7 +13,7 @@ module Yoti
     attr_reader :user_profile
 
     # @return [String] the selfie in base64 format
-    attr_reader :base64_selfie
+    attr_reader :base64_selfie_uri
 
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
@@ -26,7 +26,7 @@ module Yoti
           @user_profile[field.name] = Yoti::Protobuf.value_based_on_content_type(field.value, field.content_type)
 
           if field.name == 'selfie'
-            @base64_selfie = Yoti::Protobuf.image_uri_based_on_content_type(field.value, field.content_type)
+            @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(field.value, field.content_type)
           end
         end
       end

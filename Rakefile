@@ -34,11 +34,6 @@ Yardstick::Rake::Measurement.new(:measurement, yardstick_options) do |measuremen
   measurement.output = 'measurement/report.txt'
 end
 
-require 'yardstick/rake/verify'
-Yardstick::Rake::Verify.new(:verify_measurements, yardstick_options) do |verify|
-  verify.threshold = 89.0
-end
-
 ################################
 # Defaults                     #
 ################################

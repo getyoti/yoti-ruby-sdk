@@ -75,12 +75,6 @@ $ bundle exec rake measurement
 Verifies the documentation with [Yardstick][] and generates the `measurement/report.txt` file, containing tips on how to improve the documentation coverage.
 
 ```shell
-$ bundle exec rake verify_measurements
-```
-
-Verifies that the [Yardstick][] coverage matches the one set in the [Rakefile](Rakefile).
-
-```shell
 $ bundle exec rake yard
 ```
 Generates [YARD][] documentation in the doc folder.

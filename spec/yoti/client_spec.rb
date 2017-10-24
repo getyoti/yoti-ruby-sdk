@@ -6,6 +6,7 @@ describe 'Yoti::Client' do
     let(:profile) { activity_details.user_profile }
     let(:outcome) { activity_details.outcome }
     let(:user_id) { activity_details.user_id }
+    let(:base64_selfie_uri) { activity_details.base64_selfie_uri }
 
     context 'when the encrypted token is nil', type: :api_with_profile do
       it 'raises an ArgumentError ' do
@@ -49,8 +50,8 @@ describe 'Yoti::Client' do
       end
 
       it 'contains the base64_selfie_uri value' do
-        base64_selfie_uri = 'data:image/jpeg;base64,'.concat(File.read('spec/fixtures/selfie.txt', encoding: 'utf-8')[23..-1])
-        expect(activity_details.base64_selfie_uri).to eql(base64_selfie_uri)
+        selfie = File.read('spec/fixtures/selfie.txt', encoding: 'utf-8')
+        expect(base64_selfie_uri).to eql(selfie)
       end
     end
 

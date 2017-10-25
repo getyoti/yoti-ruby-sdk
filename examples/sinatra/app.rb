@@ -24,9 +24,13 @@ get '/profile' do
 
   if yoti_activity_details.outcome == 'SUCCESS'
     user_profile = yoti_activity_details.user_profile
+
+    # Save the selfie file
+    File.open(File.join(settings.root, 'public', 'selfie.jpeg'), 'wb') { |file| file.write(user_profile['selfie']) }
+
     erb :profile, locals: {
       user_id: yoti_activity_details.user_id,
-      selfie: user_profile['selfie'],
+      base64_selfie_uri: yoti_activity_details.base64_selfie_uri,
       given_names: user_profile['given_names'],
       family_name: user_profile['family_name'],
       mobile_number: user_profile['phone_number'],

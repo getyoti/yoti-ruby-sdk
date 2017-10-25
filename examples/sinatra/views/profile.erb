@@ -1,17 +1,21 @@
 <html>
 <head>
-	<title>Welcome</title>
+  <title>Welcome</title>
 </head>
 <body>
   <h1><a href="/">Home</a></h1>
   <table>
-  	<tr>
-  		<td>User ID</td>
-  		<td><%= user_id %></td>
-  	</tr>
     <tr>
-      <td>Selfie</td>
-      <td><img src="<%= selfie %>" /></td>
+      <td>User ID</td>
+      <td><%= user_id %></td>
+    </tr>
+    <tr>
+      <td>Selfie as base64 URI<br />
+      <td><img src="<%= base64_selfie_uri %>" /></td>
+    </tr>
+    <tr>
+      <td>Selfie as image file<br />
+      <td><img src="selfie.jpeg" /></td>
     </tr>
     <tr>
       <td>Given Names</td>
@@ -21,30 +25,30 @@
       <td>Family Name</td>
       <td><%= family_name %></td>
     </tr>
-  	<tr>
-  		<td>Mobile Number</td>
-  		<td><%= mobile_number %></td>
-  	</tr>
-  	<tr>
-  		<td>Email Address</td>
-  		<td><%= email_address %></td>
-  	</tr>
-  	<tr>
-  		<td>Date of Birth</td>
-  		<td><%= date_of_birth %></td>
-  	</tr>
-  	<tr>
-  		<td>Address</td>
-  		<td><%= address %></td>
-  	</tr>
+    <tr>
+      <td>Mobile Number</td>
+      <td><%= mobile_number %></td>
+    </tr>
+    <tr>
+      <td>Email Address</td>
+      <td><%= email_address %></td>
+    </tr>
+    <tr>
+      <td>Date of Birth</td>
+      <td><%= date_of_birth %></td>
+    </tr>
+    <tr>
+      <td>Address</td>
+      <td><%= address %></td>
+    </tr>
     <tr>
       <td>Gender</td>
       <td><%= gender %></td>
     </tr>
-  	<tr>
-  		<td>Nationality</td>
-  		<td><%= nationality %></td>
-  	</tr>
+    <tr>
+      <td>Nationality</td>
+      <td><%= nationality %></td>
+    </tr>
   </table>
 </body>
 </html>

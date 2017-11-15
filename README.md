@@ -7,34 +7,34 @@ Welcome to the Yoti Ruby SDK. This repository contains the tools you need to qui
 1) [An Architectural view](#an-architectural-view) -
 High level overview of integration
 
-2) [References](#references)-
+2) [References](#references) -
 Guides before you start
 
-3) [Requirements](#requirements)-
+3) [Requirements](#requirements) -
 Everything you need to get started
 
-4) [Installing the SDK](#installing-the-sdk)-
+4) [Installing the SDK](#installing-the-sdk) -
 How to install our SDK
 
-5) [SDK Project Import](#sdk-project-import)-
+5) [SDK Project Import](#sdk-project-import) -
 How to install the SDK to your project
 
-6) [Configuration](#configuration)-
+6) [Configuration](#configuration) -
 entry point explanation
 
-7) [Profile Retrieval](#profile-retrieval)-
+7) [Profile Retrieval](#profile-retrieval) -
 How to retrieve a Yoti profile using the token
 
-8) [Handling Users](#handling-users)-
+8) [Handling Users](#handling-users) -
 How to manage users
 
-9) [API Coverage](#api-coverage)-
+9) [API Coverage](#api-coverage) -
 Attributes defined
 
-10) [Running the Examples](running-the-examples)-
+10) [Running the Examples](running-the-examples) -
 Attributes defined
 
-11) [Support](#support)-
+11) [Support](#support) -
 Please feel free to reach out
 
 12) [Change Log](#change-log)

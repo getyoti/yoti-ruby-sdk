@@ -31,7 +31,7 @@ How to manage users
 9) [API Coverage](#api-coverage) -
 Attributes defined
 
-10) [Running the Examples](running-the-examples) -
+10) [Running the Examples](#running-the-examples) -
 Attributes defined
 
 11) [Support](#support) -

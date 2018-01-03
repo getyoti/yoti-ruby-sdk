@@ -4,11 +4,10 @@ After checking out the repo, run `bundle install` to install dependencies. Then,
 
 You can use [Guard][] to automatically run the tests every time a file in the `lib` or `spec` folder changes.
 
-
 Run Guard through Bundler with:
 
 ```shell
-$ bundle exec guard
+bundle exec guard
 ```
 
 [Guard]: https://github.com/guard/guard
@@ -22,12 +21,13 @@ If you wish to compile `.proto` definitions to Ruby, you will need to install [G
 ### OSX
 
 ```shell
-$ brew install protobuf
+brew install protobuf
 ```
 
 ### Ubuntu
+
 ```shell
-$ sudo apt-get install -y protobuf
+sudo apt-get install -y protobuf
 ```
 
 This gem relies heavily on the [Ruby Protobuf][] gem. For more information on how Google Protobuf works, please see the [Wiki pages][].
@@ -35,9 +35,9 @@ This gem relies heavily on the [Ruby Protobuf][] gem. For more information on ho
 Compiling the common and attribute `.proto` definitions can be done with the following commands:
 
 ```shell
-$ cd lib/yoti/protobuf/v1
-$ protoc -I definitions/attribute-public-api/attrpubapi_v1 --ruby_out ./attribute_public_api definitions/attribute-public-api/attrpubapi_v1/*.proto
-$ protoc -I definitions/common-public-api/compubapi_v1/ --ruby_out ./common_public_api definitions/common-public-api/compubapi_v1/*.proto
+cd lib/yoti/protobuf/v1
+protoc -I definitions/attribute-public-api/attrpubapi_v1 --ruby_out ./attribute_public_api definitions/attribute-public-api/attrpubapi_v1/*.proto
+protoc -I definitions/common-public-api/compubapi_v1/ --ruby_out ./common_public_api definitions/common-public-api/compubapi_v1/*.proto
 ```
 
 These commands will overwrite the current protobuf Ruby modules, which have been modified. If the protobuf files have to be updated, a good idea would be to change them manually, or generate the files in a new location, and compare the content.
@@ -53,30 +53,33 @@ The 100% code coverage requirement must be met before submitting new code.
 This can be checked by opening the generated [SimpleCov][] files:
 
  ```shell
- $ open coverage/index.html
+ open coverage/index.html
  ```
 
 ### Style guide
+
 The Ruby style guide is configured in the [rubocop.yml](rubocop.yml) file and can be checked by running:
 
 ```shell
-$ bundle exec rake rubocop
+bundle exec rake rubocop
 ```
 
 ### Documentation
+
 The documentation uses the [Yard][] format. Please ensure all new classes and methods are fully documented.
 
 There are a few Rake tasks to handle documentation:
 
 ```shell
-$ bundle exec rake measurement
+bundle exec rake measurement
 ```
 
 Verifies the documentation with [Yardstick][] and generates the `measurement/report.txt` file, containing tips on how to improve the documentation coverage.
 
 ```shell
-$ bundle exec rake yard
+bundle exec rake yard
 ```
+
 Generates [YARD][] documentation in the doc folder.
 
 ### Git
@@ -106,6 +109,7 @@ gem push pkg/yoti-[version].gem
 ```
 
 ## Submitting a pull request
+
 1. [Fork the repository.][fork]
 2. [Create a topic branch.][branch]
 3. Add specs for your unimplemented feature or bug fix.

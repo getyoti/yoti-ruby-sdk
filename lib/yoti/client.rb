@@ -6,7 +6,7 @@ module Yoti
     # @param encrypted_connect_token [String] token provided as a base 64 string
     # @return [Object] an ActivityDetails instance encapsulating the user profile
     def self.get_activity_details(encrypted_connect_token)
-      receipt = Yoti::Request.new(encrypted_connect_token).receipt
+      receipt = Yoti::ProfileRequest.receipt(encrypted_connect_token)
       encrypted_data = Protobuf.current_user(receipt)
 
       return ActivityDetails.new(receipt) if encrypted_data.nil?

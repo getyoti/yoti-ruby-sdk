@@ -1,8 +1,10 @@
 module Yoti
   # Manage the API's HTTPS requests
   class Request
-    def initialize(encrypted_connect_token)
+    def initialize(encrypted_connect_token, http_method, endpoint)
       @encrypted_connect_token = encrypted_connect_token
+      @http_method = http_method
+      @endpoint = endpoint
       @auth_key = Yoti::SSL.auth_key_from_pem
     end
 
@@ -33,7 +35,7 @@ module Yoti
     end
 
     def message_signature
-      @message_signature ||= Yoti::SSL.get_secure_signature("GET&#{path}")
+      @message_signature ||= Yoti::SSL.get_secure_signature("#{@http_method}&#{path}")
     end
 
     def uri
@@ -44,7 +46,7 @@ module Yoti
       @path ||= begin
         nonce = SecureRandom.uuid
         timestamp = Time.now.to_i
-        "/profile/#{token}?nonce=#{nonce}&timestamp=#{timestamp}&appId=#{Yoti.configuration.client_sdk_id}"
+        "/#{@endpoint}/#{token}?nonce=#{nonce}&timestamp=#{timestamp}&appId=#{Yoti.configuration.client_sdk_id}"
       end
     end
 

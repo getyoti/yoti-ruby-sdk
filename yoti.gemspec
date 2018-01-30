@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rspec', '~> 3.5'
   spec.add_development_dependency 'simplecov', '~> 0.13'
-  spec.add_development_dependency 'webmock', '~> 2.3'
+  spec.add_development_dependency 'webmock', '~> 3.3'
   spec.add_development_dependency 'yard', '~> 0.9'
   spec.add_development_dependency 'yardstick', '~> 0.9'
 end

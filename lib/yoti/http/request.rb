@@ -1,10 +1,11 @@
+require 'base64'
+
 module Yoti
   # Manage the API's HTTPS requests
   class Request
-    def initialize(encrypted_connect_token, http_method, endpoint)
-      @encrypted_connect_token = encrypted_connect_token
-      @http_method = http_method
-      @endpoint = endpoint
+    attr_accessor :encrypted_connect_token, :http_method, :endpoint, :payload
+
+    def initialize
       @auth_key = Yoti::SSL.auth_key_from_pem
     end
 
@@ -25,7 +26,19 @@ module Yoti
     end
 
     def req
-      http_req = Net::HTTP::Get.new(uri)
+      raise RequestError, 'The request requires a HTTP method.' unless @http_method
+      raise RequestError, 'The payload needs to be a hash.' unless payload.to_s.empty? || @payload.is_a?(Hash)
+
+      case @http_method
+      when 'GET', 'DELETE'
+        http_req = Net::HTTP::Get.new(uri)
+      when 'POST', 'PUT', 'PATCH'
+        http_req = Net::HTTP::Get.new(uri)
+        http_req.set_form_data(@payload)
+      else
+        raise RequestError, "Request method not allowed: #{@http_method}"
+      end
+
       http_req['X-Yoti-Auth-Key'] = @auth_key
       http_req['X-Yoti-Auth-Digest'] = message_signature
       http_req['X-Yoti-SDK'] = @sdk_identifier
@@ -46,7 +59,12 @@ module Yoti
       @path ||= begin
         nonce = SecureRandom.uuid
         timestamp = Time.now.to_i
-        "/#{@endpoint}/#{token}?nonce=#{nonce}&timestamp=#{timestamp}&appId=#{Yoti.configuration.client_sdk_id}"
+
+        "/#{@endpoint}/#{token}"\
+        "?nonce=#{nonce}"\
+        "&timestamp=#{timestamp}"\
+        "&appId=#{Yoti.configuration.client_sdk_id}"\
+        "#{payload.nil? ? '' : '&' + payload_string}"
       end
     end
 
@@ -56,6 +74,14 @@ module Yoti
 
     def https_uri?
       uri.scheme == 'https'
+    end
+
+    # Create the base64 encoded request body
+    def payload_string
+      payload_serialized = Marshal.dump(@payload)
+      payload_byte_array = payload_serialized.bytes
+      payload_byte_string = Marshal.dump(payload_byte_array)
+      Base64.strict_encode64(payload_byte_string)
     end
   end
 end

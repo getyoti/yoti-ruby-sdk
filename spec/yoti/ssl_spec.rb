@@ -66,15 +66,14 @@ describe 'Yoti::SSL' do
   describe '.auth_key_from_pem' do
     it 'extracts the auth token from the pem file' do
       key_from_pem = Yoti::SSL.auth_key_from_pem
-      expected_key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs9zAY5K9O92zfmRhxBO0NX8Dg7UyyIaLE5GdbCMimlccew2p8LN6P8EDUoU7hiCbW1EQ/cp4iZVIp7UPA3AO/ecuejs2DjkFQOeMGnSlwD0pk74ZI3ammQtYm2ml47IWGrciMh4dPIPh0SOF+tVD0kHhAB9cMaj96Ij2De60Y7SeqvIXUHCtnoHId7Zk5I71mtewAnb9Gpx+wPnr2gpX/uUqkh+3ZHsF2eNCpw/ICvKj4UkNXopUyBemDp3n/s7u8TFyewp7ipPbFxDmxZKJT9SjZNFFe/jc2V/R2uC9qSFRKpTsxqmXggjiBlH46cpyg2SeYFj1p5bkpKZ10b3iOwIDAQAB'
-      expect(key_from_pem).to eql(expected_key)
+      expect(key_from_pem).to eql('MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs9zAY5K9O92zfmRhxBO0NX8Dg7UyyIaLE5GdbCMimlccew2p8LN6P8EDUoU7hiCbW1EQ/cp4iZVIp7UPA3AO/ecuejs2DjkFQOeMGnSlwD0pk74ZI3ammQtYm2ml47IWGrciMh4dPIPh0SOF+tVD0kHhAB9cMaj96Ij2De60Y7SeqvIXUHCtnoHId7Zk5I71mtewAnb9Gpx+wPnr2gpX/uUqkh+3ZHsF2eNCpw/ICvKj4UkNXopUyBemDp3n/s7u8TFyewp7ipPbFxDmxZKJT9SjZNFFe/jc2V/R2uC9qSFRKpTsxqmXggjiBlH46cpyg2SeYFj1p5bkpKZ10b3iOwIDAQAB')
     end
   end
 
   describe '.get_secure_signature' do
     it 'generates secure random token' do
       token = Yoti::SSL.get_secure_signature('message')
-      expect(token.length).to eql(344)
+      expect(token).to eql('Dvk2DCW/5/pNwkhDoHG/qaf/vl1RR/lFIldw6ms3yVOe7TStnX9EJupfewprehHQ6XhkxfoCCb+VTWGtQHRkuZB/CotJ5sSsc28HYokMvq2Mz7mD47gx5pEXqtb9s22v0eOUELTcbCmaQg8HPk3kBcvRWbyMjY7cJhI44METHxOjhN/9AEdlNU+96K7nJe7QxgQNX5Q/dKsIawD0UabT/qGBFLtic3j9+XACnM+ZTcJIYs6OXpPfXhHkekKvLVpT/EBx1KTK6XXr5NYI7f5pawIHtwx2B0oy2uqxu/trKEw6opJ3yUoN1JqbCRMIHUdIHzi0Mdz6LY05689+224/ww==')
     end
   end
 

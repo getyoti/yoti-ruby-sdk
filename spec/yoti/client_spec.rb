@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Yoti::Client' do
   describe '.get_activity_details' do
-    let(:encrypted_yoti_token) { File.read('spec/fixtures/encrypted_yoti_token.txt', encoding: 'utf-8') }
+    let(:encrypted_connect_token) { File.read('spec/fixtures/encrypted_connect_token.txt', encoding: 'utf-8') }
     let(:profile) { activity_details.user_profile }
     let(:outcome) { activity_details.outcome }
     let(:user_id) { activity_details.user_id }
@@ -16,7 +16,7 @@ describe 'Yoti::Client' do
     end
 
     context 'when the encrypted token is valid', type: :api_with_profile do
-      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_yoti_token) }
+      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_connect_token) }
 
       it 'returns an ActivityDetails object' do
         expect(activity_details).to be_a(Yoti::ActivityDetails)
@@ -28,7 +28,7 @@ describe 'Yoti::Client' do
     end
 
     context 'when the profile has content', type: :api_with_profile do
-      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_yoti_token) }
+      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_connect_token) }
 
       it 'contains the fetched profile' do
         expect(profile).not_to be_nil
@@ -56,7 +56,7 @@ describe 'Yoti::Client' do
     end
 
     context 'when the profile is empty', type: :api_with_empty_profile do
-      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_yoti_token) }
+      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_connect_token) }
 
       it 'contains the fetched profile' do
         expect(profile).to be_empty
@@ -69,7 +69,7 @@ describe 'Yoti::Client' do
     end
 
     context 'when the profile is null', type: :api_with_null_profile do
-      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_yoti_token) }
+      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_connect_token) }
 
       it 'contains the fetched profile' do
         expect(profile).to be_empty
@@ -82,7 +82,7 @@ describe 'Yoti::Client' do
     end
 
     context 'when the profile is missing', type: :api_without_profile do
-      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_yoti_token) }
+      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_connect_token) }
 
       it 'contains the fetched profile' do
         expect(profile).to be_empty

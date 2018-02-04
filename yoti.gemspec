@@ -1,5 +1,3 @@
-# coding: utf-8
-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'yoti/version'
@@ -11,11 +9,11 @@ Gem::Specification.new do |spec|
   spec.email         = ['tech@yoti.com']
 
   spec.summary       = 'Yoti Ruby SDK for back-end integration.'
-  spec.description = <<-EOF
+  spec.description = <<-DESC
     This gem contains the tools you need to quickly integrate your Ruby back-end
     with Yoti, so that your users can share their identity details with your
     application in a secure and trusted way.
-  EOF
+  DESC
 
   spec.homepage      = 'https://github.com/getyoti/yoti-ruby-sdk'
   spec.license       = 'MIT'

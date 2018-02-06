@@ -3,7 +3,7 @@
 # You can either run this example with `ruby app.rb` or
 # `./app.rb` make sure it's executable (chmod +x app.rb) or
 # `dotenv ./app.rb` if you're using the Dotenv gem
-
+require 'dotenv/load'
 require 'sinatra'
 require 'yoti'
 
@@ -31,11 +31,15 @@ get '/profile' do
     erb :profile, locals: {
       user_id: yoti_activity_details.user_id,
       base64_selfie_uri: yoti_activity_details.base64_selfie_uri,
+      full_name: user_profile['full_name'],
       given_names: user_profile['given_names'],
       family_name: user_profile['family_name'],
       mobile_number: user_profile['phone_number'],
       email_address: user_profile['email_address'],
       date_of_birth: user_profile['date_of_birth'],
+      # This key uses the  format: age_[over|under]:[1-999] and is dynamically
+      # generated based on the dashboard attribute Age / Verify Condition
+      age_verified: user_profile['age_over:18'],
       address: user_profile['postal_address'],
       gender: user_profile['gender'],
       nationality: user_profile['nationality']

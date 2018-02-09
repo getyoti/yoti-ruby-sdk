@@ -33,10 +33,7 @@ module Yoti
     def payload_string
       return '' unless @payload
 
-      payload_serialized = Marshal.dump(@payload)
-      payload_byte_array = payload_serialized.bytes
-      payload_byte_string = Marshal.dump(payload_byte_array)
-      '&' + Base64.strict_encode64(payload_byte_string)
+      '&' + Base64.strict_encode64(@payload.to_json)
     end
   end
 end

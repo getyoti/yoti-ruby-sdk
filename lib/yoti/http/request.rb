@@ -1,7 +1,18 @@
 module Yoti
   # Manage the API's HTTPS requests
   class Request
-    attr_accessor :encrypted_connect_token, :http_method, :endpoint, :payload
+    # @return [String] the URL token received from Yoti Connect
+    attr_accessor :encrypted_connect_token
+
+    # @return [String] the HTTP method used for the request
+    # The allowed methods are: GET, DELETE, POST, PUT, PATCH
+    attr_accessor :http_method
+
+    # @return [String] the API endpoint for the request
+    attr_accessor :endpoint
+
+    # @return [Hash] the body sent with the request
+    attr_accessor :payload
 
     # @return [Hash] the receipt key from the request hash response
     def receipt
@@ -27,13 +38,13 @@ module Yoti
         http_req = Net::HTTP::Delete.new(uri)
       when 'POST'
         http_req = Net::HTTP::Post.new(uri)
-        http_req.set_form_data(@payload) unless @payload.to_s.empty?
+        http_req.body = @payload.to_json unless @payload.to_s.empty?
       when 'PUT'
         http_req = Net::HTTP::Put.new(uri)
-        http_req.set_form_data(@payload) unless @payload.to_s.empty?
+        http_req.body = @payload.to_json unless @payload.to_s.empty?
       when 'PATCH'
         http_req = Net::HTTP::Patch.new(uri)
-        http_req.set_form_data(@payload) unless @payload.to_s.empty?
+        http_req.body = @payload.to_json unless @payload.to_s.empty?
       else
         raise RequestError, "Request method not allowed: #{@http_method}"
       end
@@ -58,7 +69,8 @@ module Yoti
     end
 
     def token
-      @token ||= Yoti::SSL.decrypt_token(@encrypted_connect_token)
+      return '' unless @encrypted_connect_token
+      Yoti::SSL.decrypt_token(@encrypted_connect_token)
     end
 
     def https_uri?

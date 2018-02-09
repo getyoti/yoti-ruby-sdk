@@ -10,4 +10,7 @@ module Yoti
 
   # Raises exceptions realted to an incorrect gem configuration value
   class ConfigurationError < StandardError; end
+
+  # Raises exceptions related to AML actions
+  class AmlError < StandardError; end
 end

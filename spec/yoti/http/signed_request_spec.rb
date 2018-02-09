@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Yoti::SignedRequest' do
   let(:encrypted_connect_token) { File.read('spec/fixtures/encrypted_connect_token.txt', encoding: 'utf-8') }
+  let(:payload_aml) { JSON.parse(File.read('spec/fixtures/payload_aml.json', encoding: 'utf-8')) }
   let(:unsigned_request) { Net::HTTP::Get.new('uri') }
   let(:signed_request) { Yoti::SignedRequest.new(unsigned_request, 'path') }
 
@@ -19,7 +20,7 @@ describe 'Yoti::SignedRequest' do
     it 'return a signed request' do
       expect(signed).to be_a(Net::HTTP::Get)
       expect(signed['X-Yoti-Auth-Key']).to eql('MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs9zAY5K9O92zfmRhxBO0NX8Dg7UyyIaLE5GdbCMimlccew2p8LN6P8EDUoU7hiCbW1EQ/cp4iZVIp7UPA3AO/ecuejs2DjkFQOeMGnSlwD0pk74ZI3ammQtYm2ml47IWGrciMh4dPIPh0SOF+tVD0kHhAB9cMaj96Ij2De60Y7SeqvIXUHCtnoHId7Zk5I71mtewAnb9Gpx+wPnr2gpX/uUqkh+3ZHsF2eNCpw/ICvKj4UkNXopUyBemDp3n/s7u8TFyewp7ipPbFxDmxZKJT9SjZNFFe/jc2V/R2uC9qSFRKpTsxqmXggjiBlH46cpyg2SeYFj1p5bkpKZ10b3iOwIDAQAB')
-      expect(signed['X-Yoti-Auth-Digest']).to eql('UmOFC+aF7W0EA+Nb6KvWzW0js8NaexNdVanEZ4b7qmsn4XD3glZcmII59RjQ583n3/Gyd6vdqFHrYU1Cwxy+sbyFMieAkc9OjKNA9sanBdI1owxO4ElO8Ch6g6Ww3a0mTri5RObJT6JaYbpJxoteLhibzUL+EFAI76qeALcAEhXhqjkbrmB5kiaqjVAYZwk7vmz6OVxAHiCIr+kJ1/qgvZUyU6pSdDHnFoB0k5hMMuUpOu6PirSRG8imMBYhhG4gBMQbV19FKdnVbFJAZXOe7F5Ir7r+EGRoV4le7RCPscE2OE4EByrYzzKv5TQ1Gj823haSYTs+/TeUl5x06ntONw==')
+      expect(signed['X-Yoti-Auth-Digest']).to eql('X4iPrpUNUXDFbdRWiWjh87P7TOq5sPmPYCaNGsbqsB5EDnsuFi+kG2yeYFBJiUpcvm5QogseXMlBY6pxUD6d1AZv1ftllAp5nA2RcpUBbCvvYneJC8f+MYMxw01pl2i3Xz7FlbEB633PnMaJLOnaXtMTzZgdP1GPzbsjjOLiUxMyeCUonkz700PuKCdHQfI339OmUZUrPKZe3WrKLlqcYEbJFdSIxGo8vnzi7sFoUkWV6gmp5vlfreMfm6mpQbJcomgoyCUQInF3MgeMKetj7V+wifZW0nLI5evZSffUcXvX/0pbJUR9gl41NU8VpXGSVru+7iilT8ytJd0WGNlWjw==')
       expect(signed['X-Yoti-SDK']).to eql('Ruby')
       expect(signed['Content-Type']).to eql('application/json')
       expect(signed['Accept']).to eql('application/json')
@@ -38,8 +39,8 @@ describe 'Yoti::SignedRequest' do
 
     context 'witha payload' do
       it 'returns a base64 encoded string' do
-        signed_request.instance_variable_set(:@payload, payload: 'payload')
-        expect(payload_string).to eql('&BAhbIWkJaQ1pAXtpC2k/aRFpdWlmaX5pcWl0aWZpaWlOaSdpEWl1aWZpfmlxaXRpZmlpaQtpP2kLaUppWQ==')
+        signed_request.instance_variable_set(:@payload, payload_aml)
+        expect(payload_string).to eql('&eyJnaXZlbl9uYW1lcyI6IiIsImZhbWlseV9uYW1lIjoiIiwic3NuIjoiIiwiYWRkcmVzcyI6eyJwb3N0X2NvZGUiOiIiLCJjb3VudHJ5IjoiIn19')
       end
     end
   end

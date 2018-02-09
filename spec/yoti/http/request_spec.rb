@@ -66,7 +66,7 @@ describe 'Yoti::Request' do
         request.payload = { payload: 'fake_payload' }
 
         expect(unsigned_request).to be_a(Net::HTTP::Post)
-        expect(unsigned_request.body).to eql('payload=fake_payload')
+        expect(unsigned_request.body).to eql('{"payload":"fake_payload"}')
       end
 
       it 'returns the a Put object' do
@@ -74,7 +74,7 @@ describe 'Yoti::Request' do
         request.payload = { payload: 'fake_payload' }
 
         expect(unsigned_request).to be_a(Net::HTTP::Put)
-        expect(unsigned_request.body).to eql('payload=fake_payload')
+        expect(unsigned_request.body).to eql('{"payload":"fake_payload"}')
       end
 
       it 'returns the a Patch object' do
@@ -82,7 +82,7 @@ describe 'Yoti::Request' do
         request.payload = { payload: 'fake_payload' }
 
         expect(unsigned_request).to be_a(Net::HTTP::Patch)
-        expect(unsigned_request.body).to eql('payload=fake_payload')
+        expect(unsigned_request.body).to eql('{"payload":"fake_payload"}')
       end
     end
 

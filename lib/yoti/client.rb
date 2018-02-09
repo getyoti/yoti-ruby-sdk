@@ -16,5 +16,9 @@ module Yoti
       decrypted_profile = Protobuf.attribute_list(decrypted_data)
       ActivityDetails.new(receipt, decrypted_profile)
     end
+
+    def self.aml_check(aml_profile)
+      Yoti::AmlCheckRequest.new(aml_profile).receipt
+    end
   end
 end

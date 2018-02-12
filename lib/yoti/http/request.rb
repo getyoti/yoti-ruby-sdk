@@ -15,7 +15,7 @@ module Yoti
     attr_accessor :payload
 
     # @return [Hash] the receipt key from the request hash response
-    def receipt
+    def body
       raise RequestError, 'The request requires a HTTP method.' unless @http_method
       raise RequestError, 'The payload needs to be a hash.' unless @payload.to_s.empty? || @payload.is_a?(Hash)
 
@@ -25,7 +25,7 @@ module Yoti
       end
 
       raise RequestError, "Unsuccessful Yoti API call: #{res.message}" unless res.code == '200'
-      JSON.parse(res.body)['receipt']
+      res.body
     end
 
     private

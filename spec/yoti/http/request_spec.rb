@@ -4,7 +4,7 @@ describe 'Yoti::Request' do
   let(:encrypted_connect_token) { File.read('spec/fixtures/encrypted_connect_token.txt', encoding: 'utf-8') }
   let(:request) { Yoti::Request.new }
 
-  describe '#receipt', type: :api_empty do
+  describe '#body', type: :api_empty do
     before(:each) do
       request.instance_variable_set(:@token, '')
     end
@@ -12,7 +12,7 @@ describe 'Yoti::Request' do
     context 'without a HTTP method' do
       it 'raises Yoti::RequestError' do
         error = 'The request requires a HTTP method.'
-        expect { request.receipt }.to raise_error(Yoti::RequestError, error)
+        expect { request.body }.to raise_error(Yoti::RequestError, error)
       end
     end
 
@@ -22,7 +22,7 @@ describe 'Yoti::Request' do
         request.payload = 'payload'
 
         error = 'The payload needs to be a hash.'
-        expect { request.receipt }.to raise_error(Yoti::RequestError, error)
+        expect { request.body }.to raise_error(Yoti::RequestError, error)
       end
     end
 
@@ -31,14 +31,14 @@ describe 'Yoti::Request' do
         request.http_method = 'GET'
 
         error = 'Unsuccessful Yoti API call: Error'
-        expect { request.receipt }.to raise_error(Yoti::RequestError, error)
+        expect { request.body }.to raise_error(Yoti::RequestError, error)
       end
     end
 
     context 'with a HTTP method and a valid payload', type: :api_empty do
       it 'returns the receipt value' do
         request.http_method = 'GET'
-        expect(request.receipt).to eql({})
+        expect(request.body).to eql("{}")
       end
     end
   end

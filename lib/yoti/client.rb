@@ -18,7 +18,7 @@ module Yoti
     end
 
     def self.aml_check(aml_profile)
-      Yoti::AmlCheckRequest.new(aml_profile).receipt
+      Yoti::AmlCheckRequest.new(aml_profile).response
     end
   end
 end

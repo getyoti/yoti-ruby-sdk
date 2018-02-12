@@ -7,8 +7,8 @@ module Yoti
       @request = request
     end
 
-    def receipt
-      @request.receipt
+    def response
+      JSON.parse(@request.body)
     end
 
     private

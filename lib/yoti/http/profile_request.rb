@@ -7,7 +7,7 @@ module Yoti
     end
 
     def receipt
-      @request.receipt
+      JSON.parse(@request.body)['receipt']
     end
 
     private

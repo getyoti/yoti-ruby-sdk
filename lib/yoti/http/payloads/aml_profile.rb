@@ -1,4 +1,5 @@
 module Yoti
+  # Manages the AML check Profile object
   class AmlProfile
     def initialize(given_names, family_name, aml_address, ssn = nil)
       @given_names = given_names
@@ -10,6 +11,7 @@ module Yoti
       raise AmlError, 'Request for USA require a valid SSN and post code.' unless usa_valid
     end
 
+    # @return [Object] the AML check request body
     def payload
       {
         given_names: @given_names,
@@ -25,7 +27,11 @@ module Yoti
     private
 
     def profile_valid
-      !@given_names.to_s.empty? && !@family_name.to_s.empty? &&  @address.is_a?(AmlAddress) && @address.country.length == 3
+      !@given_names.to_s.empty? && !@family_name.to_s.empty? && address_valid
+    end
+
+    def address_valid
+      @address.is_a?(AmlAddress) && @address.country.to_s.length == 3
     end
 
     def usa_valid

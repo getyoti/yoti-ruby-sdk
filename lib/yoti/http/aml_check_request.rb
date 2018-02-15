@@ -7,6 +7,7 @@ module Yoti
       @request = request
     end
 
+    # @return [String] a JSON representation of the AML check response
     def response
       JSON.parse(@request.body)
     end

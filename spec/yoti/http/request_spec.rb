@@ -38,7 +38,7 @@ describe 'Yoti::Request' do
     context 'with a HTTP method and a valid payload', type: :api_empty do
       it 'returns the receipt value' do
         request.http_method = 'GET'
-        expect(request.body).to eql("{}")
+        expect(request.body).to eql('{}')
       end
     end
   end

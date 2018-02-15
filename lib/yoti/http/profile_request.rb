@@ -6,6 +6,7 @@ module Yoti
       @request = request
     end
 
+    # @return [String] a JSON representation of the profile response receipt
     def receipt
       JSON.parse(@request.body)['receipt']
     end

@@ -14,7 +14,8 @@ module Yoti
     # @return [Hash] the body sent with the request
     attr_accessor :payload
 
-    # @return [Hash] the receipt key from the request hash response
+    # Makes a HTTP request after signing the headers
+    # @return [Hash] the body from the HTTP request
     def body
       raise RequestError, 'The request requires a HTTP method.' unless @http_method
       raise RequestError, 'The payload needs to be a hash.' unless @payload.to_s.empty? || @payload.is_a?(Hash)

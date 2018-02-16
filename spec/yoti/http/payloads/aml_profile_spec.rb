@@ -23,7 +23,7 @@ describe 'Yoti::AmlProfile' do
 
     context 'with an invalid USA address values' do
       it 'raises Yoti::AmlError' do
-        error = 'Request for USA require a valid SSN and post code.'
+        error = 'Request for USA require a valid SSN and postcode.'
         expect { Yoti::AmlProfile.new('John', 'Doe', Yoti::AmlAddress.new('USA', 'W120RT')) }.to raise_error(Yoti::AmlError, error)
         expect { Yoti::AmlProfile.new('John', 'Doe', Yoti::AmlAddress.new('USA'), '123321') }.to raise_error(Yoti::AmlError, error)
       end

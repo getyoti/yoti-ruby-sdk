@@ -220,7 +220,7 @@ Yoti.configure do |config|
   config.key_file_path = ENV['YOTI_KEY_FILE_PATH']
 end
 
-aml_address = Yoti::AmlAddress.new('GBR', 'E1 6DB')
+aml_address = Yoti::AmlAddress.new('GBR')
 aml_profile = Yoti::AmlProfile.new('Edward Richard George', 'Heath', aml_address)
 
 puts Yoti::Client.aml_check(aml_profile)

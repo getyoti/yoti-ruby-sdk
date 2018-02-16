@@ -7,8 +7,8 @@ module Yoti
       @ssn = ssn
       @address = aml_address
 
-      raise AmlError, 'The AML request requires given names, family name and an ISO 3166 3-letter code.' unless profile_valid
-      raise AmlError, 'Request for USA require a valid SSN and post code.' unless usa_valid
+      raise AmlError, 'The AML request requires given names, family name and an ISO 3166 3-letter code.' if profile_invalid
+      raise AmlError, 'Request for USA require a valid SSN and postcode.' if usa_invalid
     end
 
     # @return [Object] the AML check request body
@@ -26,16 +26,16 @@ module Yoti
 
     private
 
-    def profile_valid
-      !@given_names.to_s.empty? && !@family_name.to_s.empty? && address_valid
+    def profile_invalid
+      @given_names.to_s.empty? || @family_name.to_s.empty? || address_invalid
     end
 
-    def address_valid
-      @address.is_a?(AmlAddress) && @address.country.to_s.length == 3
+    def address_invalid
+      !@address.is_a?(AmlAddress) || @address.country.to_s.length != 3
     end
 
-    def usa_valid
-      @address.country != 'USA' || (!@ssn.nil? && !@address.post_code.to_s.empty?)
+    def usa_invalid
+      @address.country == 'USA' && (@ssn.to_s.empty? || @address.post_code.to_s.empty?)
     end
   end
 end

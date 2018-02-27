@@ -53,7 +53,7 @@ The 100% code coverage requirement must be met before submitting new code.
 This can be checked by opening the generated [SimpleCov][] files:
 
  ```shell
- open coverage/index.html
+open coverage/index.html
  ```
 
 ### Style guide

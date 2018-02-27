@@ -1,13 +1,15 @@
 <html>
 <head>
-	<title>Yoti Login Example</title>
-	<script src="https://sdk.yoti.com/clients/browser.2.0.1.js"></script>
+  <title>Yoti client example</title>
+  <script src="https://sdk.yoti.com/clients/browser.2.0.1.js"></script>
 </head>
 <body style="text-align: center; margin: 200px 0">
-	<a class="btn button yoti-connect learn-more btn-primary" data-target='embed' data-yoti-application-id='<%= yoti_application_id %>'>Sign up with Yoti</a>
-	<script>
-	    _ybg.config.service = 'https://code.yoti.com/app/'
-	    _ybg.init()
-	</script>
+  <span data-yoti-application-id="<%= yoti_application_id %>">
+    Use Yoti
+  </span>
+  <script>
+    _ybg.config.service = 'https://code.yoti.com/app/'
+    _ybg.init()
+  </script>
 </body>
 </html>

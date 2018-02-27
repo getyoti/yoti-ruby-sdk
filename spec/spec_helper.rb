@@ -7,7 +7,7 @@ require 'webmock/rspec'
 
 require 'yoti'
 
-def stub_api_requests_v1(method = :get ,response = 'profile', endpoint = '[a-zA-Z]*', status = [200])
+def stub_api_requests_v1(method = :get, response = 'profile', endpoint = '[a-zA-Z]*', status = [200])
   stub_response = File.read("spec/fixtures/responses/#{response}.json")
   stub_request(method, %r{https:\/\/api.yoti.com\/api\/v1\/#{endpoint}\/(.)*})
     .to_return(

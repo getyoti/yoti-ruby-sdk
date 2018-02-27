@@ -10,7 +10,7 @@ Welcome to the Yoti Ruby SDK. This repository contains the tools you need to qui
 1. [Configuration](#configuration) - Configuring the SDK
 1. [Profile Retrieval](#profile-retrieval) - How to retrieve a Yoti profile using the token
 1. [AML Integration](#aml-integration) - How to integrate with Yoti's AML (Anti Money Laundering) service
-1. [Running the Examples](#running-the-examples) - Attributes defined
+1. [Running the Examples](#running-the-examples) - How to run the example projects provided
 1. [API Coverage](#api-coverage) - Attributes defined
 1. [Support](#support) - Please feel free to reach out
 

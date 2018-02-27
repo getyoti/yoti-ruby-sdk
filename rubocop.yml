@@ -6,7 +6,7 @@ AllCops:
     - 'examples/rails/config/**/*'
 
 Metrics/AbcSize:
-  Max: 15
+  Max: 23
   Exclude:
     - examples/rails/app/controllers/yoti_controller.rb
 
@@ -14,14 +14,15 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/**/*.rb
 
+Metrics/CyclomaticComplexity:
+  Max: 9
+
 Metrics/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
   CountComments: false
-  Max: 15
-  Exclude:
-    - examples/rails/app/controllers/yoti_controller.rb
+  Max: 19
 
 Style/Documentation:
   Enabled: false

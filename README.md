@@ -4,42 +4,15 @@ Welcome to the Yoti Ruby SDK. This repository contains the tools you need to qui
 
 ## Table of Contents
 
-1) [An Architectural view](#an-architectural-view) -
-High level overview of integration
-
-2) [References](#references) -
-Guides before you start
-
-3) [Requirements](#requirements) -
-Everything you need to get started
-
-4) [Installing the SDK](#installing-the-sdk) -
-How to install our SDK
-
-5) [SDK Project Import](#sdk-project-import) -
-How to install the SDK to your project
-
-6) [Configuration](#configuration) -
-entry point explanation
-
-7) [Profile Retrieval](#profile-retrieval) -
-How to retrieve a Yoti profile using the token
-
-8) [Handling Users](#handling-users) -
-How to manage users
-
-9) [API Coverage](#api-coverage) -
-Attributes defined
-
-10) [Running the Examples](#running-the-examples) -
-Attributes defined
-
-11) [Support](#support) -
-Please feel free to reach out
-
-12) [Change Log](#change-log)
-
-13) [License](#license)
+1. [An Architectural view](#an-architectural-view) - High level overview of integration
+1. [Requirements](#requirements) - Everything you need to get started
+1. [Installing the SDK](#installing-the-sdk) - How to install our SDK
+1. [Configuration](#configuration) - Configuring the SDK
+1. [Profile Retrieval](#profile-retrieval) - How to retrieve a Yoti profile using the token
+1. [AML Integration](#aml-integration) - How to integrate with Yoti's AML (Anti Money Laundering) service
+1. [Running the Examples](#running-the-examples) - How to run the example projects provided
+1. [API Coverage](#api-coverage) - Attributes defined
+1. [Support](#support) - Please feel free to reach out
 
 ## An Architectural view
 
@@ -208,6 +181,51 @@ end
 
 Where `your_user_search_function` is a piece of logic in your app that is supposed to find a user, given a user_id. Regardless of whether the user is a new or an existing one, Yoti will always provide their profile, so you don't necessarily need to store it.
 
+## AML Integration
+
+Yoti provides an AML (Anti Money Laundering) check service to allow a deeper KYC process to prevent fraud. This is a chargeable service, so please contact [sdksupport@yoti.com](mailto:sdksupport@yoti.com) for more information.
+
+Yoti will provide a boolean result on the following checks:
+
+* PEP list - Verify against Politically Exposed Persons list
+* Fraud list - Verify against  US Social Security Administration Fraud (SSN Fraud) list
+* Watch list - Verify against watch lists from the Office of Foreign Assets Control
+
+To use this functionality you must ensure your application is assigned to your Organisation in the Yoti Dashboard - please see here for further information.
+
+For the AML check you will need to provide the following:
+
+* Data provided by Yoti (please ensure you have selected the Given name(s) and Family name attributes from the Data tab in the Yoti Dashboard)
+  * Given name(s)
+  * Family name
+* Data that must be collected from the user:
+  * Country of residence (must be an ISO 3166 3-letter code)
+  * Social Security Number (US citizens only)
+  * Postcode/Zip code (US citizens only)
+
+### Consent
+
+Performing an AML check on a person *requires* their consent.
+**You must ensure you have user consent *before* using this service.**
+
+### Code Example
+
+Given a YotiClient initialised with your SDK ID and KeyPair (see [Client Initialisation](#client-initialisation)) performing an AML check is a straightforward case of providing basic profile data.
+
+```ruby
+require 'yoti'
+
+Yoti.configure do |config|
+  config.client_sdk_id = ENV['YOTI_CLIENT_SDK_ID']
+  config.key_file_path = ENV['YOTI_KEY_FILE_PATH']
+end
+
+aml_address = Yoti::AmlAddress.new('GBR')
+aml_profile = Yoti::AmlProfile.new('Edward Richard George', 'Heath', aml_address)
+
+puts Yoti::Client.aml_check(aml_profile)
+```
+
 ## Running the Examples
 
 The examples can be found in the [examples folder](examples).
@@ -227,9 +245,15 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
 
 * rename the [.env.default](examples/sinatra/.env.default) file to `.env` and fill in the required configuration values
 * install the dependencies with `bundle install`
-* start the server `dotenv ./app.rb`
+* start the server `ruby ./app.rb`
 
 Visiting the `http://your-local-url.domain` should show a Yoti Connect button
+
+### AML Check
+
+* rename the [.env.default](examples/aml_check/.env.default) file to `.env` and fill in the required configuration values
+* install the dependencies with `bundle install`
+* run the script with `ruby ./app.rb`
 
 ## API Coverage
 

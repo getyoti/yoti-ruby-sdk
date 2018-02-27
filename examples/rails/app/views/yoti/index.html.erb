@@ -1,8 +1,10 @@
 <div style="text-align: center; margin: 200px 0">
-	<a class="btn button yoti-connect learn-more btn-primary" data-target='embed' data-yoti-application-id='<%= @yoti_application_id %>'>Sign up with Yoti</a>
+  <span data-yoti-application-id="<%= @yoti_application_id %>">
+    Use Yoti
+  </span>
 </div>
-  <script src="https://sdk.yoti.com/clients/browser.2.0.1.js"></script>
-	<script>
-	    _ybg.config.service = 'https://code.yoti.com/app/'
-	    _ybg.init()
-	</script>
+<script src="https://sdk.yoti.com/clients/browser.2.0.1.js"></script>
+<script>
+  _ybg.config.service = 'https://code.yoti.com/app/'
+  _ybg.init()
+</script>

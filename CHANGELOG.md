@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.0 - 2018-02-28
+### Added
+- AML (Anti Money Laundering) check service
+
 ## 1.1.0 - 2017-10-24
 ### Changed
 - `user_profile['selfie']` will return image data instead of an image URI

@@ -26,7 +26,7 @@ module Yoti
 
         begin
           private_key.private_decrypt(Base64.urlsafe_decode64(encrypted_connect_token))
-        rescue => error
+        rescue StandardError => error
           raise SslError, "Could not decrypt token. #{error}"
         end
       end
@@ -63,7 +63,7 @@ module Yoti
 
       def private_key
         @private_key ||= OpenSSL::PKey::RSA.new(pem)
-      rescue => error
+      rescue StandardError => error
         raise SslError, "The secure key is invalid. #{error}"
       end
     end

@@ -7,31 +7,43 @@ require 'webmock/rspec'
 
 require 'yoti'
 
-def stub_api_requests_v1(payload = 'payload_v1')
-  response = File.read("spec/fixtures/#{payload}.json")
-  stub_request(:get, %r{https:\/\/api.yoti.com\/api\/v1\/profile\/(.)*})
+def stub_api_requests_v1(method = :get, response = 'profile', endpoint = '[a-zA-Z]*', status = [200])
+  stub_response = File.read("spec/fixtures/responses/#{response}.json")
+  stub_request(method, %r{https:\/\/api.yoti.com\/api\/v1\/#{endpoint}\/(.)*})
     .to_return(
-      status: 200,
-      body: response,
+      status: status,
+      body: stub_response,
       headers: { 'Content-Type' => 'application/json' }
     )
 end
 
 RSpec.configure do |config|
   config.before(:each, type: :api_with_profile) do
-    stub_api_requests_v1
+    stub_api_requests_v1(:get, 'profile', 'profile')
   end
 
   config.before(:each, type: :api_with_empty_profile) do
-    stub_api_requests_v1('payload_v1_empty_profile')
+    stub_api_requests_v1(:get, 'profile_empty', 'profile')
   end
 
   config.before(:each, type: :api_with_null_profile) do
-    stub_api_requests_v1('payload_v1_null_profile')
+    stub_api_requests_v1(:get, 'profile_null', 'profile')
   end
 
   config.before(:each, type: :api_without_profile) do
-    stub_api_requests_v1('payload_v1_no_profile')
+    stub_api_requests_v1(:get, 'profile_missing', 'profile')
+  end
+
+  config.before(:each, type: :api_empty) do
+    stub_api_requests_v1(:get, 'empty')
+  end
+
+  config.before(:each, type: :api_error) do
+    stub_api_requests_v1(:get, 'profile_error', nil, %w[401 Error])
+  end
+
+  config.before(:each, type: :api_aml_check) do
+    stub_api_requests_v1(:post, 'aml_check', 'aml-check')
   end
 
   config.before do

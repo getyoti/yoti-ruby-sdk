@@ -191,7 +191,7 @@ Yoti will provide a boolean result on the following checks:
 * Fraud list - Verify against  US Social Security Administration Fraud (SSN Fraud) list
 * Watch list - Verify against watch lists from the Office of Foreign Assets Control
 
-To use this functionality you must ensure your application is assigned to your Organisation in the Yoti Dashboard - please see here for further information.
+To use this functionality you must ensure your application is assigned to your organisation in the Yoti Dashboard - please see here for further information.
 
 For the AML check you will need to provide the following:
 
@@ -235,7 +235,7 @@ The examples also use the `YOTI_APPLICATION_ID` environment variable to display 
 
 ### Ruby on Rails
 
-* rename the [.env.default](examples/rails/.env.default) file to `.env` and fill in the required configuration values
+* rename the [.env.example](examples/rails/.env.example) file to `.env` and fill in the required configuration values
 * install the dependencies with `bundle install`
 * start the server `rails server`
 
@@ -243,7 +243,7 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
 
 ### Sinatra
 
-* rename the [.env.default](examples/sinatra/.env.default) file to `.env` and fill in the required configuration values
+* rename the [.env.example](examples/sinatra/.env.example) file to `.env` and fill in the required configuration values
 * install the dependencies with `bundle install`
 * start the server `ruby ./app.rb`
 
@@ -251,7 +251,7 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
 
 ### AML Check
 
-* rename the [.env.default](examples/aml_check/.env.default) file to `.env` and fill in the required configuration values
+* rename the [.env.example](examples/aml_check/.env.example) file to `.env` and fill in the required configuration values
 * install the dependencies with `bundle install`
 * run the script with `ruby ./app.rb`
 

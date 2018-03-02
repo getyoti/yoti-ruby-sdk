@@ -23,7 +23,7 @@ first_name = 'Edward Richard George'
 last_name = 'Heath'
 country_code = 'USA'
 post_code = '012345'
-ssn = '170206773'
+ssn = '123123123'
 
 aml_address = Yoti::AmlAddress.new(country_code, post_code)
 aml_profile = Yoti::AmlProfile.new(first_name, last_name, aml_address, ssn)

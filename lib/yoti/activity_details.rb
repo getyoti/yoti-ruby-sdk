@@ -15,6 +15,9 @@ module Yoti
     # @return [String] the selfie in base64 format
     attr_reader :base64_selfie_uri
 
+    # @return [Boolean] the age under/over attribute
+    attr_reader :age_verified
+
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
     def initialize(receipt, decrypted_profile = nil)
@@ -27,6 +30,11 @@ module Yoti
 
           if field.name == 'selfie'
             @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(field.value, field.content_type)
+          end
+
+          # check if the key matches the format age_[over|under]:[1-999]
+          if /age_(over|under):[1-9][0-9]?[0-9]?/.match?(field.name)
+            @age_verified = field.value == 'true'
           end
         end
       end

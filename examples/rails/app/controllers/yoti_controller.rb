@@ -11,6 +11,7 @@ class YotiController < ApplicationController
 
       user_profile = yoti_activity_details.user_profile
       @base64_selfie_uri = yoti_activity_details.base64_selfie_uri
+      @age_verified = yoti_activity_details.age_verified
 
       @full_name = user_profile['full_name']
       @given_names = user_profile['given_names']
@@ -18,9 +19,6 @@ class YotiController < ApplicationController
       @mobile_number = user_profile['phone_number']
       @email_address = user_profile['email_address']
       @date_of_birth = user_profile['date_of_birth']
-      # This key uses the  format: age_[over|under]:[1-999] and is dynamically
-      # generated based on the dashboard attribute Age / Verify Condition
-      @age_verified = user_profile['age_over:18']
       @address = user_profile['postal_address']
       @gender = user_profile['gender']
       @nationality = user_profile['nationality']

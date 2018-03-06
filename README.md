@@ -272,6 +272,7 @@ Visiting the `http://your-local-url.domain` should show a Yoti Connect button
     * [X] Gender `gender`
     * [X] Nationality `nationality`
   * [X] Base64 Selfie URI `base64_selfie_uri`
+  * [X] Age verified `age_verified`
 
 ## Support
 

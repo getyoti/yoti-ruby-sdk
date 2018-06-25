@@ -4,7 +4,8 @@ class YotiController < ApplicationController
   end
 
   def profile
-    yoti_activity_details = Yoti::Client.get_activity_details(params[:token])
+    one_time_use_token = params[:token]
+    yoti_activity_details = Yoti::Client.get_activity_details(one_time_use_token)
 
     if yoti_activity_details.outcome == 'SUCCESS'
       @user_id = yoti_activity_details.user_id

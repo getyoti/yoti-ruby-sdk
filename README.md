@@ -8,7 +8,7 @@ Welcome to the Yoti Ruby SDK. This repository contains the tools you need to qui
 1. [Requirements](#requirements) - Everything you need to get started
 1. [Installing the SDK](#installing-the-sdk) - How to install our SDK
 1. [Configuration](#configuration) - Configuring the SDK
-1. [Profile Retrieval](#profile-retrieval) - How to retrieve a Yoti profile using the token
+1. [Profile Retrieval](#profile-retrieval) - How to retrieve a Yoti profile using the one time use token
 1. [AML Integration](#aml-integration) - How to integrate with Yoti's AML (Anti Money Laundering) service
 1. [Running the Examples](#running-the-examples) - How to run the example projects provided
 1. [API Coverage](#api-coverage) - Attributes defined
@@ -140,10 +140,11 @@ heroku config:add YOTI_KEY ="$(cat your-access-security.pem)"
 
 ## Profile Retrieval
 
-When your application receives a token via the exposed endpoint (it will be assigned to a query string parameter named `token`), you can easily retrieve the user profile:
+When your application receives a one time use token via the exposed endpoint (it will be assigned to a query string parameter named `token`), you can easily retrieve the user profile:
 
 ```ruby
-yoti_activity_details = Yoti::Client.get_activity_details(params[:token])
+one_time_use_token = params[:token]
+yoti_activity_details = Yoti::Client.get_activity_details(one_time_use_token)
 ```
 
 Before you inspect the user profile, you might want to check whether the user validation was successful. This is done as follows:

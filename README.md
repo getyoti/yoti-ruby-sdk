@@ -17,7 +17,7 @@ Welcome to the Yoti Ruby SDK. This repository contains the tools you need to qui
 ## An Architectural view
 
 To integrate your application with Yoti, your back-end must expose a GET endpoint that Yoti will use to forward tokens.
-The endpoint can be configured in your Yoti Dashboard when you create/update your application. It can be found in the Integration section under the Callback URL name.
+The endpoint can be configured in your [Yoti Dashboard](https://www.yoti.com/dashboard) when you create/update your application. To see an example of how this is configured, see the [Running the Examples](#running-the-examples) section.
 
 The image below shows how your application back-end and Yoti integrate into the context of a Login flow.
 Yoti SDK carries out for you steps 6, 7, 8 and the profile decryption in step 9.
@@ -228,26 +228,31 @@ puts Yoti::Client.aml_check(aml_profile)
 
 ## Running the Examples
 
-The examples can be found in the [examples folder](examples).
-For them to work you will need a working callback URL that your browser can redirect to. The callback URL for both examples will be: `http://your-local-url.domain/profile`.
-
-The examples also use the `YOTI_APPLICATION_ID` environment variable to display the Yoti Connect button. This value can be found in your Yoti account, on the *Keys* settings page.
+The examples can be found in the [examples folder](examples). 
 
 ### Ruby on Rails
 
-* rename the [.env.example](examples/rails/.env.example) file to `.env` and fill in the required configuration values
-* install the dependencies with `bundle install`
-* start the server `rails server`
+1. Create your application in the [Yoti Dashboard](https://www.yoti.com/dashboard/applications)
+1. Set the application domain of you app to `localhost:3000`
+1. Set the scenario callback URL to `/profile`
+1. Rename the [.env.example](examples/rails/.env.example) file to `.env` 
+1. Fill in the environment variables in this file with the ones specific to your application (mentioned in the [Configuration](#configuration) section)
+1. Install the dependencies with `bundle install`
+1. Start the server `rails server`
 
-Visiting the `http://your-local-url.domain` should show a Yoti Connect button
+Visiting `http://localhost:3000/` should show a Yoti Connect button
 
 ### Sinatra
 
-* rename the [.env.example](examples/sinatra/.env.example) file to `.env` and fill in the required configuration values
-* install the dependencies with `bundle install`
-* start the server `ruby ./app.rb`
+1. Create your application in the [Yoti Dashboard](https://www.yoti.com/dashboard/applications)
+1. Set the application domain of you app to `localhost:4567`
+1. Set the scenario callback URL to `/profile`
+1. Rename the [.env.example](examples/sinatra/.env.example) file to `.env`
+1. Fill in the environment variables in this file with the ones specific to your application (mentioned in the [Configuration](#configuration) section)
+1. Install the dependencies with `bundle install`
+1. Start the server `ruby ./app.rb`
 
-Visiting the `http://your-local-url.domain` should show a Yoti Connect button
+Visiting `http://localhost:4567/` should show a Yoti Connect button
 
 ### AML Check
 

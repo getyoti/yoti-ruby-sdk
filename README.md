@@ -17,7 +17,7 @@ Welcome to the Yoti Ruby SDK. This repository contains the tools you need to qui
 ## An Architectural view
 
 To integrate your application with Yoti, your back-end must expose a GET endpoint that Yoti will use to forward tokens.
-The endpoint can be configured in your [Yoti Dashboard](https://www.yoti.com/dashboard) when you create/update your application. To see an example of how this is configured, see the [Running the Examples](#running-the-examples) section.
+The endpoint is configured in the [Yoti Dashboard](https://www.yoti.com/dashboard) where you create/update your application. To see an example of how this is configured, see the [Running the Examples](#running-the-examples) section.
 
 The image below shows how your application back-end and Yoti integrate into the context of a Login flow.
 Yoti SDK carries out for you steps 6, 7, 8 and the profile decryption in step 9.
@@ -233,7 +233,7 @@ The examples can be found in the [examples folder](examples).
 ### Ruby on Rails
 
 1. Create your application in the [Yoti Dashboard](https://www.yoti.com/dashboard/applications)
-1. Set the application domain of you app to `localhost:3000`
+1. Set the application domain of your app to `localhost:3000`
 1. Set the scenario callback URL to `/profile`
 1. Rename the [.env.example](examples/rails/.env.example) file to `.env` 
 1. Fill in the environment variables in this file with the ones specific to your application (mentioned in the [Configuration](#configuration) section)
@@ -245,7 +245,7 @@ Visiting `http://localhost:3000/` should show a Yoti Connect button
 ### Sinatra
 
 1. Create your application in the [Yoti Dashboard](https://www.yoti.com/dashboard/applications)
-1. Set the application domain of you app to `localhost:4567`
+1. Set the application domain of your app to `localhost:4567`
 1. Set the scenario callback URL to `/profile`
 1. Rename the [.env.example](examples/sinatra/.env.example) file to `.env`
 1. Fill in the environment variables in this file with the ones specific to your application (mentioned in the [Configuration](#configuration) section)

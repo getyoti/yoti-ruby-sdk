@@ -42,5 +42,12 @@ module Yoti
       @user_id = receipt['remember_me_id']
       @outcome = receipt['sharing_outcome']
     end
+
+    public
+
+        def structured_postal_address
+            @user_profile['structured_postal_address']
+        end
+
   end
 end

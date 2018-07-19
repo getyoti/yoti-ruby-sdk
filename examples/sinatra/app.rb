@@ -41,7 +41,8 @@ get '/profile' do
       date_of_birth: user_profile['date_of_birth'],
       address: user_profile['postal_address'],
       gender: user_profile['gender'],
-      nationality: user_profile['nationality']
+      nationality: user_profile['nationality'],
+      structured_postal_address: yoti_activity_details.structured_postal_address
     }
   else
     status 500

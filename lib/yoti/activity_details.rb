@@ -44,7 +44,7 @@ module Yoti
     end
 
     public
-
+        # @return [Hash] a JSON of the address
         def structured_postal_address
             @user_profile['structured_postal_address']
         end

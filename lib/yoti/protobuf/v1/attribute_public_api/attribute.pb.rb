@@ -13,6 +13,7 @@ module Yoti
           define :JPEG, 2
           define :DATE, 3
           define :PNG, 4
+          define :JSON, 5
         end
 
         ##

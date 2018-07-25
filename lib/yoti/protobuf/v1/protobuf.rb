@@ -1,4 +1,5 @@
 require 'protobuf'
+require 'json'
 require_relative 'attribute_public_api/list.pb'
 require_relative 'common_public_api/encrypted_data.pb'
 
@@ -10,6 +11,7 @@ module Yoti
       CT_JPEG = 2 # standard .jpeg image.
       CT_DATE = 3 # string in RFC3339 format (YYYY-MM-DD)
       CT_PNG = 4 # standard .png image
+      CT_JSON = 5 # json_string
 
       def current_user(receipt)
         return nil unless valid_receipt?(receipt)
@@ -31,6 +33,8 @@ module Yoti
           value.encode('utf-8')
         when CT_DATE
           value.encode('utf-8')
+        when CT_JSON
+           JSON.parse(value)
         else
           value
         end

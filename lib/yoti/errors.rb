@@ -13,4 +13,7 @@ module Yoti
 
   # Raises exceptions related to AML actions
   class AmlError < StandardError; end
+
+  # Raises exceptions related to Profile actions
+  class ProfileError < StandardError; end
 end

@@ -11,6 +11,12 @@ require_relative 'yoti/http/signed_request'
 require_relative 'yoti/http/profile_request'
 require_relative 'yoti/http/request'
 
+require_relative 'yoti/data_type/profile'
+require_relative 'yoti/data_type/attribute'
+require_relative 'yoti/data_type/anchor'
+
+require_relative 'yoti/util/anchor_processor'
+
 require_relative 'yoti/activity_details'
 require_relative 'yoti/client'
 require_relative 'yoti/protobuf/v1/protobuf'

@@ -1,7 +1,8 @@
-require 'protobuf'
+require 'google/protobuf'
 require 'json'
-require_relative 'attribute_public_api/list.pb'
-require_relative 'common_public_api/encrypted_data.pb'
+require_relative 'v3/attrpubapi/list_pb.rb'
+require_relative 'v3/compubapi/encrypted_data_pb.rb'
+require_relative 'v3/compubapi/signed_time_stamp_pb.rb'
 
 module Yoti
   module Protobuf
@@ -18,11 +19,11 @@ module Yoti
 
         profile_content = receipt['other_party_profile_content']
         decoded_profile_content = Base64.decode64(profile_content)
-        V1::Compubapi::EncryptedData.decode(decoded_profile_content)
+        CompubapiV3::EncryptedData.decode(decoded_profile_content)
       end
 
       def attribute_list(data)
-        V1::Attrpubapi::AttributeList.decode(data)
+        AttrpubapiV3::AttributeList.decode(data)
       end
 
       def value_based_on_content_type(value, content_type = nil)

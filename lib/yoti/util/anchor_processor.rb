@@ -1,5 +1,6 @@
 require 'openssl'
 require 'pp'
+require 'date'
 
 module Yoti
   # Parse attribute anchors
@@ -14,9 +15,12 @@ module Yoti
         anchor_types = self.anchor_types
 
         @anchors_list.each do |anchor|
+            x509_certs_list = convert_certs_list_to_X509(anchor.origin_server_certs)
+            yoti_signed_time_stamp = get_yoti_signed_time_stamp(anchor.signed_time_stamp)
+
             anchor.origin_server_certs.each do |cert|
                 anchor_types.each do |type, oid|
-                    yotiAnchor = get_anchor_by_oid(cert, oid, anchor.sub_type, anchor.signed_time_stamp, anchor.origin_server_certs)
+                    yotiAnchor = get_anchor_by_oid(cert, oid, anchor.sub_type, yoti_signed_time_stamp, x509_certs_list)
                     if yotiAnchor != nil then
                         result_data[type].push(yotiAnchor)
                     end
@@ -28,19 +32,61 @@ module Yoti
     end
 
     def convert_certs_list_to_X509(certs_list)
+        x509_certs_list = []
+        certs_list.each do |cert|
+           x509_cert = OpenSSL::X509::Certificate.new cert
+           x509_certs_list.push x509_cert
+        end
+
+        return x509_certs_list
     end
 
-    def convert_cert_to_X509(certificate)
+    def get_yoti_signed_time_stamp(proto_signed_time_stamp)
+        signed_time_stamp = CompubapiV3::SignedTimestamp.decode(proto_signed_time_stamp)
+        time_in_sec = signed_time_stamp.timestamp/1000000
+        date_time = DateTime.parse(Time.at(time_in_sec).to_s)
+
+        return Yoti::SignedTimeStamp.new(signed_time_stamp.version, date_time)
     end
 
-    def get_anchor_by_oid(cert, oid, sub_type, signed_time_stamp, origin_server_certs)
+    def get_anchor_by_oid(cert, oid, sub_type, signed_time_stamp, x509_certs_list)
         asn1 = OpenSSL::ASN1.decode(cert)
-        anchorValue = get_anchor_value_by_oid(asn1, oid)
+        anchorValue = get_anchor_value_by_oid_2(asn1, oid)
+
+        #anchorValue = get_anchor_value_by_oid(asn1, oid)
         yotiAnchor = nil
         if anchorValue != nil
-            yotiAnchor = Yoti::Anchor.new(anchorValue, sub_type, signed_time_stamp, origin_server_certs)
+            yotiAnchor = Yoti::Anchor.new(anchorValue, sub_type, signed_time_stamp, x509_certs_list)
         end
         return yotiAnchor
+    end
+
+    def get_anchor_value_by_oid_2(obj, oid)
+
+        case obj
+        when OpenSSL::ASN1::Sequence, Array
+            obj.each do |obj_element|
+                result = get_anchor_value_by_oid_2(obj_element, oid)
+                if result != nil
+                    return result
+                    break
+                end
+            end
+        when OpenSSL::ASN1::ASN1Data
+            if obj.value.respond_to?(:to_s) && obj.value === oid
+                @getNext = true
+            elsif obj.value.respond_to?(:to_s) && @getNext
+                rawValue = OpenSSL::ASN1.decode(obj.value)
+                anchorValue = rawValue.value[0].value
+                @getNext = false
+                return anchorValue
+            end
+
+            return get_anchor_value_by_oid_2(obj.value, oid)
+        end
+
+        return nil
+
     end
 
     def get_anchor_value_by_oid(obj, oid)
@@ -54,7 +100,7 @@ module Yoti
             end
             #return :sequence => obj.to_a.map {|o| get_anchor_by_oid(o, oid)}
           when OpenSSL::ASN1::ASN1Data
-            if obj.value.respond_to?(:to_s) && obj.value == oid
+            if obj.value.respond_to?(:to_s) && obj.value === oid
                 @getNext = true
             elsif obj.value.respond_to?(:to_s) && @getNext
                 rawValue = OpenSSL::ASN1.decode(obj.value)

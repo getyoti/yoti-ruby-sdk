@@ -25,7 +25,7 @@ module Yoti
       @user_profile = {}
       @extended_profile = {}
 
-      if !@decrypted_profile.nil? && @decrypted_profile.respond_to_has_and_present?(:attributes)
+      if !@decrypted_profile.nil? && @decrypted_profile.respond_to?(:attributes)
         @decrypted_profile.attributes.each do |field|
           @user_profile[field.name] = Yoti::Protobuf.value_based_on_content_type(field.value, field.content_type)
           anchor_processor = Yoti::AnchorProcessor.new(field.anchors)

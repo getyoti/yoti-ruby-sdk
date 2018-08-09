@@ -25,21 +25,23 @@ module Yoti
       @user_profile = {}
       @extended_profile = {}
 
-      if !@decrypted_profile.nil? && @decrypted_profile.respond_to?(:attributes)
+      if @decrypted_profile.is_a?(Object) && @decrypted_profile.respond_to?(:attributes)
         @decrypted_profile.attributes.each do |field|
           @user_profile[field.name] = Yoti::Protobuf.value_based_on_content_type(field.value, field.content_type)
           anchor_processor = Yoti::AnchorProcessor.new(field.anchors)
-          parsed_anchors = anchor_processor.process
-          @extended_profile[field.name] = Yoti::Attribute.new(field.name, field.value, parsed_anchors['sources'], parsed_anchors['verifiers'])
+          anchors_list = anchor_processor.process
 
           if field.name == 'selfie'
             @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(field.value, field.content_type)
           end
 
-          # check if the key matches the format age_[over|under]:[1-999]
-          if /age_(over|under):[1-9][0-9]?[0-9]?/.match?(field.name)
+          attribute_name = field.name
+          if Yoti::AgeProcessor.age_is_verified(field.name)
             @age_verified = field.value == 'true'
+            attribute_name = Yoti::Attribute::AGE_CONDITION
           end
+
+          @extended_profile[attribute_name] = Yoti::Attribute.new(attribute_name, field.value, anchors_list['sources'], anchors_list['verifiers'])
         end
       end
 
@@ -54,6 +56,7 @@ module Yoti
             @user_profile['structured_postal_address']
         end
 
+        # @return [Profile] of Yoti user
         def profile
             return Yoti::Profile.new(@extended_profile)
         end

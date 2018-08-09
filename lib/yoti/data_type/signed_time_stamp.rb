@@ -1,8 +1,11 @@
 module Yoti
+    # Encapsulates anchor signed time stamp
     class SignedTimeStamp
-        def initialize(version, datetime)
+        attr_reader :version, :date_time
+
+        def initialize(version, date_time)
             @version = version
-            @datetime = datetime
+            @date_time = date_time
         end
     end
 end

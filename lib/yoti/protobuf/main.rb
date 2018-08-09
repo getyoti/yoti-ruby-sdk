@@ -7,12 +7,12 @@ require_relative 'v3/compubapi/signed_time_stamp_pb.rb'
 module Yoti
   module Protobuf
     class << self
-      CT_UNDEFINED = 0 # should not be seen, and is used as an error placeholder
-      CT_STRING = 1 # UTF-8 encoded text.
-      CT_JPEG = 2 # standard .jpeg image.
-      CT_DATE = 3 # string in RFC3339 format (YYYY-MM-DD)
-      CT_PNG = 4 # standard .png image
-      CT_JSON = 5 # json_string
+      CT_UNDEFINED = :UNDEFINED # should not be seen, and is used as an error placeholder
+      CT_STRING = :STRING # UTF-8 encoded text.
+      CT_JPEG = :JPEG # standard .jpeg image.
+      CT_DATE = :DATE # string in RFC3339 format (YYYY-MM-DD)
+      CT_PNG = :PNG # standard .png image
+      CT_JSON = :JSON # json_string
 
       def current_user(receipt)
         return nil unless valid_receipt?(receipt)
@@ -30,9 +30,7 @@ module Yoti
         case content_type
         when CT_UNDEFINED
           raise ProtobufError, 'The content type is invalid.'
-        when CT_STRING
-          value.encode('utf-8')
-        when CT_DATE
+        when CT_STRING, CT_DATE
           value.encode('utf-8')
         when CT_JSON
            JSON.parse(value)

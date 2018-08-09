@@ -1,12 +1,19 @@
 module Yoti
-  # Encapsulates the user profile data
+  # Encapsulates Yoti user profile
   class Profile
 
     def initialize(profile_data)
+        if !profile_data.is_a? Object
+            profile_data = Hash.new
+        end
         @profile_data = profile_data
     end
 
     public
+        def selfie
+            return get_attribute(Yoti::Attribute::SELFIE)
+        end
+
         def family_name
             return get_attribute(Yoti::Attribute::FAMILY_NAME)
         end
@@ -41,6 +48,10 @@ module Yoti
 
         def postal_address
             return get_attribute(Yoti::Attribute::POSTAL_ADDRESS)
+        end
+
+        def age_condition
+            return get_attribute(Yoti::Attribute::AGE_CONDITION)
         end
 
         def structured_postal_address

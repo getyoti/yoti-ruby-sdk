@@ -16,6 +16,7 @@ require_relative 'yoti/data_type/profile'
 require_relative 'yoti/data_type/attribute'
 require_relative 'yoti/data_type/signed_time_stamp'
 
+require_relative 'yoti/util/age_processor'
 require_relative 'yoti/util/anchor_processor'
 
 require_relative 'yoti/activity_details'

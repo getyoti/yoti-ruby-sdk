@@ -1,13 +1,13 @@
 module Yoti
-  # Encapsulates profile attribute
+  # Encapsulates attribute anchor
   class Anchor
-    attr_reader :value, :subType, :signedTimeStamp, :originServerCerts
+    attr_reader :value, :sub_type, :signed_time_stamp, :origin_server_certs
 
-    def initialize(value, subType, signedTimeStamp, originServerCerts)
+    def initialize(value, sub_type, signed_time_stamp, origin_server_certs)
         @value = value
-        @subType = subType
-        @signedTimeStamp = signedTimeStamp
-        @originServerCerts = originServerCerts
+        @sub_type = sub_type
+        @signed_time_stamp = signed_time_stamp
+        @origin_server_certs = origin_server_certs
     end
   end
 end

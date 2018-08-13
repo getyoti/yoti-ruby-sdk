@@ -4,7 +4,7 @@
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "compubapi_v3.SignedTimestamp" do
+  add_message "Yoti.Protobuf.compubapi_v3.SignedTimestamp" do
     optional :version, :int32, 1
     optional :timestamp, :uint64, 2
     optional :message_digest, :bytes, 3
@@ -14,6 +14,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module CompubapiV3
-  SignedTimestamp = Google::Protobuf::DescriptorPool.generated_pool.lookup("compubapi_v3.SignedTimestamp").msgclass
+module Yoti
+  module Protobuf
+    module CompubapiV3
+      SignedTimestamp = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.compubapi_v3.SignedTimestamp").msgclass
+    end
+  end
 end

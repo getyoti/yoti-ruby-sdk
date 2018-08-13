@@ -5,20 +5,24 @@ require 'google/protobuf'
 
 require_relative 'Attribute_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "attrpubapi_v3.AttributeAndId" do
-    optional :attribute, :message, 1, "attrpubapi_v3.Attribute"
+  add_message "Yoti.Protobuf.attrpubapi_v3.AttributeAndId" do
+    optional :attribute, :message, 1, "Yoti.Protobuf.attrpubapi_v3.Attribute"
     optional :attribute_id, :bytes, 2
   end
-  add_message "attrpubapi_v3.AttributeAndIdList" do
-    repeated :attribute_and_id_list, :message, 1, "attrpubapi_v3.AttributeAndId"
+  add_message "Yoti.Protobuf.attrpubapi_v3.AttributeAndIdList" do
+    repeated :attribute_and_id_list, :message, 1, "Yoti.Protobuf.attrpubapi_v3.AttributeAndId"
   end
-  add_message "attrpubapi_v3.AttributeList" do
-    repeated :attributes, :message, 1, "attrpubapi_v3.Attribute"
+  add_message "Yoti.Protobuf.attrpubapi_v3.AttributeList" do
+    repeated :attributes, :message, 1, "Yoti.Protobuf.attrpubapi_v3.Attribute"
   end
 end
 
-module AttrpubapiV3
-  AttributeAndId = Google::Protobuf::DescriptorPool.generated_pool.lookup("attrpubapi_v3.AttributeAndId").msgclass
-  AttributeAndIdList = Google::Protobuf::DescriptorPool.generated_pool.lookup("attrpubapi_v3.AttributeAndIdList").msgclass
-  AttributeList = Google::Protobuf::DescriptorPool.generated_pool.lookup("attrpubapi_v3.AttributeList").msgclass
+module Yoti
+  module Protobuf
+    module AttrpubapiV3
+      AttributeAndId = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.attrpubapi_v3.AttributeAndId").msgclass
+      AttributeAndIdList = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.attrpubapi_v3.AttributeAndIdList").msgclass
+      AttributeList = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.attrpubapi_v3.AttributeList").msgclass
+    end
+  end
 end

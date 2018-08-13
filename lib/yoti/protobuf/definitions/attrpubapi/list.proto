@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package attrpubapi_v3;
+package Yoti.Protobuf.attrpubapi_v3;
 
 import "Attribute.proto";
 

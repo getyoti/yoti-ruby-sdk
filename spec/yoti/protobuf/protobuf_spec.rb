@@ -27,10 +27,11 @@ describe 'Yoti::Protobuf' do
     end
 
     context 'when the receipt is valid' do
-      let(:receipt) { { 'other_party_profile_content' => 'test text' } }
+      profile_json = JSON.parse(File.read("spec/fixtures/responses/profile.json"))
+      let(:receipt) { profile_json['receipt'] }
 
-      it 'returns a Yoti::Protobuf::V1::EncryptedData object' do
-        expect(Yoti::Protobuf.current_user(receipt)).to be_a(Yoti::Protobuf::V1::Compubapi::EncryptedData)
+      it 'returns a Yoti::Protobuf::CompubapiV3::EncryptedData object' do
+        expect(Yoti::Protobuf.current_user(receipt)).to be_a(Yoti::Protobuf::CompubapiV3::EncryptedData)
       end
     end
   end
@@ -38,8 +39,8 @@ describe 'Yoti::Protobuf' do
   describe '.attribute_list' do
     let(:data) { '' }
 
-    it 'returns a Yoti::Protobuf::V1::Attrpubapi::AttributeList object' do
-      expect(Yoti::Protobuf.attribute_list(data)).to be_a(Yoti::Protobuf::V1::Attrpubapi::AttributeList)
+    it 'returns a Yoti::Protobuf::AttrpubapiV3::AttributeList object' do
+      expect(Yoti::Protobuf.attribute_list(data)).to be_a(Yoti::Protobuf::AttrpubapiV3::AttributeList)
     end
   end
 
@@ -49,7 +50,7 @@ describe 'Yoti::Protobuf' do
     subject { Yoti::Protobuf.value_based_on_content_type(value, content_type) }
 
     context 'when the content type is 0' do
-      let(:content_type) { 0 }
+      let(:content_type) { :UNDEFINED }
 
       it 'raises a ProtobufError' do
         error = 'The content type is invalid.'
@@ -58,7 +59,7 @@ describe 'Yoti::Protobuf' do
     end
 
     context 'when the content type is 1' do
-      let(:content_type) { 1 }
+      let(:content_type) { :STRING }
       it 'encodes the string to UTF8' do
         expect(value_encoded.encoding.name).to_not eql('UTF-8')
         expect(subject.encoding.name).to eql('UTF-8')
@@ -66,7 +67,7 @@ describe 'Yoti::Protobuf' do
     end
 
     context 'when the content type is 3' do
-      let(:content_type) { 3 }
+      let(:content_type) { :DATE }
 
       it 'encodes the string to UTF8' do
         expect(value_encoded.encoding.name).to_not eql('UTF-8')
@@ -88,14 +89,14 @@ describe 'Yoti::Protobuf' do
     subject { Yoti::Protobuf.image_uri_based_on_content_type(value, content_type) }
 
     context 'when the content type is 2' do
-      let(:content_type) { 2 }
+      let(:content_type) { :JPEG }
       it 'encodes the string to JPEG format' do
         is_expected.to eql('data:image/jpeg;base64,dGVzdCBzdHJpbmc=')
       end
     end
 
     context 'when the content type is 4' do
-      let(:content_type) { 4 }
+      let(:content_type) { :PNG }
 
       it 'encodes the string to PNG format' do
         is_expected.to eql('data:image/png;base64,dGVzdCBzdHJpbmc=')

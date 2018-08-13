@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package compubapi_v3;
+package Yoti.Protobuf.compubapi_v3;
 
 option java_package = "com.yoti.compubapi_v3";
 option java_outer_classname = "EncryptedDataProto";

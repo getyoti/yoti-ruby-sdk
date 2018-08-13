@@ -4,13 +4,13 @@
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "attrpubapi_v3.Attribute" do
+  add_message "Yoti.Protobuf.attrpubapi_v3.Attribute" do
     optional :name, :string, 1
     optional :value, :bytes, 2
-    optional :content_type, :enum, 3, "attrpubapi_v3.ContentType"
-    repeated :anchors, :message, 4, "attrpubapi_v3.Anchor"
+    optional :content_type, :enum, 3, "Yoti.Protobuf.attrpubapi_v3.ContentType"
+    repeated :anchors, :message, 4, "Yoti.Protobuf.attrpubapi_v3.Anchor"
   end
-  add_message "attrpubapi_v3.Anchor" do
+  add_message "Yoti.Protobuf.attrpubapi_v3.Anchor" do
     optional :artifact_link, :bytes, 1
     repeated :origin_server_certs, :bytes, 2
     optional :artifact_signature, :bytes, 3
@@ -18,7 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :signature, :bytes, 5
     optional :signed_time_stamp, :bytes, 6
   end
-  add_enum "attrpubapi_v3.ContentType" do
+  add_enum "Yoti.Protobuf.attrpubapi_v3.ContentType" do
     value :UNDEFINED, 0
     value :STRING, 1
     value :JPEG, 2
@@ -28,8 +28,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module AttrpubapiV3
-  Attribute = Google::Protobuf::DescriptorPool.generated_pool.lookup("attrpubapi_v3.Attribute").msgclass
-  Anchor = Google::Protobuf::DescriptorPool.generated_pool.lookup("attrpubapi_v3.Anchor").msgclass
-  ContentType = Google::Protobuf::DescriptorPool.generated_pool.lookup("attrpubapi_v3.ContentType").enummodule
+module Yoti
+  module Protobuf
+    module AttrpubapiV3
+      Attribute = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.attrpubapi_v3.Attribute").msgclass
+      Anchor = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.attrpubapi_v3.Anchor").msgclass
+      ContentType = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.attrpubapi_v3.ContentType").enummodule
+    end
+  end
 end

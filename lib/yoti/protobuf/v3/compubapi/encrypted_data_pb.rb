@@ -4,12 +4,16 @@
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "compubapi_v3.EncryptedData" do
+  add_message "Yoti.Protobuf.compubapi_v3.EncryptedData" do
     optional :iv, :bytes, 1
     optional :cipher_text, :bytes, 2
   end
 end
 
-module CompubapiV3
-  EncryptedData = Google::Protobuf::DescriptorPool.generated_pool.lookup("compubapi_v3.EncryptedData").msgclass
+module Yoti
+  module Protobuf
+    module CompubapiV3
+      EncryptedData = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.compubapi_v3.EncryptedData").msgclass
+    end
+  end
 end

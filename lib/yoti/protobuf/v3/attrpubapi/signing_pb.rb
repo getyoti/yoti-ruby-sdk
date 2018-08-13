@@ -5,16 +5,20 @@ require 'google/protobuf'
 
 require_relative 'Attribute_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "attrpubapi_v3.AttributeSigning" do
+  add_message "Yoti.Protobuf.attrpubapi_v3.AttributeSigning" do
     optional :name, :string, 1
     optional :value, :bytes, 2
-    optional :content_type, :enum, 3, "attrpubapi_v3.ContentType"
+    optional :content_type, :enum, 3, "Yoti.Protobuf.attrpubapi_v3.ContentType"
     optional :artifact_signature, :bytes, 4
     optional :sub_type, :string, 5
     optional :signed_time_stamp, :bytes, 6
   end
 end
 
-module AttrpubapiV3
-  AttributeSigning = Google::Protobuf::DescriptorPool.generated_pool.lookup("attrpubapi_v3.AttributeSigning").msgclass
+module Yoti
+  module Protobuf
+    module AttrpubapiV3
+      AttributeSigning = Google::Protobuf::DescriptorPool.generated_pool.lookup("Yoti.Protobuf.attrpubapi_v3.AttributeSigning").msgclass
+    end
+  end
 end

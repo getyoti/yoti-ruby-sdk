@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'Yoti::SignedRequest' do
-  let(:encrypted_connect_token) { File.read('spec/fixtures/encrypted_connect_token.txt', encoding: 'utf-8') }
-  let(:payload_aml) { JSON.parse(File.read('spec/fixtures/payloads/aml_check.json', encoding: 'utf-8')) }
+  let(:encrypted_connect_token) { File.read('spec/sample-data/encrypted_connect_token.txt', encoding: 'utf-8') }
+  let(:payload_aml) { JSON.parse(File.read('spec/sample-data/payloads/aml_check.json', encoding: 'utf-8')) }
   let(:unsigned_request) { Net::HTTP::Get.new('uri') }
   let(:signed_request) { Yoti::SignedRequest.new(unsigned_request, 'path') }
 

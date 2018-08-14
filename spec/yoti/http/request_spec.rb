@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Yoti::Request' do
-  let(:encrypted_connect_token) { File.read('spec/fixtures/encrypted_connect_token.txt', encoding: 'utf-8') }
+  let(:encrypted_connect_token) { File.read('spec/sample-data/encrypted_connect_token.txt', encoding: 'utf-8') }
   let(:request) { Yoti::Request.new }
 
   describe '#body', type: :api_empty do

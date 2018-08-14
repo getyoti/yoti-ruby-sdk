@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Yoti::Client' do
   describe '.get_activity_details' do
-    let(:encrypted_connect_token) { File.read('spec/fixtures/encrypted_connect_token.txt', encoding: 'utf-8') }
+    let(:encrypted_connect_token) { File.read('spec/sample-data/encrypted_connect_token.txt', encoding: 'utf-8') }
     let(:profile) { activity_details.user_profile }
     let(:outcome) { activity_details.outcome }
     let(:user_id) { activity_details.user_id }
@@ -45,7 +45,7 @@ describe 'Yoti::Client' do
       end
 
       it 'contains the decrypted selfie value' do
-        selfie = File.read('spec/fixtures/selfie.txt', encoding: 'utf-8')
+        selfie = File.read('spec/sample-data/selfie.txt', encoding: 'utf-8')
         expect('data:image/jpeg;base64,'.concat(Base64.strict_encode64(profile['selfie']))).to eql(selfie)
       end
 

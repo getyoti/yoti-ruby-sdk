@@ -8,7 +8,7 @@ require 'webmock/rspec'
 require 'yoti'
 
 def stub_api_requests_v1(method = :get, response = 'profile', endpoint = '[a-zA-Z]*', status = [200])
-  stub_response = File.read("spec/fixtures/responses/#{response}.json")
+  stub_response = File.read("spec/sample-data/responses/#{response}.json")
   stub_request(method, %r{https:\/\/api.yoti.com\/api\/v1\/#{endpoint}\/(.)*})
     .to_return(
       status: status,
@@ -56,7 +56,7 @@ def initialize_test_app
 
   Yoti.configure do |config|
     config.client_sdk_id = 'stub_yoti_client_sdk_id'
-    config.key_file_path = 'spec/fixtures/ruby-sdk-test.pem'
+    config.key_file_path = 'spec/sample-data/ruby-sdk-test.pem'
   end
 end
 

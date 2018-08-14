@@ -14,7 +14,7 @@ describe Yoti::Generators::InstallGenerator, type: :generator do
     FileUtils.rm_rf(Dir['spec/tmp'])
   end
 
-  let(:initializer) { File.read('spec/fixtures/initializer.txt') }
+  let(:initializer) { File.read('spec/sample-data/initializer.txt') }
 
   it 'creates the Yoti initializer in the right path' do
     assert_file 'config/initializers/yoti.rb', initializer

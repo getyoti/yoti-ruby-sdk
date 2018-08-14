@@ -27,7 +27,7 @@ describe 'Yoti::Protobuf' do
     end
 
     context 'when the receipt is valid' do
-      profile_json = JSON.parse(File.read("spec/fixtures/responses/profile.json"))
+      profile_json = JSON.parse(File.read("spec/sample-data/responses/profile.json"))
       let(:receipt) { profile_json['receipt'] }
 
       it 'returns a Yoti::Protobuf::CompubapiV3::EncryptedData object' do

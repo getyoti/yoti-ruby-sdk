@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Yoti::ProfileRequest' do
-  let(:encrypted_connect_token) { File.read('spec/fixtures/encrypted_connect_token.txt', encoding: 'utf-8') }
+  let(:encrypted_connect_token) { File.read('spec/sample-data/encrypted_connect_token.txt', encoding: 'utf-8') }
   let(:profile_request) { Yoti::ProfileRequest.new(encrypted_connect_token) }
 
   describe '#initialize' do

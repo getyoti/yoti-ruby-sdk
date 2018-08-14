@@ -49,16 +49,14 @@ module Yoti
       @outcome = receipt['sharing_outcome']
     end
 
-    public
+    # @return [Hash] a JSON of the address
+    def structured_postal_address
+        @user_profile['structured_postal_address']
+    end
 
-        # @return [Hash] a JSON of the address
-        def structured_postal_address
-            @user_profile['structured_postal_address']
-        end
-
-        # @return [Profile] of Yoti user
-        def profile
-            return Yoti::Profile.new(@extended_profile)
-        end
+    # @return [Profile] of Yoti user
+    def profile
+        return Yoti::Profile.new(@extended_profile)
+    end
   end
 end

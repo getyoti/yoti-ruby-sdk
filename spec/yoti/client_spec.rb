@@ -50,7 +50,7 @@ describe 'Yoti::Client' do
       end
 
       it 'contains the base64_selfie_uri value' do
-        selfie = File.read('spec/fixtures/selfie.txt', encoding: 'utf-8')
+        selfie = File.read('spec/sample-data/selfie.txt', encoding: 'utf-8')
         expect(base64_selfie_uri).to eql(selfie)
       end
     end

@@ -60,7 +60,7 @@ module Yoti
         return get_attribute(Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS)
     end
 
-    # return attribute value by name
+    # @return attribute value by name
     def get_attribute(attr_name)
         if @profile_data.has_key? attr_name then
             return @profile_data[attr_name]

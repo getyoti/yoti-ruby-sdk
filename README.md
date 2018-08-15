@@ -40,7 +40,7 @@ Yoti also allows you to enable user details verification from your mobile app by
 
 ## Requirements
 
-The Yoti gem requires at least Ruby 2.0.0.
+The Yoti gem requires at least Ruby 2.4.0.
 If you're using a version of Ruby lower than 2.2.2 you might encounter issues when [Bundler][] tries to install the [Active Support][] gem. This can be avoided by manually requiring activesupport 4.2.
 
 ```ruby
@@ -151,13 +151,16 @@ Before you inspect the user profile, you might want to check whether the user va
 
 ```ruby
 if yoti_activity_details.outcome == 'SUCCESS'
-  user_profile = yoti_activity_details.user_profile
+  user_profile = yoti_activity_details.user_profile # deprecated, use @profile instead
+  profile = yoti_activity_details.profile
+  given_names = profile.given_names.value
+  family_name = profile.family_name.value
 else
   # handle unhappy path
 end
 ```
 
-The `user_profile` object provides a set of attributes corresponding to user attributes. Whether the attributes are present or not depends on the settings you have applied to your app on Yoti Dashboard.
+The `profile` object provides a set of attributes corresponding to user attributes. Whether the attributes are present or not depends on the settings you have applied to your app on Yoti Dashboard.
 
 ### Handling Users
 
@@ -172,8 +175,12 @@ if yoti_activity_details.outcome == 'SUCCESS'
 
   if user
     # handle login
+    email = profile.email_address.value
   else
     # handle registration
+    given_names = profile.given_names.value
+    family_name = profile.family_name.value
+    email = profile.email_address.value
   end
 else
   # handle unhappy path
@@ -181,6 +188,22 @@ end
 ```
 
 Where `your_user_search_function` is a piece of logic in your app that is supposed to find a user, given a user_id. Regardless of whether the user is a new or an existing one, Yoti will always provide their profile, so you don't necessarily need to store it.
+
+You can retrieve the sources and verifiers for each attribute as follows:
+
+```ruby
+given_names_sources = profile.given_names.sources // list or array of anchors
+given_names_verifiers = profile.given_names.verifiers // list or array of anchors
+```
+You can also retrieve further properties from these respective anchors in the following way:
+
+```ruby
+// Retrieving properties of the first anchor
+value = given_names_sources[0].value // string
+sub_type = given_names_sources[0].sub_type // string
+time_stamp = given_names_sources[0].signed_time_stamp.time_stamp // DateTime object
+origin_server_certs = given_names_sources[0].origin_server_certs // list of X509 certificates
+```
 
 ## AML Integration
 
@@ -265,7 +288,7 @@ Visiting `http://localhost:4567/` should show a Yoti Connect button
 
 * Activity Details
   * [X] User ID `user_id`
-  * [X] Profile
+  * [X] Profile `profile`
     * [X] Selfie `selfie`
     * [X] Full Name `full_name`
     * [X] Given Names `given_names`
@@ -273,12 +296,12 @@ Visiting `http://localhost:4567/` should show a Yoti Connect button
     * [X] Mobile Number `phone_number`
     * [X] Email Address `email_address`
     * [X] Age / Date of Birth `date_of_birth`
-    * [X] Age / Verify Condition `age_[over|under]:[1-999]`
+    * [X] Age / Verify Condition `age_condition`
     * [X] Address `postal_address`
     * [X] Gender `gender`
     * [X] Nationality `nationality`
   * [X] Base64 Selfie URI `base64_selfie_uri`
-  * [X] Age verified `age_verified`
+  * [X] Age verified `age_verified` # deprecated, please use @profile.age_condition instead.
 
 ## Support
 

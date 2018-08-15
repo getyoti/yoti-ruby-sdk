@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|examples)/}) }
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2'
+  spec.required_ruby_version = '>= 2.4'
 
   spec.add_dependency 'protobuf', '~> 3.6'
   spec.add_dependency 'google-protobuf', '~> 3.6.1'

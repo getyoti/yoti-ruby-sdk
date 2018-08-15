@@ -19,7 +19,7 @@ describe 'Yoti::SSL' do
 
     context 'when Yoti receives a file as a pem key' do
       before do
-        Yoti.configuration.key_file_path = 'spec/fixtures/ruby-sdk-test.pem'
+        Yoti.configuration.key_file_path = 'spec/sample-data/ruby-sdk-test.pem'
       end
 
       it 'returns the secret key as a string' do

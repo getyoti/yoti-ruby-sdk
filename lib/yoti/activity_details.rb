@@ -35,13 +35,14 @@ module Yoti
             @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(field.value, field.content_type)
           end
 
-          attribute_name = field.name
+
           if Yoti::AgeProcessor.has_age_condition(field.name)
             @age_verified = field.value == 'true'
             attribute_name = Yoti::Attribute::AGE_CONDITION
+            @extended_profile[attribute_name] = Yoti::Attribute.new(attribute_name, field.value, anchors_list['sources'], anchors_list['verifiers'])
           end
 
-          @extended_profile[attribute_name] = Yoti::Attribute.new(attribute_name, field.value, anchors_list['sources'], anchors_list['verifiers'])
+          @extended_profile[field.name] = Yoti::Attribute.new(field.name, field.value, anchors_list['sources'], anchors_list['verifiers'])
         end
       end
 

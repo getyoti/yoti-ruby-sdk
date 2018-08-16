@@ -42,7 +42,6 @@ get '/profile' do
       address: user_profile['postal_address'],
       gender: user_profile['gender'],
       nationality: user_profile['nationality'],
-      structured_postal_address: yoti_activity_details.structured_postal_address
     }
   else
     status 500

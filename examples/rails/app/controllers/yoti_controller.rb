@@ -9,26 +9,17 @@ class YotiController < ApplicationController
 
     if yoti_activity_details.outcome == 'SUCCESS'
       @user_id = yoti_activity_details.user_id
-
-      user_profile = yoti_activity_details.user_profile
       @base64_selfie_uri = yoti_activity_details.base64_selfie_uri
       @age_verified = yoti_activity_details.age_verified
-
-      @full_name = user_profile['full_name']
-      @given_names = user_profile['given_names']
-      @family_name = user_profile['family_name']
-      @mobile_number = user_profile['phone_number']
-      @email_address = user_profile['email_address']
-      @date_of_birth = user_profile['date_of_birth']
-      @address = user_profile['postal_address']
-      @gender = user_profile['gender']
-      @nationality = user_profile['nationality']
-      @structured_postal_address = yoti_activity_details.structured_postal_address
+      @profile = yoti_activity_details.profile
 
       # Save the selfie file
-      File.open(Rails.root.join('public', 'selfie.jpeg'), 'wb') { |file| file.write(user_profile['selfie']) }
+      if !@profile.selfie.nil?
+        File.open(Rails.root.join('public', 'selfie.jpeg'), 'wb') { |file| file.write(@profile.selfie.value) }
+      end
     else
       render text: 'Error: Fetching the activity details failed.', status: :error
     end
+    render :layout => 'profile'
   end
 end

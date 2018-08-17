@@ -1,55 +1,126 @@
-<h1><a href="/">Home</a></h1>
-<table>
-  <tr>
-    <td>User ID</td>
-    <td><%= @user_id %></td>
-  </tr>
-  <tr>
-    <td>Selfie as base64 URI<br />
-    <td><img src="<%= @base64_selfie_uri %>" /></td>
-  </tr>
-  <tr>
-    <td>Selfie as image file<br />
-    <td><img src="selfie.jpeg" /></td>
-  </tr>
-  <tr>
-    <td>Full name</td>
-    <td><%= @full_name %></td>
-  </tr>
-  <tr>
-    <td>Given names</td>
-    <td><%= @given_names %></td>
-  </tr>
-  <tr>
-    <td>Family name</td>
-    <td><%= @family_name %></td>
-  </tr>
-  <tr>
-    <td>Mobile number</td>
-    <td><%= @mobile_number %></td>
-  </tr>
-  <tr>
-    <td>Email address</td>
-    <td><%= @email_address %></td>
-  </tr>
-  <tr>
-    <td>Date of birth</td>
-    <td><%= @date_of_birth %></td>
-  </tr>
-  <tr>
-    <td>Age verified</td>
-    <td><%= @age_verified %></td>
-  </tr>
-  <tr>
-    <td>Address</td>
-    <td><%= @address %></td>
-  </tr>
-  <tr>
-    <td>Gender</td>
-    <td><%= @gender %></td>
-  </tr>
-  <tr>
-    <td>Nationality</td>
-    <td><%= @nationality %></td>
-  </tr>
-</table>
+<%
+attributes = [
+  {
+    "label"=> "Given names",
+    "obj"=> @profile.given_names,
+    "icon"=> "yoti-icon-profile"
+  },
+  {
+    "label"=> "Family names",
+    "obj"=> @profile.family_name,
+    "icon"=> "yoti-icon-profile"
+  },
+  {
+    "label"=> "Mobile number",
+    "obj"=> @profile.phone_number,
+    "icon"=> "yoti-icon-phone"
+  },
+  {
+    "label"=> "Email address",
+    "obj"=> @profile.email_address,
+    "icon"=> "yoti-icon-email"
+  },
+  {
+    "label"=> "Date of birth",
+    "obj"=> @profile.date_of_birth,
+    "icon"=> "yoti-icon-calendar"
+  },
+  {
+    "label"=> "Address",
+    "obj"=> @profile.postal_address,
+    "icon"=> "yoti-icon-address"
+  },
+  {
+    "label"=> "Gender",
+    "obj"=> @profile.gender,
+    "icon"=> "yoti-icon-gender"
+  },
+  {
+    "label"=> "Nationality",
+    "obj"=> @profile.nationality,
+    "icon"=> "yoti-icon-nationality"
+  }
+]
+
+full_name = @profile.full_name
+%>
+<main class="yoti-profile-layout">
+    <section class="yoti-profile-user-section">
+      <div class="yoti-profile-picture-powered-section">
+        <span class="yoti-profile-picture-powered">Powered by</span>
+        <a href="https://www.yoti.com/" target="_blank">
+            <img class="yoti-logo-image" src="/assets/logo.png" srcset="/assets/logo@2x.png 2x" alt="Yoti" />
+        </a>
+      </div>
+
+      <div class="yoti-profile-picture-section">
+        <div class="yoti-profile-picture-area">
+          <img src="selfie.jpeg" class="yoti-profile-picture-image" alt="Yoti" />
+          <i class="yoti-profile-picture-verified-icon"></i>
+        </div>
+
+        <% if full_name %>
+        <div class="yoti-profile-name">
+          <%= full_name.value %>
+        </div>
+        <% end %>
+      </div>
+    </section>
+
+    <section class="yoti-attributes-section">
+      <a href="/"><img class="yoti-company-logo" src="/assets/company-logo.jpg" alt="company logo"></a>
+
+      <div class="yoti-attribute-list-header">
+        <div class="yoti-attribute-list-header-attribute">Attribute</div>
+        <div class="yoti-attribute-list-header-value">Value</div>
+        <div>Anchors</div>
+      </div>
+
+      <div class="yoti-attribute-list-subheader">
+        <div class="yoti-attribute-list-subhead-layout">
+          <div>S / V</div>
+          <div>Value</div>
+          <div>Sub type</div>
+        </div>
+      </div>
+
+      <div class="yoti-attribute-list">
+
+        <% attributes.each do |attr|  %>
+            <% if !attr['obj'].nil? %>
+                <div class="yoti-attribute-list-item">
+                  <div class="yoti-attribute-name">
+                    <div class="yoti-attribute-name-cell">
+                      <i class="<%= attr['icon'] %>"></i>
+                      <span class="yoti-attribute-name-cell-text"><%= attr['label'] %></span>
+                    </div>
+                  </div>
+
+                  <div class="yoti-attribute-value">
+                    <div class="yoti-attribute-value-text"><%= attr['label_prefix'] %><%= attr['obj'] && attr['obj'].value %></div>
+                  </div>
+
+                  <div class="yoti-attribute-anchors-layout">
+                    <div class="yoti-attribute-anchors-head -s-v">S / V</div>
+                    <div class="yoti-attribute-anchors-head -value">Value</div>
+                    <div class="yoti-attribute-anchors-head -subtype">Sub type</div>
+                    <% if attr['obj'] %>
+                      <% attr['obj'].sources.each do |source| %>
+                        <div class="yoti-attribute-anchors -s-v">Source</div>
+                        <div class="yoti-attribute-anchors -value"><%= source.value %></div>
+                        <div class="yoti-attribute-anchors -subtype"><%= source.sub_type %></div>
+                      <% end %>
+
+                      <% attr['obj'].verifiers.each do |verifier| %>
+                        <div class="yoti-attribute-anchors -s-v">Verifier</div>
+                        <div class="yoti-attribute-anchors -value"><%= verifier.value %></div>
+                        <div class="yoti-attribute-anchors -subtype"><%= verifier.sub_type %></div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+            <% end %>
+        <% end %>
+      </div>
+    </section>
+</main>

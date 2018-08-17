@@ -5,7 +5,6 @@ module Yoti
     GIVEN_NAMES = 'given_names';
     FULL_NAME = 'full_name';
     DATE_OF_BIRTH = 'date_of_birth';
-    AGE_CONDITION = 'age_condition';
     GENDER = 'gender';
     NATIONALITY = 'nationality';
     PHONE_NUMBER = 'phone_number';

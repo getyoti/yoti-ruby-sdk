@@ -52,10 +52,6 @@ module Yoti
         return get_formatted_address
     end
 
-    def age_condition
-        return get_attribute(Yoti::Attribute::AGE_CONDITION)
-    end
-
     def structured_postal_address
         return get_attribute(Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS)
     end

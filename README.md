@@ -40,7 +40,7 @@ Yoti also allows you to enable user details verification from your mobile app by
 
 ## Requirements
 
-The Yoti gem requires at least Ruby 2.4.0.
+The Yoti gem requires at least Ruby `2.4.0`.
 If you're using a version of Ruby lower than 2.2.2 you might encounter issues when [Bundler][] tries to install the [Active Support][] gem. This can be avoided by manually requiring activesupport 4.2.
 
 ```ruby
@@ -151,7 +151,6 @@ Before you inspect the user profile, you might want to check whether the user va
 
 ```ruby
 if yoti_activity_details.outcome == 'SUCCESS'
-  user_profile = yoti_activity_details.user_profile # deprecated, use @profile instead
   profile = yoti_activity_details.profile
   given_names = profile.given_names.value
   family_name = profile.family_name.value
@@ -172,6 +171,7 @@ Here is an example of how this works:
 ```ruby
 if yoti_activity_details.outcome == 'SUCCESS'
   user = your_user_search_function(yoti_activity_details.user_id)
+  profile = yoti_activity_details.profile
 
   if user
     # handle login
@@ -192,8 +192,8 @@ Where `your_user_search_function` is a piece of logic in your app that is suppos
 You can retrieve the sources and verifiers for each attribute as follows:
 
 ```ruby
-given_names_sources = profile.given_names.sources // list or array of anchors
-given_names_verifiers = profile.given_names.verifiers // list or array of anchors
+given_names_sources = profile.given_names.sources // list of anchors
+given_names_verifiers = profile.given_names.verifiers // list of anchors
 ```
 You can also retrieve further properties from these respective anchors in the following way:
 
@@ -203,6 +203,14 @@ value = given_names_sources[0].value // string
 sub_type = given_names_sources[0].sub_type // string
 time_stamp = given_names_sources[0].signed_time_stamp.time_stamp // DateTime object
 origin_server_certs = given_names_sources[0].origin_server_certs // list of X509 certificates
+```
+
+In case you want to prove the sources and verifiers of the helper`ActivityDetails.age_verified` on `Age Over 18` set as age derivation, please retrieve it's original attribute from the profile as follow:
+
+```ruby
+age_attribute = profile.get_attribute('age_over:18')
+sources = age_attribute.sources
+verifiers = age_attribute.verifiers
 ```
 
 ## AML Integration
@@ -288,6 +296,8 @@ Visiting `http://localhost:4567/` should show a Yoti Connect button
 
 * Activity Details
   * [X] User ID `user_id`
+  * [X] Base64 Selfie URI `base64_selfie_uri`
+  * [X] Age verified `age_verified`
   * [X] Profile `profile`
     * [X] Selfie `selfie`
     * [X] Full Name `full_name`
@@ -296,12 +306,9 @@ Visiting `http://localhost:4567/` should show a Yoti Connect button
     * [X] Mobile Number `phone_number`
     * [X] Email Address `email_address`
     * [X] Age / Date of Birth `date_of_birth`
-    * [X] Age / Verify Condition `age_condition`
     * [X] Address `postal_address`
     * [X] Gender `gender`
     * [X] Nationality `nationality`
-  * [X] Base64 Selfie URI `base64_selfie_uri`
-  * [X] Age verified `age_verified` # deprecated, please use @profile.age_condition instead.
 
 ## Support
 

@@ -1,14 +1,15 @@
 describe 'Yoti::AgeProcessor' do
-    describe '.has_age_condition' do
-        context 'when there is age_over|under attribute present' do
+    describe '.is_age_verification' do
+        context 'returns true when field name is age_over|under' do
             it 'should return true as value' do
-                expect(Yoti::AgeProcessor.has_age_condition('age_over:18')).to eql(true)
+                expect(Yoti::AgeProcessor.is_age_verification('age_over:18')).to eql(true)
+                expect(Yoti::AgeProcessor.is_age_verification('age_under:18')).to eql(true)
             end
         end
 
-        context 'when there is no age_over|under attribute present' do
+        context 'returns false when field name is no age_over|under' do
             it 'should return false as value' do
-                expect(Yoti::AgeProcessor.has_age_condition('age_test:18')).to eql(false)
+                expect(Yoti::AgeProcessor.is_age_verification('given_names')).to eql(false)
             end
         end
     end

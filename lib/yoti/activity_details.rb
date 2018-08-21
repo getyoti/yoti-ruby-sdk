@@ -36,7 +36,7 @@ module Yoti
           end
 
 
-          if Yoti::AgeProcessor.has_age_condition(field.name)
+          if Yoti::AgeProcessor.is_age_verification(field.name)
             @age_verified = field.value == 'true'
           end
 

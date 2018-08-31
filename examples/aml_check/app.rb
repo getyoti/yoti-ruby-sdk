@@ -1,4 +1,5 @@
 require 'dotenv/load'
+require 'securerandom'
 require 'yoti'
 
 Yoti.configure do |config|

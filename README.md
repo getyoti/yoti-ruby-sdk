@@ -269,10 +269,14 @@ The examples can be found in the [examples folder](examples).
 1. Set the scenario callback URL to `/profile`
 1. Rename the [.env.example](examples/rails/.env.example) file to `.env` 
 1. Fill in the environment variables in this file with the ones specific to your application (mentioned in the [Configuration](#configuration) section)
-1. Install the dependencies with `bundle install`
-1. Start the server `rails server`
+1. Install the dependencies by running the following commands
+    ```ruby
+    $ bundle install
+    $ gem install foreman # We are doing this as it's not recommended to include foreman in your Gemfile
+    ```
+1. Start the server `foreman start`
 
-Visiting `http://localhost:3000/` should show a Yoti Connect button
+Visiting `https://localhost:3001/` should show a Yoti Connect button
 
 ### Sinatra
 
@@ -281,10 +285,14 @@ Visiting `http://localhost:3000/` should show a Yoti Connect button
 1. Set the scenario callback URL to `/profile`
 1. Rename the [.env.example](examples/sinatra/.env.example) file to `.env`
 1. Fill in the environment variables in this file with the ones specific to your application (mentioned in the [Configuration](#configuration) section)
-1. Install the dependencies with `bundle install`
-1. Start the server `ruby ./app.rb`
+1. Install the dependencies by running the following commands
+    ```ruby
+    $ bundle install
+    $ gem install foreman # We are doing this as it's not recommended to include foreman in your Gemfile
+    ```
+1. Start the server `foreman start`
 
-Visiting `http://localhost:4567/` should show a Yoti Connect button
+Visiting `https://localhost:4567/` should show a Yoti Connect button
 
 ### AML Check
 

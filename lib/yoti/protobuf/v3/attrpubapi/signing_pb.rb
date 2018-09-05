@@ -3,7 +3,7 @@
 
 require 'google/protobuf'
 
-require_relative 'Attribute_pb'
+require_relative 'attribute_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "Yoti.Protobuf.attrpubapi_v3.AttributeSigning" do
     optional :name, :string, 1

@@ -4,6 +4,8 @@ AllCops:
   TargetRubyVersion: 2.2
   Exclude:
     - 'examples/rails/config/**/*'
+    - 'lib/yoti/protobuf/attrpubapi/*'
+    - 'lib/yoti/protobuf/compubapi/*'
 
 Metrics/AbcSize:
   Max: 23

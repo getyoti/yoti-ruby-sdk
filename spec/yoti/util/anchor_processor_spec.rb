@@ -1,7 +1,7 @@
 require "base64"
 
 def process_anchors_list(binary_anchors_list)
-    anchor = Yoti::Protobuf::AttrpubapiV3::Anchor.decode(Base64.decode64(binary_anchors_list))
+    anchor = Yoti::Protobuf::Attrpubapi::Anchor.decode(Base64.decode64(binary_anchors_list))
     anchors_list = [anchor]
     anchor_processor = Yoti::AnchorProcessor.new(anchors_list)
     return anchor_processor.process

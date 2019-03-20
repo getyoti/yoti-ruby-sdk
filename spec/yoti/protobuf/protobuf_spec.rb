@@ -30,8 +30,8 @@ describe 'Yoti::Protobuf' do
       profile_json = JSON.parse(File.read("spec/sample-data/responses/profile.json"))
       let(:receipt) { profile_json['receipt'] }
 
-      it 'returns a Yoti::Protobuf::CompubapiV3::EncryptedData object' do
-        expect(Yoti::Protobuf.current_user(receipt)).to be_a(Yoti::Protobuf::CompubapiV3::EncryptedData)
+      it 'returns a Yoti::Protobuf::Compubapi::EncryptedData object' do
+        expect(Yoti::Protobuf.current_user(receipt)).to be_a(Yoti::Protobuf::Compubapi::EncryptedData)
       end
     end
   end
@@ -39,8 +39,8 @@ describe 'Yoti::Protobuf' do
   describe '.attribute_list' do
     let(:data) { '' }
 
-    it 'returns a Yoti::Protobuf::AttrpubapiV3::AttributeList object' do
-      expect(Yoti::Protobuf.attribute_list(data)).to be_a(Yoti::Protobuf::AttrpubapiV3::AttributeList)
+    it 'returns a Yoti::Protobuf::Attrpubapi::AttributeList object' do
+      expect(Yoti::Protobuf.attribute_list(data)).to be_a(Yoti::Protobuf::Attrpubapi::AttributeList)
     end
   end
 

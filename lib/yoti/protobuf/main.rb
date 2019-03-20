@@ -1,8 +1,11 @@
+$LOAD_PATH.unshift File.expand_path('./attrpubapi/', __dir__)
+
 require 'google/protobuf'
 require 'json'
-require_relative 'v3/attrpubapi/list_pb.rb'
-require_relative 'v3/compubapi/encrypted_data_pb.rb'
-require_relative 'v3/compubapi/signed_time_stamp_pb.rb'
+
+require_relative 'attrpubapi/List_pb.rb'
+require_relative 'compubapi/EncryptedData_pb.rb'
+require_relative 'compubapi/SignedTimestamp_pb.rb'
 
 module Yoti
   module Protobuf
@@ -19,11 +22,11 @@ module Yoti
 
         profile_content = receipt['other_party_profile_content']
         decoded_profile_content = Base64.decode64(profile_content)
-        Yoti::Protobuf::CompubapiV3::EncryptedData.decode(decoded_profile_content)
+        Yoti::Protobuf::Compubapi::EncryptedData.decode(decoded_profile_content)
       end
 
       def attribute_list(data)
-        Yoti::Protobuf::AttrpubapiV3::AttributeList.decode(data)
+        Yoti::Protobuf::Attrpubapi::AttributeList.decode(data)
       end
 
       def value_based_on_content_type(value, content_type = nil)

@@ -14,12 +14,10 @@ class YotiController < ApplicationController
       @profile = yoti_activity_details.profile
 
       # Save the selfie file
-      if !@profile.selfie.nil?
-        File.open(Rails.root.join('public', 'selfie.jpeg'), 'wb') { |file| file.write(@profile.selfie.value) }
-      end
+      File.open(Rails.root.join('public', 'selfie.jpeg'), 'wb') { |file| file.write(@profile.selfie.value) } unless @profile.selfie.nil?
     else
       render text: 'Error: Fetching the activity details failed.', status: :error
     end
-    render :layout => 'profile'
+    render layout: 'profile'
   end
 end

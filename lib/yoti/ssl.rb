@@ -51,11 +51,11 @@ module Yoti
       # @param iv [String] base 64 decoded iv
       # @param text [String] base 64 decoded cyphered text
       # @return [String] base 64 decoded deciphered text
-      def decipher(key, iv, text)
+      def decipher(key, user_iv, text)
         ssl_decipher = OpenSSL::Cipher.new('AES-256-CBC')
         ssl_decipher.decrypt
         ssl_decipher.key = key
-        ssl_decipher.iv = iv
+        ssl_decipher.iv = user_iv
         ssl_decipher.update(text) + ssl_decipher.final
       end
 

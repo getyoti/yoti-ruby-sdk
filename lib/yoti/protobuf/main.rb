@@ -37,7 +37,7 @@ module Yoti
         when CT_STRING, CT_DATE
           value.encode('utf-8')
         when CT_JSON
-           JSON.parse(value)
+          JSON.parse(value)
         when CT_INT
           value.to_i
         else

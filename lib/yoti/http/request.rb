@@ -26,6 +26,7 @@ module Yoti
       end
 
       raise RequestError, "Unsuccessful Yoti API call: #{res.message}" unless res.code == '200'
+
       res.body
     end
 
@@ -71,6 +72,7 @@ module Yoti
 
     def token
       return '' unless @encrypted_connect_token
+
       Yoti::SSL.decrypt_token(@encrypted_connect_token)
     end
 

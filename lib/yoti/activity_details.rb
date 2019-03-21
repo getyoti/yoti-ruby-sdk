@@ -28,44 +28,46 @@ module Yoti
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
     def initialize(receipt, decrypted_profile = nil)
-      @decrypted_profile = decrypted_profile
-      @user_profile = {}
-      @extended_profile = {}
-
-      if @decrypted_profile.is_a?(Object) && @decrypted_profile.respond_to?(:attributes)
-        @decrypted_profile.attributes.each do |field|
-          @user_profile[field.name] = Yoti::Protobuf.value_based_on_content_type(field.value, field.content_type)
-          anchor_processor = Yoti::AnchorProcessor.new(field.anchors)
-          anchors_list = anchor_processor.process
-
-          if field.name == 'selfie'
-            @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(field.value, field.content_type)
-          end
-
-
-          if Yoti::AgeProcessor.is_age_verification(field.name)
-            @age_verified = field.value == 'true'
-          end
-
-          @extended_profile[field.name] = Yoti::Attribute.new(field.name, field.value, anchors_list['sources'], anchors_list['verifiers'])
-        end
-      end
-
+      process_decrypted_profile(decrypted_profile)
       @remember_me_id = receipt['remember_me_id']
       @user_id = @remember_me_id
       @parent_remember_me_id = receipt['parent_remember_me_id']
-
       @outcome = receipt['sharing_outcome']
     end
 
     # @return [Hash] a JSON of the address
     def structured_postal_address
-        @user_profile['structured_postal_address']
+      @user_profile['structured_postal_address']
     end
 
     # @return [Profile] of Yoti user
     def profile
-        return Yoti::Profile.new(@extended_profile)
+      Yoti::Profile.new(@extended_profile)
+    end
+
+    protected
+
+    def process_decrypted_profile(decrypted_profile)
+      @user_profile = {}
+      @extended_profile = {}
+      @decrypted_profile = decrypted_profile
+
+      return nil unless @decrypted_profile.is_a?(Object)
+      return nil unless @decrypted_profile.respond_to?(:attributes)
+
+      @decrypted_profile.attributes.each do |attribute|
+        process_attribute(attribute)
+
+        @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(attribute.value, attribute.content_type) if attribute.name == 'selfie'
+        @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.age_verification(attribute.name)
+      end
+    end
+
+    def process_attribute(attribute)
+      @user_profile[attribute.name] = Yoti::Protobuf.value_based_on_content_type(attribute.value, attribute.content_type)
+      anchor_processor = Yoti::AnchorProcessor.new(attribute.anchors)
+      anchors_list = anchor_processor.process
+      @extended_profile[attribute.name] = Yoti::Attribute.new(attribute.name, attribute.value, anchors_list['sources'], anchors_list['verifiers'])
     end
   end
 end

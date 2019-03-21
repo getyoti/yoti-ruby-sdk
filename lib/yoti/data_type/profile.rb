@@ -44,7 +44,8 @@ module Yoti
 
     def postal_address
       postal_address = get_attribute(Yoti::Attribute::POSTAL_ADDRESS)
-      postal_address unless postal_address.nil?
+      return postal_address unless postal_address.nil?
+
       formatted_address
     end
 
@@ -54,7 +55,7 @@ module Yoti
 
     # @return attribute value by name
     def get_attribute(attr_name)
-      return @profile_data[attr_name] if @profile_data.key? attr_name
+      @profile_data[attr_name] if @profile_data.key? attr_name
     end
 
     protected

@@ -1,5 +1,5 @@
 # config.ru
-$: << File.expand_path(File.dirname(__FILE__))
+$LOAD_PATH << File.expand_path(__dir__)
 
 require 'app'
 run Sinatra::Application

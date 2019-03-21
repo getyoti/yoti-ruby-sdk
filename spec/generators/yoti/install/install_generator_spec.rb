@@ -3,7 +3,7 @@ require 'generator_spec'
 require 'generators/yoti/install/install_generator.rb'
 
 describe Yoti::Generators::InstallGenerator, type: :generator do
-  destination File.expand_path('../../../../tmp', __FILE__)
+  destination File.expand_path('../../../tmp', __dir__)
 
   before(:all) do
     prepare_destination

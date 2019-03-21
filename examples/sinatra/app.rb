@@ -27,15 +27,13 @@ get '/profile' do
     profile = yoti_activity_details.profile
 
     # Save the selfie file
-    if !profile.selfie.nil?
-        File.open(File.join(settings.root, 'public', 'selfie.jpeg'), 'wb') { |file| file.write(profile.selfie.value) }
-    end
+    File.open(File.join(settings.root, 'public', 'selfie.jpeg'), 'wb') { |file| file.write(profile.selfie.value) } unless profile.selfie.nil?
 
     erb :profile, locals: {
       profile: profile,
       user_id: yoti_activity_details.user_id,
       age_verified: yoti_activity_details.age_verified,
-      base64_selfie_uri: yoti_activity_details.base64_selfie_uri,
+      base64_selfie_uri: yoti_activity_details.base64_selfie_uri
     }
   else
     status 500

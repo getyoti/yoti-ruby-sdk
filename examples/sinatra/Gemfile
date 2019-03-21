@@ -2,6 +2,6 @@ source 'https://rubygems.org'
 
 gem 'dotenv'
 gem 'pry'
-gem 'sinatra'
 gem 'puma'
+gem 'sinatra'
 gem 'yoti', '~> 1.3.1'

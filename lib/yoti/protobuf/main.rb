@@ -16,6 +16,7 @@ module Yoti
       CT_DATE = :DATE # string in RFC3339 format (YYYY-MM-DD)
       CT_PNG = :PNG # standard .png image
       CT_JSON = :JSON # json_string
+      CT_INT = :INT # integer
 
       def current_user(receipt)
         return nil unless valid_receipt?(receipt)
@@ -37,6 +38,8 @@ module Yoti
           value.encode('utf-8')
         when CT_JSON
            JSON.parse(value)
+        when CT_INT
+          value.to_i
         else
           value
         end

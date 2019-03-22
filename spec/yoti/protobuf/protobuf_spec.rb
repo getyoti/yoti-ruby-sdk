@@ -86,6 +86,16 @@ describe 'Yoti::Protobuf' do
       end
     end
 
+    context 'when the content type is 4' do
+      json_string = '{"test": "json string"}'
+      let(:content_type) { :JSON }
+      let(:value) { json_string }
+
+      it 'parses the string to JSON' do
+        expect(subject).to eql(JSON.parse(json_string))
+      end
+    end
+
     context 'when the content type is something else' do
       let(:content_type) { double }
 

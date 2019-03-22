@@ -49,7 +49,7 @@ describe 'Yoti::Protobuf' do
     let(:value_encoded) { 'test string'.encode('ISO-8859-1') }
     subject { Yoti::Protobuf.value_based_on_content_type(value, content_type) }
 
-    context 'when the content type is 0' do
+    context 'when the content type is UNDEFINED' do
       let(:content_type) { :UNDEFINED }
 
       it 'raises a ProtobufError' do
@@ -58,7 +58,7 @@ describe 'Yoti::Protobuf' do
       end
     end
 
-    context 'when the content type is 1' do
+    context 'when the content type is STRING' do
       let(:content_type) { :STRING }
       it 'encodes the string to UTF8' do
         expect(value_encoded.encoding.name).to_not eql('UTF-8')
@@ -66,7 +66,7 @@ describe 'Yoti::Protobuf' do
       end
     end
 
-    context 'when the content type is 3' do
+    context 'when the content type is DATE' do
       let(:content_type) { :DATE }
 
       it 'encodes the string to UTF8' do
@@ -76,7 +76,7 @@ describe 'Yoti::Protobuf' do
     end
 
     [0, 1, 123, -1, -10].each do |integer|
-      context "when the content type is 7 and value is string '#{integer}'" do
+      context "when the content type is INT and value is string '#{integer}'" do
         let(:content_type) { :INT }
         let(:value) { integer.to_s }
 
@@ -99,14 +99,14 @@ describe 'Yoti::Protobuf' do
     let(:value) { 'test string' }
     subject { Yoti::Protobuf.image_uri_based_on_content_type(value, content_type) }
 
-    context 'when the content type is 2' do
+    context 'when the content type is JPEG' do
       let(:content_type) { :JPEG }
       it 'encodes the string to JPEG format' do
         is_expected.to eql('data:image/jpeg;base64,dGVzdCBzdHJpbmc=')
       end
     end
 
-    context 'when the content type is 4' do
+    context 'when the content type is PNG' do
       let(:content_type) { :PNG }
 
       it 'encodes the string to PNG format' do

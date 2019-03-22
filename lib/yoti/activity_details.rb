@@ -6,8 +6,15 @@ module Yoti
     # @return [String] the outcome of the profile request, eg: SUCCESS
     attr_reader :outcome
 
+    # @deprecated replaced by :remember_me_id
     # @return [String] the Yoti ID
     attr_reader :user_id
+
+    # @return [String] the Remember Me ID
+    attr_reader :remember_me_id
+
+    # @return [String] the Parent Remember Me ID
+    attr_reader :parent_remember_me_id
 
     # @return [Hash] the decoded profile attributes
     attr_reader :user_profile
@@ -44,7 +51,10 @@ module Yoti
         end
       end
 
-      @user_id = receipt['remember_me_id']
+      @remember_me_id = receipt['remember_me_id']
+      @user_id = @remember_me_id
+      @parent_remember_me_id = receipt['parent_remember_me_id']
+
       @outcome = receipt['sharing_outcome']
     end
 

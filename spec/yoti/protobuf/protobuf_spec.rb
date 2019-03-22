@@ -75,6 +75,17 @@ describe 'Yoti::Protobuf' do
       end
     end
 
+    [0, 1, 123, -1, -10].each do |integer|
+      context "when the content type is 7 and value is string '#{integer}'" do
+        let(:content_type) { :INT }
+        let(:value) { integer.to_s }
+
+        it "parses value to integer #{integer}" do
+          expect(subject).to eql(integer)
+        end
+      end
+    end
+
     context 'when the content type is something else' do
       let(:content_type) { double }
 

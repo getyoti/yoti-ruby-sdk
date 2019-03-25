@@ -24,8 +24,8 @@ describe 'Yoti::AnchorProcessor' do
       end
 
       it 'should return 2018-04-11 13:13:03 as timestamp' do
-        expected_value = '2018-04-11 13:13:03'
-        date_time_str = dl_first_anchor.signed_time_stamp.time_stamp.strftime('%Y-%m-%d %H:%M:%S')
+        expected_value = Time.utc(2018, 4, 11, 12, 13, 3).strftime('%Y-%m-%d %H:%M:%S')
+        date_time_str = dl_first_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S')
         expect(date_time_str).to eql(expected_value)
       end
 
@@ -51,8 +51,8 @@ describe 'Yoti::AnchorProcessor' do
       end
 
       it 'should return 2018-04-11 13:13:04 as timestamp' do
-        expected_value = '2018-04-11 13:13:04'
-        date_time_str = verifier_first_anchor.signed_time_stamp.time_stamp.strftime('%Y-%m-%d %H:%M:%S')
+        expected_value = Time.utc(2018, 4, 11, 12, 13, 4).strftime('%Y-%m-%d %H:%M:%S')
+        date_time_str = verifier_first_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S')
         expect(date_time_str).to eql(expected_value)
       end
 
@@ -78,8 +78,8 @@ describe 'Yoti::AnchorProcessor' do
       end
 
       it 'should return 2018-04-12 14:14:32 as timestamp' do
-        expected_value = '2018-04-12 14:14:32'
-        date_time_str = pp_source_anchor.signed_time_stamp.time_stamp.strftime('%Y-%m-%d %H:%M:%S')
+        expected_value = Time.utc(2018, 4, 12, 13, 14, 32).strftime('%Y-%m-%d %H:%M:%S')
+        date_time_str = pp_source_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S')
         expect(date_time_str).to eql(expected_value)
       end
 

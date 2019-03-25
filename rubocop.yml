@@ -35,3 +35,10 @@ Style/FrozenStringLiteralComment:
 
 Style/NumericLiterals:
   Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Naming/PredicateName:
+  Exclude:
+    - lib/yoti/util/age_processor.rb

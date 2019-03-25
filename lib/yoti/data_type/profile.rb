@@ -55,7 +55,9 @@ module Yoti
 
     # @return attribute value by name
     def get_attribute(attr_name)
-      @profile_data[attr_name] if @profile_data.key? attr_name
+      return nil unless @profile_data.key? attr_name
+
+      @profile_data[attr_name]
     end
 
     protected

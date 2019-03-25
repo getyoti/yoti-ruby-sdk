@@ -59,7 +59,7 @@ module Yoti
         process_attribute(attribute)
 
         @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(attribute.value, attribute.content_type) if attribute.name == 'selfie'
-        @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.age_verification(attribute.name)
+        @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)
       end
     end
 

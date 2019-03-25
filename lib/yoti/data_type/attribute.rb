@@ -1,17 +1,17 @@
 module Yoti
   # Encapsulates profile attribute
   class Attribute
-    FAMILY_NAME = 'family_name'.freeze
-    GIVEN_NAMES = 'given_names'.freeze
-    FULL_NAME = 'full_name'.freeze
-    DATE_OF_BIRTH = 'date_of_birth'.freeze
-    GENDER = 'gender'.freeze
-    NATIONALITY = 'nationality'.freeze
-    PHONE_NUMBER = 'phone_number'.freeze
-    SELFIE = 'selfie'.freeze
-    EMAIL_ADDRESS = 'email_address'.freeze
-    POSTAL_ADDRESS = 'postal_address'.freeze
-    STRUCTURED_POSTAL_ADDRESS = 'structured_postal_address'.freeze
+    FAMILY_NAME = 'family_name'
+    GIVEN_NAMES = 'given_names'
+    FULL_NAME = 'full_name'
+    DATE_OF_BIRTH = 'date_of_birth'
+    GENDER = 'gender'
+    NATIONALITY = 'nationality'
+    PHONE_NUMBER = 'phone_number'
+    SELFIE = 'selfie'
+    EMAIL_ADDRESS = 'email_address'
+    POSTAL_ADDRESS = 'postal_address'
+    STRUCTURED_POSTAL_ADDRESS = 'structured_postal_address'
 
     attr_reader :name, :value, :sources, :verifiers
 

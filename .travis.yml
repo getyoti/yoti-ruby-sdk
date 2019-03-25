@@ -4,6 +4,9 @@ rvm:
   - 2.5
   - 2.6
 
+before_install:
+  - bundle update --bundler
+
 install:
   - bundle install
 

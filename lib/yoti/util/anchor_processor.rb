@@ -4,10 +4,6 @@ require 'date'
 module Yoti
   # Parse attribute anchors
   class AnchorProcessor
-    # Define whether the search function get_anchor_value_by_oid
-    # should return the next value in the array
-    attr_reader :get_next
-
     def initialize(anchors_list)
       @anchors_list = anchors_list
       @get_next = false
@@ -95,5 +91,11 @@ module Yoti
       { 'sources' => '1.3.6.1.4.1.47127.1.1.1',
         'verifiers' => '1.3.6.1.4.1.47127.1.1.2' }
     end
+
+    protected
+
+    # Define whether the search function get_anchor_value_by_oid
+    # should return the next value in the array
+    attr_reader :get_next
   end
 end

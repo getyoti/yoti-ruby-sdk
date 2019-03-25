@@ -1,5 +1,7 @@
 # Yoti Ruby SDK
 
+[![Build Status](https://travis-ci.com/getyoti/yoti-ruby-sdk.svg?branch=master)](https://travis-ci.com/getyoti/yoti-ruby-sdk)
+
 Welcome to the Yoti Ruby SDK. This repository contains the tools you need to quickly integrate your Ruby back-end with Yoti so that your users can share their identity details with your application in a secure and trusted way.
 
 ## Table of Contents

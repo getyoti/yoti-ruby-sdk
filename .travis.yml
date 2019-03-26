@@ -4,6 +4,9 @@ rvm:
   - 2.5
   - 2.6
 
+git:
+  depth: 1
+
 before_install:
   - gem install bundler
 

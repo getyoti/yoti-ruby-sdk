@@ -39,6 +39,10 @@ Style/NumericLiterals:
 Style/MutableConstant:
   Enabled: false
 
+Naming/MethodName:
+  Exclude:
+    - lib/yoti/util/anchor_processor.rb
+
 Naming/PredicateName:
   Exclude:
     - lib/yoti/util/age_processor.rb

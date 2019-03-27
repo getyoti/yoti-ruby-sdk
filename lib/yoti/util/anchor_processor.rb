@@ -14,7 +14,7 @@ module Yoti
       anchor_types = self.anchor_types
 
       @anchors_list.each do |anchor|
-        x509_certs_list = convert_certs_list_to_x509(anchor.origin_server_certs)
+        x509_certs_list = convert_certs_list_to_X509(anchor.origin_server_certs)
         yoti_signed_time_stamp = process_signed_time_stamp(anchor.signed_time_stamp)
 
         anchor.origin_server_certs.each do |cert|
@@ -28,7 +28,7 @@ module Yoti
       result_data
     end
 
-    def convert_certs_list_to_x509(certs_list)
+    def convert_certs_list_to_X509(certs_list)
       x509_certs_list = []
       certs_list.each do |cert|
         x509_cert = OpenSSL::X509::Certificate.new cert

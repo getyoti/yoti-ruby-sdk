@@ -72,8 +72,21 @@ describe 'Yoti::Profile' do
       expect(profile.postal_address).to eql('test_postal_address')
     end
     it 'should return formatted address when postal address not available' do
-      formatted_address_profile = Yoti::Profile.new(Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS => { 'formatted_address' => 'test_structured_address' })
-      expect(formatted_address_profile.postal_address).to eql('test_structured_address')
+      structured_address_attribute = Yoti::Attribute.new(
+        Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS,
+        { 'formatted_address' => 'test_structured_address' },
+        'test_sources',
+        'test_verifiers'
+      )
+
+      formatted_address_profile = Yoti::Profile.new(
+        Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS => structured_address_attribute
+      )
+
+      expect(formatted_address_profile.postal_address.name).to eql(Yoti::Attribute::POSTAL_ADDRESS)
+      expect(formatted_address_profile.postal_address.sources).to eql('test_sources')
+      expect(formatted_address_profile.postal_address.verifiers).to eql('test_verifiers')
+      expect(formatted_address_profile.postal_address.value).to eql('test_structured_address')
     end
   end
 

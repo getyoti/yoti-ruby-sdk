@@ -46,7 +46,7 @@ module Yoti
       postal_address = get_attribute(Yoti::Attribute::POSTAL_ADDRESS)
       return postal_address unless postal_address.nil?
 
-      formatted_address
+      attribute_from_formatted_address
     end
 
     def structured_postal_address
@@ -62,10 +62,16 @@ module Yoti
 
     protected
 
-    def formatted_address
+    def attribute_from_formatted_address
       return nil if structured_postal_address.nil?
+      return nil unless structured_postal_address.value.key?('formatted_address')
 
-      structured_postal_address['formatted_address'] if structured_postal_address.key?('formatted_address')
+      Yoti::Attribute.new(
+        Yoti::Attribute::POSTAL_ADDRESS,
+        structured_postal_address.value['formatted_address'],
+        structured_postal_address.sources,
+        structured_postal_address.verifiers
+      )
     end
   end
 end

@@ -64,10 +64,11 @@ module Yoti
     end
 
     def process_attribute(attribute)
-      @user_profile[attribute.name] = Yoti::Protobuf.value_based_on_content_type(attribute.value, attribute.content_type)
+      attr_value = Yoti::Protobuf.value_based_on_content_type(attribute.value, attribute.content_type)
+      @user_profile[attribute.name] = attr_value
       anchor_processor = Yoti::AnchorProcessor.new(attribute.anchors)
       anchors_list = anchor_processor.process
-      @extended_profile[attribute.name] = Yoti::Attribute.new(attribute.name, attribute.value, anchors_list['sources'], anchors_list['verifiers'])
+      @extended_profile[attribute.name] = Yoti::Attribute.new(attribute.name, attr_value, anchors_list['sources'], anchors_list['verifiers'])
     end
   end
 end

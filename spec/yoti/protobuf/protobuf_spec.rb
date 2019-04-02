@@ -52,9 +52,8 @@ describe 'Yoti::Protobuf' do
     context 'when the content type is UNDEFINED' do
       let(:content_type) { :UNDEFINED }
 
-      it 'raises a ProtobufError' do
-        error = 'The content type is invalid.'
-        expect { subject }.to raise_error(Yoti::ProtobufError, error)
+      it 'returns the value' do
+        is_expected.to eql(value)
       end
     end
 
@@ -97,7 +96,7 @@ describe 'Yoti::Protobuf' do
     end
 
     context 'when the content type is something else' do
-      let(:content_type) { double }
+      let(:content_type) { 100 }
 
       it 'returns the value' do
         is_expected.to eql(value)

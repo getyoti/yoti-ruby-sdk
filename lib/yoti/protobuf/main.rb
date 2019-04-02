@@ -2,6 +2,7 @@ $LOAD_PATH.unshift File.expand_path('./attrpubapi/', __dir__)
 
 require 'google/protobuf'
 require 'json'
+require 'logger'
 
 require_relative 'attrpubapi/List_pb.rb'
 require_relative 'compubapi/EncryptedData_pb.rb'
@@ -18,6 +19,10 @@ module Yoti
       CT_JSON = :JSON # json_string
       CT_INT = :INT # integer
 
+      def logger
+        @logger ||= Logger.new(STDOUT)
+      end
+
       def current_user(receipt)
         return nil unless valid_receipt?(receipt)
 
@@ -32,16 +37,17 @@ module Yoti
 
       def value_based_on_content_type(value, content_type = nil)
         case content_type
-        when CT_UNDEFINED
-          raise ProtobufError, 'The content type is invalid.'
         when CT_STRING, CT_DATE
           value.encode('utf-8')
         when CT_JSON
           JSON.parse(value)
         when CT_INT
           value.to_i
-        else
+        when CT_JPEG, CT_PNG
           value
+        else
+          logger.warn("Unknown Content Type '#{content_type}', parsing as a String")
+          value.encode('utf-8')
         end
       end
 

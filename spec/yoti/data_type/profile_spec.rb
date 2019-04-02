@@ -43,7 +43,7 @@ describe 'Yoti::Profile' do
     end
   end
 
-  describe '.test_email_address' do
+  describe '.email_address' do
     it 'should return test_email_address' do
       expect(profile.email_address).to eql('test_email_address')
     end

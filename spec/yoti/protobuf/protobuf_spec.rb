@@ -59,7 +59,7 @@ describe 'Yoti::Protobuf' do
 
       it 'returns the value' do
         is_expected.to eql(value)
-        expect(@log_output.string).to include "Unknown Content Type 'UNDEFINED', parsing as a String"
+        expect(@log_output.string).to include "WARN -- Yoti: Unknown Content Type 'UNDEFINED', parsing as a String"
       end
     end
 
@@ -111,7 +111,7 @@ describe 'Yoti::Protobuf' do
 
       it 'returns the value' do
         is_expected.to eql(value)
-        expect(@log_output.string).to include "Unknown Content Type '100', parsing as a String"
+        expect(@log_output.string).to include "WARN -- Yoti: Unknown Content Type '100', parsing as a String"
       end
     end
   end

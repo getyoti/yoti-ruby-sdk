@@ -15,6 +15,8 @@ module Yoti
 
       def create_logger(output_stream)
         @logger = Logger.new(output_stream)
+        @logger.progname = 'Yoti'
+        @logger
       end
     end
   end

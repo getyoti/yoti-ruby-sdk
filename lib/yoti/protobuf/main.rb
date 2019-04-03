@@ -2,7 +2,6 @@ $LOAD_PATH.unshift File.expand_path('./attrpubapi/', __dir__)
 
 require 'google/protobuf'
 require 'json'
-require 'logger'
 
 require_relative 'attrpubapi/List_pb.rb'
 require_relative 'compubapi/EncryptedData_pb.rb'
@@ -18,10 +17,6 @@ module Yoti
       CT_PNG = :PNG # standard .png image
       CT_JSON = :JSON # json_string
       CT_INT = :INT # integer
-
-      def logger
-        @logger ||= Logger.new(STDOUT)
-      end
 
       def current_user(receipt)
         return nil unless valid_receipt?(receipt)
@@ -46,7 +41,7 @@ module Yoti
         when CT_JPEG, CT_PNG
           value
         else
-          logger.warn("Unknown Content Type '#{content_type}', parsing as a String")
+          Yoti::Log.logger.warn("Unknown Content Type '#{content_type}', parsing as a String")
           value.encode('utf-8')
         end
       end

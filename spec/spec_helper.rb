@@ -46,6 +46,10 @@ RSpec.configure do |config|
     stub_api_requests_v1(:post, 'aml_check', 'aml-check')
   end
 
+  config.after(:each) do
+    Yoti::Log.output(STDOUT)
+  end
+
   config.before do
     initialize_test_app
   end

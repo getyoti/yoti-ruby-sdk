@@ -60,6 +60,35 @@ describe 'Yoti::ActivityDetails' do
       expect(activity_details.profile.get_attribute('test_integer')).to be_an_instance_of(Yoti::Attribute)
       expect(activity_details.profile.get_attribute('test_integer').value).to eql(123)
     end
+
+    it 'excludes attributes that cannot be converted' do
+      @log_output = StringIO.new
+      Yoti::Log.output(@log_output)
+
+      activity_details = Yoti::ActivityDetails.new(
+        {},
+        proto_attr_list(
+          [
+            proto_attr('unknown_image_value', Base64.decode64('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='), 100),
+            proto_attr('unknown_string_value', 'test_string', 200),
+            proto_attr('phone_number', '+447474747474', :STRING)
+          ]
+        )
+      )
+      expect(activity_details.profile).to be_an_instance_of(Yoti::Profile)
+
+      expect(activity_details.profile.phone_number).to be_an_instance_of(Yoti::Attribute)
+      expect(activity_details.profile.phone_number.value).to eql('+447474747474')
+
+      expect(activity_details.profile.get_attribute('unknown_string_value')).to be_an_instance_of(Yoti::Attribute)
+      expect(activity_details.profile.get_attribute('unknown_string_value').value).to eql('test_string')
+
+      expect(activity_details.profile.get_attribute('unknown_image_value')).to be_nil
+
+      expect(@log_output.string).to include 'WARN -- Yoti: "\x80" from ASCII-8BIT to UTF-8 (Attribute: unknown_image_value)'
+      expect(@log_output.string).to include "WARN -- Yoti: Unknown Content Type '100', parsing as a String"
+      expect(@log_output.string).to include "WARN -- Yoti: Unknown Content Type '200', parsing as a String"
+    end
   end
 
   describe '#structured_postal_address' do

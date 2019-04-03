@@ -52,8 +52,14 @@ describe 'Yoti::Protobuf' do
     context 'when the content type is UNDEFINED' do
       let(:content_type) { :UNDEFINED }
 
+      before(:each) do
+        @log_output = StringIO.new
+        Yoti::Log.output(@log_output)
+      end
+
       it 'returns the value' do
         is_expected.to eql(value)
+        expect(@log_output.string).to include "Unknown Content Type 'UNDEFINED', parsing as a String"
       end
     end
 
@@ -98,8 +104,14 @@ describe 'Yoti::Protobuf' do
     context 'when the content type is something else' do
       let(:content_type) { 100 }
 
+      before(:each) do
+        @log_output = StringIO.new
+        Yoti::Log.output(@log_output)
+      end
+
       it 'returns the value' do
         is_expected.to eql(value)
+        expect(@log_output.string).to include "Unknown Content Type '100', parsing as a String"
       end
     end
   end

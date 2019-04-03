@@ -56,7 +56,11 @@ module Yoti
       return nil unless @decrypted_profile.respond_to?(:attributes)
 
       @decrypted_profile.attributes.each do |attribute|
-        process_attribute(attribute)
+        begin
+          process_attribute(attribute)
+        rescue StandardError => e
+          Yoti::Log.logger.warn("#{e.message} (Attribute: #{attribute.name})")
+        end
 
         @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(attribute.value, attribute.content_type) if attribute.name == 'selfie'
         @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)

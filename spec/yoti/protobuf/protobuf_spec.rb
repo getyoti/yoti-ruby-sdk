@@ -115,24 +115,4 @@ describe 'Yoti::Protobuf' do
       end
     end
   end
-
-  describe '.image_uri_based_on_content_type' do
-    let(:value) { 'test string' }
-    subject { Yoti::Protobuf.image_uri_based_on_content_type(value, content_type) }
-
-    context 'when the content type is JPEG' do
-      let(:content_type) { :JPEG }
-      it 'encodes the string to JPEG format' do
-        is_expected.to eql('data:image/jpeg;base64,dGVzdCBzdHJpbmc=')
-      end
-    end
-
-    context 'when the content type is PNG' do
-      let(:content_type) { :PNG }
-
-      it 'encodes the string to PNG format' do
-        is_expected.to eql('data:image/png;base64,dGVzdCBzdHJpbmc=')
-      end
-    end
-  end
 end

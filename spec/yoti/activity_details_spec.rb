@@ -9,7 +9,7 @@ def activity_details
     },
     proto_attr_list(
       [
-        proto_attr('selfie', 'test_selfie_value', :STRING),
+        proto_attr('selfie', 'test_selfie_value', :JPEG),
         proto_attr('phone_number', '+447474747474', :STRING),
         proto_attr('test_integer', '123', :INT),
         proto_attr('structured_postal_address', '{"formatted_address":"test_structured_address"}', :JSON)

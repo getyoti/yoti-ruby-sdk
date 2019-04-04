@@ -1,5 +1,11 @@
 require 'spec_helper'
 
+def assert_expected_image(image, mime_type, base64_last_ten)
+  expect(image).to be_a(Yoti::Image)
+  expect(image.mime_type).to eql(mime_type)
+  expect(image.base64_content.chars.last(10).join).to eql(base64_last_ten)
+end
+
 describe 'Yoti::Protobuf' do
   describe '.current_user' do
     context 'when the receipt has a nil other_party_profile_content key' do
@@ -101,6 +107,18 @@ describe 'Yoti::Protobuf' do
       end
     end
 
+    context 'when the content type is MULTI_VALUE' do
+      multi_value_data = File.read('spec/sample-data/attributes/multi-value.txt')
+      let(:value) { Yoti::Protobuf::Attrpubapi::Attribute.decode(Base64.decode64(multi_value_data)).value }
+      let(:content_type) { :MULTI_VALUE }
+
+      it 'parses the value to multi value' do
+        expect(subject).to be_a(Yoti::MultiValue)
+        assert_expected_image(subject.items[0], 'image/jpeg', 'vWgD//2Q==')
+        assert_expected_image(subject.items[1], 'image/jpeg', '38TVEH/9k=')
+      end
+    end
+
     context 'when the content type is something else' do
       let(:content_type) { 100 }
 
@@ -112,6 +130,29 @@ describe 'Yoti::Protobuf' do
       it 'returns the value' do
         is_expected.to eql(value)
         expect(@log_output.string).to include "WARN -- Yoti: Unknown Content Type '100', parsing as a String"
+      end
+    end
+  end
+
+  describe '.value_based_on_attribute_name' do
+    subject { Yoti::Protobuf.value_based_on_attribute_name(value, attr_name) }
+    context 'when the name is document_images' do
+      items = [
+        'test_string',
+        Yoti::ImageJpeg.new('image_1'),
+        Yoti::ImagePng.new('image_2'),
+        123,
+        ['test_array']
+      ]
+      let(:value) { Yoti::MultiValue.new(items) }
+      let(:attr_name) { Yoti::Attribute::DOCUMENT_IMAGES }
+
+      it 'returns filtered array of images' do
+        expect(subject).to be_a(Array)
+        expect(subject.count).to eql(2)
+        expect(subject).to be_frozen
+        expect(subject[0]).to be_a(Yoti::ImageJpeg)
+        expect(subject[1]).to be_a(Yoti::ImagePng)
       end
     end
   end

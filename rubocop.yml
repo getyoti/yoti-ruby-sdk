@@ -26,6 +26,8 @@ Metrics/LineLength:
 Metrics/MethodLength:
   CountComments: false
   Max: 19
+  Exclude:
+    - spec/yoti/data_type/multi_value_spec.rb
 
 Style/Documentation:
   Enabled: false

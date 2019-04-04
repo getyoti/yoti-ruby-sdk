@@ -28,11 +28,13 @@ module Yoti
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
     def initialize(receipt, decrypted_profile = nil)
-      process_decrypted_profile(decrypted_profile)
       @remember_me_id = receipt['remember_me_id']
       @user_id = @remember_me_id
       @parent_remember_me_id = receipt['parent_remember_me_id']
       @outcome = receipt['sharing_outcome']
+      @user_profile = {}
+      @extended_profile = {}
+      process_decrypted_profile(decrypted_profile)
     end
 
     # @return [Hash] a JSON of the address
@@ -48,8 +50,6 @@ module Yoti
     protected
 
     def process_decrypted_profile(decrypted_profile)
-      @user_profile = {}
-      @extended_profile = {}
       @decrypted_profile = decrypted_profile
 
       return nil unless @decrypted_profile.is_a?(Object)
@@ -58,6 +58,7 @@ module Yoti
       @decrypted_profile.attributes.each do |attribute|
         begin
           process_attribute(attribute)
+          process_age_verified(attribute)
         rescue StandardError => e
           Yoti::Log.logger.warn("#{e.message} (Attribute: #{attribute.name})")
         end
@@ -66,19 +67,21 @@ module Yoti
 
     def process_attribute(attribute)
       attr_value = Yoti::Protobuf.value_based_on_content_type(attribute.value, attribute.content_type)
+      attr_value = Yoti::Protobuf.value_based_on_attribute_name(attr_value, attribute.name)
 
+      # Handle selfies for backwards compatibility.
       if attribute.name == Yoti::Attribute::SELFIE && attr_value.is_a?(Yoti::Image)
         @base64_selfie_uri = attr_value.base64_content
         attr_value = attr_value.content
       end
 
-      @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)
-
-      anchor_processor = Yoti::AnchorProcessor.new(attribute.anchors)
-      anchors_list = anchor_processor.process
+      anchors_list = Yoti::AnchorProcessor.new(attribute.anchors).process
       @extended_profile[attribute.name] = Yoti::Attribute.new(attribute.name, attr_value, anchors_list['sources'], anchors_list['verifiers'])
-
       @user_profile[attribute.name] = attr_value
+    end
+
+    def process_age_verified(attribute)
+      @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)
     end
   end
 end

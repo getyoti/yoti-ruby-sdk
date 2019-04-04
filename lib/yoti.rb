@@ -18,6 +18,7 @@ require_relative 'yoti/data_type/signed_time_stamp'
 require_relative 'yoti/data_type/image'
 require_relative 'yoti/data_type/image_jpeg'
 require_relative 'yoti/data_type/image_png'
+require_relative 'yoti/data_type/multi_value'
 
 require_relative 'yoti/util/age_processor'
 require_relative 'yoti/util/anchor_processor'

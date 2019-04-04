@@ -12,6 +12,7 @@ module Yoti
     EMAIL_ADDRESS = 'email_address'
     POSTAL_ADDRESS = 'postal_address'
     STRUCTURED_POSTAL_ADDRESS = 'structured_postal_address'
+    DOCUMENT_IMAGES = 'document_images'
 
     attr_reader :name, :value, :sources, :verifiers
 

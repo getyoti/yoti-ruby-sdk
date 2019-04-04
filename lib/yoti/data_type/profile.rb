@@ -42,6 +42,10 @@ module Yoti
       get_attribute(Yoti::Attribute::NATIONALITY)
     end
 
+    def document_images
+      get_attribute(Yoti::Attribute::DOCUMENT_IMAGES)
+    end
+
     def postal_address
       postal_address = get_attribute(Yoti::Attribute::POSTAL_ADDRESS)
       return postal_address unless postal_address.nil?

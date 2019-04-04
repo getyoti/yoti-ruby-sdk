@@ -26,7 +26,7 @@ def multi_value_items
 end
 
 describe 'Yoti::MultiValue' do
-  describe '.getItems' do
+  describe '.items' do
     it 'should return provided array of items' do
       items = multi_value_items
       multi_value = Yoti::MultiValue.new(items)

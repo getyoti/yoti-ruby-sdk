@@ -9,7 +9,8 @@ describe 'Yoti::Profile' do
                    Yoti::Attribute::GENDER => 'test_gender',
                    Yoti::Attribute::NATIONALITY => 'test_nationality',
                    Yoti::Attribute::POSTAL_ADDRESS => 'test_postal_address',
-                   Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS => 'test_structured_address' }
+                   Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS => 'test_structured_address',
+                   Yoti::Attribute::DOCUMENT_IMAGES => 'test_document_images' }
 
   profile = Yoti::Profile.new(profile_data)
 
@@ -64,6 +65,12 @@ describe 'Yoti::Profile' do
   describe '.nationality' do
     it 'should return test_nationality' do
       expect(profile.nationality).to eql('test_nationality')
+    end
+  end
+
+  describe '.document_images' do
+    it 'should return test_document_images' do
+      expect(profile.document_images).to eql('test_document_images')
     end
   end
 

@@ -61,18 +61,24 @@ module Yoti
         rescue StandardError => e
           Yoti::Log.logger.warn("#{e.message} (Attribute: #{attribute.name})")
         end
-
-        @base64_selfie_uri = Yoti::Protobuf.image_uri_based_on_content_type(attribute.value, attribute.content_type) if attribute.name == 'selfie'
-        @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)
       end
     end
 
     def process_attribute(attribute)
       attr_value = Yoti::Protobuf.value_based_on_content_type(attribute.value, attribute.content_type)
-      @user_profile[attribute.name] = attr_value
+
+      if attribute.name == Yoti::Attribute::SELFIE && attr_value.is_a?(Yoti::Image)
+        @base64_selfie_uri = attr_value.base64_content
+        attr_value = attr_value.content
+      end
+
+      @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)
+
       anchor_processor = Yoti::AnchorProcessor.new(attribute.anchors)
       anchors_list = anchor_processor.process
       @extended_profile[attribute.name] = Yoti::Attribute.new(attribute.name, attr_value, anchors_list['sources'], anchors_list['verifiers'])
+
+      @user_profile[attribute.name] = attr_value
     end
   end
 end

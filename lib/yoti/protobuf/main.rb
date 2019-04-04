@@ -38,20 +38,13 @@ module Yoti
           JSON.parse(value)
         when CT_INT
           value.to_i
-        when CT_JPEG, CT_PNG
-          value
+        when CT_JPEG
+          Yoti::ImageJpeg.new(value)
+        when CT_PNG
+          Yoti::ImagePng.new(value)
         else
           Yoti::Log.logger.warn("Unknown Content Type '#{content_type}', parsing as a String")
           value.encode('utf-8')
-        end
-      end
-
-      def image_uri_based_on_content_type(value, content_type = nil)
-        case content_type
-        when CT_JPEG
-          'data:image/jpeg;base64,'.concat(Base64.strict_encode64(value))
-        when CT_PNG
-          'data:image/png;base64,'.concat(Base64.strict_encode64(value))
         end
       end
 

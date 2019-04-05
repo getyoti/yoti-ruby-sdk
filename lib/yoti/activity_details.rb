@@ -50,12 +50,10 @@ module Yoti
     protected
 
     def process_decrypted_profile(decrypted_profile)
-      @decrypted_profile = decrypted_profile
+      return nil unless decrypted_profile.is_a?(Object)
+      return nil unless decrypted_profile.respond_to?(:attributes)
 
-      return nil unless @decrypted_profile.is_a?(Object)
-      return nil unless @decrypted_profile.respond_to?(:attributes)
-
-      @decrypted_profile.attributes.each do |attribute|
+      decrypted_profile.attributes.each do |attribute|
         begin
           process_attribute(attribute)
           process_age_verified(attribute)

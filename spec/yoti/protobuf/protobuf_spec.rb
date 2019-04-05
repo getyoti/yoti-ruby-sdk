@@ -86,6 +86,26 @@ describe 'Yoti::Protobuf' do
       end
     end
 
+    context 'when the content type is JPEG' do
+      let(:content_type) { :JPEG }
+      let(:value) { 'jpeg_image_content' }
+
+      it 'encodes the string to JPEG image object' do
+        expect(subject).to be_a(Yoti::ImageJpeg)
+        expect(subject.base64_content).to eql("data:image/jpeg;base64,#{Base64.strict_encode64('jpeg_image_content')}")
+      end
+    end
+
+    context 'when the content type is PNG' do
+      let(:content_type) { :PNG }
+      let(:value) { 'png_image_content' }
+
+      it 'encodes the string to PNG image object' do
+        expect(subject).to be_a(Yoti::ImagePng)
+        expect(subject.base64_content).to eql("data:image/png;base64,#{Base64.strict_encode64('png_image_content')}")
+      end
+    end
+
     [0, 1, 123, -1, -10].each do |integer|
       context "when the content type is INT and value is string '#{integer}'" do
         let(:content_type) { :INT }
@@ -136,6 +156,7 @@ describe 'Yoti::Protobuf' do
 
   describe '.value_based_on_attribute_name' do
     subject { Yoti::Protobuf.value_based_on_attribute_name(value, attr_name) }
+
     context 'when the name is document_images' do
       items = [
         'test_string',
@@ -153,6 +174,15 @@ describe 'Yoti::Protobuf' do
         expect(subject).to be_frozen
         expect(subject[0]).to be_a(Yoti::ImageJpeg)
         expect(subject[1]).to be_a(Yoti::ImagePng)
+      end
+    end
+
+    context 'when the name is document_images and the value is not a multi value' do
+      let(:value) { 'a string' }
+      let(:attr_name) { Yoti::Attribute::DOCUMENT_IMAGES }
+
+      it 'raises as type error' do
+        expect { subject }.to raise_error(TypeError, 'Document Images could not be decoded')
       end
     end
   end

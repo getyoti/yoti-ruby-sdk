@@ -26,6 +26,13 @@ def multi_value_items
 end
 
 describe 'Yoti::MultiValue' do
+  describe '.initialize' do
+    subject { Yoti::MultiValue.new('a string') }
+    it 'must be instantiated with an array' do
+      expect { subject }.to raise_error(TypeError, 'Arrays must be passed to Yoti::MultiValue')
+    end
+  end
+
   describe '.items' do
     it 'should return provided array of items' do
       items = multi_value_items

@@ -71,9 +71,40 @@ describe 'Yoti::Protobuf' do
 
     context 'when the content type is STRING' do
       let(:content_type) { :STRING }
-      it 'encodes the string to UTF8' do
-        expect(value_encoded.encoding.name).to_not eql('UTF-8')
-        expect(subject.encoding.name).to eql('UTF-8')
+      context 'when the value is not empty' do
+        it 'encodes the string to UTF8' do
+          expect(value_encoded.encoding.name).to_not eql('UTF-8')
+          expect(subject.encoding.name).to eql('UTF-8')
+          expect(subject).to eql('test string')
+        end
+      end
+      context 'when the value is empty' do
+        let(:value) { '' }
+        it 'encodes the string to UTF8' do
+          expect(value_encoded.encoding.name).to_not eql('UTF-8')
+          expect(subject.encoding.name).to eql('UTF-8')
+          expect(subject).to eql('')
+        end
+      end
+    end
+
+    %i[
+      UNDEFINED
+      JPEG
+      DATE
+      PNG
+      JSON
+      MULTI_VALUE
+      INT
+    ].each do |content_type|
+      context "when the content type is #{content_type}" do
+        let(:content_type) { content_type }
+        let(:value) { '' }
+        context 'when the value is empty' do
+          it 'raises an error' do
+            expect { subject }.to raise_error(TypeError, 'Warning: value is NULL')
+          end
+        end
       end
     end
 

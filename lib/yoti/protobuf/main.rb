@@ -43,6 +43,8 @@ module Yoti
       end
 
       def value_based_on_content_type(value, content_type = nil)
+        raise(TypeError, 'Warning: value is NULL') if value.empty? && content_type != CT_STRING
+
         case content_type
         when CT_STRING, CT_DATE
           value.encode('utf-8')

@@ -40,6 +40,58 @@ describe 'Yoti::ActivityDetails' do
     end
   end
 
+  describe '#remember_me_id' do
+    context 'when remember_me_id is empty string' do
+      it 'returns empty string' do
+        receipt = {
+          'remember_me_id' => '',
+          'sharing_outcome' => 'SUCCESS'
+        }
+        activity_details = activity_details(receipt, [])
+
+        expect(activity_details.remember_me_id).to eql('')
+        expect(activity_details.outcome).to eql('SUCCESS')
+      end
+    end
+    context 'when remember_me_id is not present' do
+      it 'returns nil' do
+        receipt = {
+          'sharing_outcome' => 'SUCCESS'
+        }
+        activity_details = activity_details(receipt, [])
+
+        expect(activity_details.remember_me_id).to be_nil
+        expect(activity_details.outcome).to eql('SUCCESS')
+      end
+    end
+  end
+
+  describe '#parent_remember_me_id' do
+    context 'when parent_remember_me_id is empty string' do
+      it 'returns empty string' do
+        receipt = {
+          'parent_remember_me_id' => '',
+          'sharing_outcome' => 'SUCCESS'
+        }
+        activity_details = activity_details(receipt, [])
+
+        expect(activity_details.parent_remember_me_id).to eql('')
+        expect(activity_details.outcome).to eql('SUCCESS')
+      end
+    end
+    context 'when parent_remember_me_id is not present' do
+      it 'returns nil' do
+        receipt = {
+          'sharing_outcome' => 'SUCCESS'
+        }
+        activity_details = activity_details(receipt, [])
+
+        expect(activity_details.parent_remember_me_id).to be_nil
+        expect(activity_details.outcome).to eql('SUCCESS')
+      end
+    end
+  end
+
   describe '#profile' do
     it 'returns the Yoti::Profile with processed attributes' do
       attr_arr = [

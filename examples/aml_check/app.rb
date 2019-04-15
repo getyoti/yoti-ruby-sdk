@@ -23,7 +23,7 @@ puts Yoti::Client.aml_check(aml_profile)
 first_name = 'Edward Richard George'
 last_name = 'Heath'
 country_code = 'USA'
-post_code = '012345'
+post_code = '12345'
 ssn = '123123123'
 
 aml_address = Yoti::AmlAddress.new(country_code, post_code)

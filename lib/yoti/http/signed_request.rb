@@ -14,6 +14,7 @@ module Yoti
       @http_req['X-Yoti-Auth-Key'] = @auth_key
       @http_req['X-Yoti-Auth-Digest'] = message_signature
       @http_req['X-Yoti-SDK'] = Yoti.configuration.sdk_identifier
+      @http_req['X-Yoti-SDK-Version'] = "#{Yoti.configuration.sdk_identifier}-#{Yoti::VERSION}"
       @http_req['Content-Type'] = 'application/json'
       @http_req['Accept'] = 'application/json'
       @http_req

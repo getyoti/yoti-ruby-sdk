@@ -2,14 +2,23 @@ require 'openssl'
 require 'date'
 
 module Yoti
+  #
   # Parse attribute anchors
+  #
   class AnchorProcessor
-    # @param [Array<Yoti::Anchor>]
+    #
+    # @param [Array<Yoti::Protobuf::Attrpubapi::Anchor>]
+    #
     def initialize(anchors_list)
       @anchors_list = anchors_list
       @get_next = false
     end
 
+    #
+    # Extract matching Attribute Anchors from list.
+    #
+    # @return [Array<Yoti::Anchor>]
+    #
     def process
       result_data = { 'sources' => [], 'verifiers' => [] }
       anchor_types = self.anchor_types
@@ -29,6 +38,13 @@ module Yoti
       result_data
     end
 
+    #
+    # Convert certificate list to a list of X509 certificates.
+    #
+    # @param [Google::Protobuf::RepeatedField] certs_list
+    #
+    # @return [Array<OpenSSL::X509::Certificate>]
+    #
     def convert_certs_list_to_X509(certs_list)
       x509_certs_list = []
       certs_list.each do |cert|
@@ -39,6 +55,13 @@ module Yoti
       x509_certs_list
     end
 
+    #
+    # Return signed timestamp.
+    #
+    # @param [String] signed_time_stamp_binary
+    #
+    # @return [Yoti::SignedTimeStamp]
+    #
     def process_signed_time_stamp(signed_time_stamp_binary)
       signed_time_stamp = Yoti::Protobuf::Compubapi::SignedTimestamp.decode(signed_time_stamp_binary)
       time_in_sec = signed_time_stamp.timestamp / 1000000
@@ -55,6 +78,14 @@ module Yoti
       Yoti::Anchor.new(anchor_value, sub_type, signed_time_stamp, x509_certs_list)
     end
 
+    #
+    # Return Anchor value for provided oid.
+    #
+    # @param [OpenSSL::ASN1::Sequence, OpenSSL::ASN1::ASN1Data, Array] obj
+    # @param [String] oid
+    #
+    # @return [String, nil]
+    #
     def get_anchor_value_by_oid(obj, oid)
       case obj
       when OpenSSL::ASN1::Sequence, Array
@@ -67,6 +98,14 @@ module Yoti
       nil
     end
 
+    #
+    # Return Anchor value for ASN1 data.
+    #
+    # @param [OpenSSL::ASN1::ASN1Data] value
+    # @param [String] oid
+    #
+    # @return [String, nil]
+    #
     def get_anchor_value_by_asn1_data(value, oid)
       if value.respond_to?(:to_s) && value == oid
         @get_next = true
@@ -80,6 +119,14 @@ module Yoti
       get_anchor_value_by_oid(value, oid)
     end
 
+    #
+    # Return Anchor value for ASN1 sequence.
+    #
+    # @param [OpenSSL::ASN1::Sequence, Array] obj
+    # @param [String] oid
+    #
+    # @return [String, nil]
+    #
     def get_anchor_value_by_asn1_sequence(obj, oid)
       obj.each do |child_obj|
         result = get_anchor_value_by_oid(child_obj, oid)
@@ -88,6 +135,11 @@ module Yoti
       nil
     end
 
+    #
+    # Mapping of anchor types to oid.
+    #
+    # @return [Hash]
+    #
     def anchor_types
       { 'sources' => '1.3.6.1.4.1.47127.1.1.1',
         'verifiers' => '1.3.6.1.4.1.47127.1.1.2' }
@@ -95,8 +147,12 @@ module Yoti
 
     protected
 
+    #
     # Define whether the search function get_anchor_value_by_oid
     # should return the next value in the array
+    #
+    # @return [Boolean]
+    #
     attr_reader :get_next
   end
 end

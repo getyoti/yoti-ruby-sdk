@@ -30,7 +30,7 @@ module Yoti
     #
     # Timestamp applied at the time of Anchor creation.
     #
-    # @return [SignedTimeStamp]
+    # @return [Yoti::SignedTimeStamp]
     #
     attr_reader :signed_time_stamp
 

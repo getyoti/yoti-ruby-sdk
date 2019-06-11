@@ -4,6 +4,7 @@ require 'date'
 module Yoti
   # Parse attribute anchors
   class AnchorProcessor
+    # @param [Array<Yoti::Anchor>]
     def initialize(anchors_list)
       @anchors_list = anchors_list
       @get_next = false

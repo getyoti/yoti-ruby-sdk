@@ -307,6 +307,7 @@ Visiting `https://localhost:4567/` should show a Yoti Connect button
 * Activity Details
   * [X] Remember Me ID `remember_me_id`
   * [X] Parent Remember Me ID `parent_remember_me_id`
+  * [X] Receipt ID `receipt_id`
   * [X] Base64 Selfie URI `base64_selfie_uri`
   * [X] Age verified `age_verified`
   * [X] Profile `profile`

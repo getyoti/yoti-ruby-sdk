@@ -29,7 +29,8 @@ describe 'Yoti::ActivityDetails' do
       receipt = {
         'remember_me_id' => 'test_remember_me_id',
         'parent_remember_me_id' => 'test_parent_remember_me_id',
-        'sharing_outcome' => 'SUCCESS'
+        'sharing_outcome' => 'SUCCESS',
+        'timestamp' => '2016-07-19T08:55:38Z'
       }
       activity_details = activity_details(receipt, [])
 
@@ -37,6 +38,21 @@ describe 'Yoti::ActivityDetails' do
       expect(activity_details.remember_me_id).to eql('test_remember_me_id')
       expect(activity_details.parent_remember_me_id).to eql('test_parent_remember_me_id')
       expect(activity_details.outcome).to eql('SUCCESS')
+      expect(activity_details.timestamp).to be_an_instance_of(Time)
+      expect(activity_details.timestamp.to_s).to eql('2016-07-19 08:55:38 UTC')
+    end
+  end
+
+  describe '#timestamp' do
+    context 'when timestamp has microseconds' do
+      it 'returns microseconds' do
+        receipt = {
+          'timestamp' => '2016-07-19T08:55:38.123456Z'
+        }
+        activity_details = activity_details(receipt, [])
+
+        expect(activity_details.timestamp.strftime('%F %H:%M:%S.%6N')).to eql('2016-07-19 08:55:38.123456')
+      end
     end
   end
 

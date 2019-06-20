@@ -6,7 +6,10 @@ describe 'Yoti::Client' do
     let(:profile) { activity_details.user_profile }
     let(:outcome) { activity_details.outcome }
     let(:user_id) { activity_details.user_id }
+    let(:remember_me_id) { activity_details.remember_me_id }
     let(:base64_selfie_uri) { activity_details.base64_selfie_uri }
+    let(:receipt_id) { activity_details.receipt_id }
+    let(:timestamp) { activity_details.timestamp }
 
     context 'when the encrypted token is nil', type: :api_with_profile do
       it 'raises an ArgumentError' do
@@ -34,9 +37,19 @@ describe 'Yoti::Client' do
         expect(profile).not_to be_nil
       end
 
-      it 'contains the decrypted user ID value' do
+      it 'contains the decrypted remember me ID value' do
         expected_id = 'Hig2yAT79cWvseSuXcIuCLa5lNkAPy70rxetUaeHlTJGmiwc/g1MWdYWYrexWvPU'
+        expect(remember_me_id).to eql(expected_id)
         expect(user_id).to eql(expected_id)
+      end
+
+      it 'contains the receipt ID value' do
+        expect(receipt_id).to eql('9HNJDX5bEIN5TqBm0OGzVIc1LaAmbzfx6eIrwNdwpHvKeQmgPujyogC+r7hJCVPl')
+      end
+
+      it 'contains the timestamp value' do
+        expect(timestamp.to_s).to eql('2016-07-19 08:55:38 UTC')
+        expect(timestamp.zone).to eql('UTC')
       end
 
       it 'contains the decrypted phone number value' do

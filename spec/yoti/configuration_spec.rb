@@ -38,6 +38,10 @@ describe 'Yoti::Configuration' do
       configuration.api_version = 'v1'
 
       expect(configuration.api_endpoint).to eql('https://api_url.com/api/v1')
+
+      configuration.api_endpoint = 'https://full_api_url.com'
+
+      expect(configuration.api_endpoint).to eql('https://full_api_url.com')
     end
   end
 

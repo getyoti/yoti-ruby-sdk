@@ -25,13 +25,21 @@ module Yoti
     # @return [Boolean] the age under/over attribute
     attr_reader :age_verified
 
+    # @return [String] Receipt ID identifying a completed activity
+    attr_reader :receipt_id
+
+    # @return [String] Time and date of the sharing activity
+    attr_reader :timestamp
+
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
     def initialize(receipt, decrypted_profile = nil)
       @remember_me_id = receipt['remember_me_id']
       @user_id = @remember_me_id
+      @receipt_id = receipt['receipt_id']
       @parent_remember_me_id = receipt['parent_remember_me_id']
       @outcome = receipt['sharing_outcome']
+      @timestamp = receipt['timestamp'] ? Time.parse(receipt['timestamp']) : nil
       @user_profile = {}
       @extended_profile = {}
       process_decrypted_profile(decrypted_profile)

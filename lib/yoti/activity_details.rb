@@ -91,7 +91,9 @@ module Yoti
       @timestamp = receipt['timestamp'] ? Time.parse(receipt['timestamp']) : nil
       @extended_user_profile = process_decrypted_profile(decrypted_profile)
       @extended_application_profile = process_decrypted_profile(decrypted_application_profile)
-      @user_profile = process_user_profile
+      @user_profile = @extended_user_profile.map do |name, attribute|
+        [name, attribute.value]
+      end.to_h
     end
 
     #
@@ -180,25 +182,6 @@ module Yoti
     #
     def process_age_verified(attribute)
       @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)
-    end
-
-    private
-
-    #
-    # Processes the extended user profile to user profile hash
-    #
-    # @deprecated :user_profile will be replaced by :profile
-    #
-    # @return [Hash]
-    #
-    def process_user_profile
-      if @extended_user_profile.nil?
-        {}
-      else
-        @extended_user_profile.map do |name, attribute|
-          [name, attribute.value]
-        end.to_h
-      end
     end
   end
 end

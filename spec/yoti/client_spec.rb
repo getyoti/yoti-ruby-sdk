@@ -10,6 +10,7 @@ describe 'Yoti::Client' do
     let(:base64_selfie_uri) { activity_details.base64_selfie_uri }
     let(:receipt_id) { activity_details.receipt_id }
     let(:timestamp) { activity_details.timestamp }
+    let(:application_profile) { activity_details.application_profile }
 
     context 'when the encrypted token is nil', type: :api_with_profile do
       it 'raises an ArgumentError' do
@@ -104,6 +105,26 @@ describe 'Yoti::Client' do
       it 'contains the decrypted user ID value' do
         expected_id = 'Hig2yAT79cWvseSuXcIuCLa5lNkAPy70rxetUaeHlTJGmiwc/g1MWdYWYrexWvPU'
         expect(user_id).to eql(expected_id)
+      end
+    end
+
+    context 'when the application profile has content', type: :api_with_profile do
+      let(:activity_details) { Yoti::Client.get_activity_details(encrypted_connect_token) }
+
+      it 'contains the fetched application profile' do
+        expect(application_profile).not_to be_nil
+      end
+
+      it 'contains the application name' do
+        expect(application_profile.name.value).to eql('Node SDK Test')
+      end
+
+      it 'contains the application url' do
+        expect(application_profile.url.value).to eql('https://example.com')
+      end
+
+      it 'contains the application receipt bg color' do
+        expect(application_profile.receipt_bgcolor.value).to eql('#ffffff')
       end
     end
   end

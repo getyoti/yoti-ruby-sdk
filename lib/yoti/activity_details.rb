@@ -1,58 +1,134 @@
 require 'net/http'
 
 module Yoti
-  # Encapsulates the user profile data
+  #
+  # Details of an activity between a user and the application.
+  #
   class ActivityDetails
-    # @return [String] the outcome of the profile request, eg: SUCCESS
+    #
+    # The outcome of the profile request, eg: SUCCESS
+    #
+    # @return [String]
+    #
     attr_reader :outcome
 
+    #
     # @deprecated replaced by :remember_me_id
-    # @return [String] the Yoti ID
+    #
+    # @return [String]
+    #
     attr_reader :user_id
 
-    # @return [String] the Remember Me ID
+    #
+    # Return the Remember Me ID, which is a unique, stable identifier for
+    # a user in the context of an application.
+    #
+    # You can use it to identify returning users. This value will be different
+    # for the same user in different applications.
+    #
+    # @return [String]
+    #
     attr_reader :remember_me_id
 
-    # @return [String] the Parent Remember Me ID
+    #
+    # Return the Parent Remember Me ID, which is a unique, stable identifier for a
+    # user in the context of an organisation.
+    #
+    # You can use it to identify returning users. This value is consistent for a
+    # given user across different applications belonging to a single organisation.
+    #
+    # @return [String]
+    #
     attr_reader :parent_remember_me_id
 
-    # @return [Hash] the decoded profile attributes
-    attr_reader :user_profile
-
-    # @return [String] the selfie in base64 format
+    #
+    # Base64 encoded selfie image
+    #
+    # @return [String]
+    #
     attr_reader :base64_selfie_uri
 
-    # @return [Boolean] the age under/over attribute
+    #
+    # The age under/over attribute
+    #
+    # @return [Boolean]
+    #
     attr_reader :age_verified
 
-    # @return [String] Receipt ID identifying a completed activity
+    #
+    # Receipt ID identifying a completed activity
+    #
+    # @return [String]
+    #
     attr_reader :receipt_id
 
-    # @return [Time] Time and date of the sharing activity
+    #
+    # Time and date of the sharing activity
+    #
+    # @return [Time]
+    #
     attr_reader :timestamp
 
+    #
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
-    def initialize(receipt, decrypted_profile = nil)
+    #
+    def initialize(receipt, decrypted_profile = nil, decrypted_application_profile = nil)
       @remember_me_id = receipt['remember_me_id']
       @user_id = @remember_me_id
       @receipt_id = receipt['receipt_id']
       @parent_remember_me_id = receipt['parent_remember_me_id']
       @outcome = receipt['sharing_outcome']
       @timestamp = receipt['timestamp'] ? Time.parse(receipt['timestamp']) : nil
-      @user_profile = {}
-      @extended_profile = {}
-      process_decrypted_profile(decrypted_profile)
+      @extended_user_profile = process_decrypted_profile(decrypted_profile)
+      @extended_application_profile = process_decrypted_profile(decrypted_application_profile)
     end
 
-    # @return [Hash] a JSON of the address
+    #
+    # The user's structured postal address as JSON
+    #
+    # @deprecated replaced by Profile.structured_postal_address
+    #
+    # @return [Hash]
+    #
     def structured_postal_address
-      @user_profile['structured_postal_address']
+      user_profile['structured_postal_address']
     end
 
-    # @return [Profile] of Yoti user
+    #
+    # The user profile with shared attributes and anchor information, returned
+    # by Yoti if the request was successful
+    #
+    # @return [Profile]
+    #
     def profile
-      Yoti::Profile.new(@extended_profile)
+      Yoti::Profile.new(@extended_user_profile)
+    end
+
+    #
+    # Profile of an application, with convenience methods to access well-known attributes
+    #
+    # @return [ApplicationProfile]
+    #
+    def application_profile
+      Yoti::ApplicationProfile.new(@extended_application_profile)
+    end
+
+    #
+    # The decoded profile attributes
+    #
+    # @deprecated replaced by :profile
+    #
+    # @return [Hash]
+    #
+    def user_profile
+      if @extended_user_profile.nil?
+        {}
+      else
+        @extended_user_profile.map do |name, attribute|
+          [name, attribute.value]
+        end.to_h
+      end
     end
 
     protected
@@ -61,14 +137,16 @@ module Yoti
       return nil unless decrypted_profile.is_a?(Object)
       return nil unless decrypted_profile.respond_to?(:attributes)
 
+      profile_data = {}
       decrypted_profile.attributes.each do |attribute|
         begin
-          process_attribute(attribute)
+          profile_data[attribute.name] = process_attribute(attribute)
           process_age_verified(attribute)
         rescue StandardError => e
           Yoti::Log.logger.warn("#{e.message} (Attribute: #{attribute.name})")
         end
       end
+      profile_data
     end
 
     def process_attribute(attribute)
@@ -82,8 +160,7 @@ module Yoti
       end
 
       anchors_list = Yoti::AnchorProcessor.new(attribute.anchors).process
-      @extended_profile[attribute.name] = Yoti::Attribute.new(attribute.name, attr_value, anchors_list['sources'], anchors_list['verifiers'])
-      @user_profile[attribute.name] = attr_value
+      Yoti::Attribute.new(attribute.name, attr_value, anchors_list['sources'], anchors_list['verifiers'])
     end
 
     def process_age_verified(attribute)

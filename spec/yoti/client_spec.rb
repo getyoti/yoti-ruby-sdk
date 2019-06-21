@@ -119,6 +119,10 @@ describe 'Yoti::Client' do
         expect(application_profile.name.value).to eql('Node SDK Test')
       end
 
+      it 'contains the application logo is nil' do
+        expect(application_profile.logo).to be_nil
+      end
+
       it 'contains the application url' do
         expect(application_profile.url.value).to eql('https://example.com')
       end

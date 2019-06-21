@@ -1,13 +1,16 @@
 require 'spec_helper'
 
-def activity_details(receipt, attr_arr)
+def activity_details(receipt, attr_arr, application_attr_arr = nil)
   Yoti::ActivityDetails.new(
     receipt,
-    proto_attr_list(attr_arr)
+    proto_attr_list(attr_arr),
+    proto_attr_list(application_attr_arr)
   )
 end
 
 def proto_attr_list(attr_arr)
+  return {} if attr_arr.nil?
+
   attr_list = Yoti::Protobuf::Attrpubapi::AttributeList.new
   attr_arr.each do |attr|
     attr_list.attributes.push(attr)
@@ -208,6 +211,37 @@ describe 'Yoti::ActivityDetails' do
         expect(activity_details.profile.get_attribute('empty_non_string_value')).to be_nil
         expect(@log_output.string).to include 'WARN -- Yoti: Warning: value is NULL (Attribute: empty_non_string_value)'
       end
+    end
+  end
+
+  describe '#application_profile' do
+    it 'returns the Yoti::ApplicationProfile with processed attributes' do
+      attr_arr = [
+        proto_attr('application_name', 'test application name', :STRING),
+        proto_attr('application_logo', 'some logo content', :JPEG),
+        proto_attr('application_url', 'https://www.example.com', :STRING),
+        proto_attr('application_receipt_bgcolor', '#000000', :STRING)
+      ]
+      activity_details = activity_details({}, {}, attr_arr)
+      application_profile = activity_details.application_profile
+
+      expect(application_profile).to be_an_instance_of(Yoti::ApplicationProfile)
+
+      expect(application_profile.name).to be_an_instance_of(Yoti::Attribute)
+      expect(application_profile.name.value).to eql('test application name')
+
+      expect(application_profile.logo).to be_an_instance_of(Yoti::Attribute)
+      base64_content = "data:image/jpeg;base64,#{Base64.strict_encode64('some logo content')}"
+      expect(application_profile.logo.value.base64_content).to eql(base64_content)
+
+      expect(application_profile.url).to be_an_instance_of(Yoti::Attribute)
+      expect(application_profile.url.value).to eql('https://www.example.com')
+
+      expect(application_profile.receipt_bgcolor).to be_an_instance_of(Yoti::Attribute)
+      expect(application_profile.receipt_bgcolor.value).to eql('#000000')
+
+      expect(application_profile.get_attribute('application_name')).to be_an_instance_of(Yoti::Attribute)
+      expect(application_profile.get_attribute('application_name').value).to eql('test application name')
     end
   end
 

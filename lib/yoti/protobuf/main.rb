@@ -19,12 +19,25 @@ module Yoti
       CT_MULTI_VALUE = :MULTI_VALUE # multi value
       CT_INT = :INT # integer
 
+      #
+      # @deprecated replaced by user_profile
+      #
       def current_user(receipt)
         return nil unless valid_receipt?(receipt)
 
-        profile_content = receipt['other_party_profile_content']
-        decoded_profile_content = Base64.decode64(profile_content)
-        Yoti::Protobuf::Compubapi::EncryptedData.decode(decoded_profile_content)
+        decode_profile(receipt['other_party_profile_content'])
+      end
+
+      def user_profile(receipt)
+        return nil unless valid_receipt?(receipt)
+
+        decipher_profile(receipt['other_party_profile_content'], receipt['wrapped_receipt_key'])
+      end
+
+      def application_profile(receipt)
+        return nil unless valid_receipt?(receipt)
+
+        decipher_profile(receipt['profile_content'], receipt['wrapped_receipt_key'])
       end
 
       def attribute_list(data)
@@ -79,6 +92,18 @@ module Yoti
         receipt.key?('other_party_profile_content') &&
           !receipt['other_party_profile_content'].nil? &&
           receipt['other_party_profile_content'] != ''
+      end
+
+      def decode_profile(profile_content)
+        decoded_profile_content = Base64.decode64(profile_content)
+        Yoti::Protobuf::Compubapi::EncryptedData.decode(decoded_profile_content)
+      end
+
+      def decipher_profile(profile_content, wrapped_key)
+        encrypted_data = decode_profile(profile_content)
+        unwrapped_key = Yoti::SSL.decrypt_token(wrapped_key)
+        decrypted_data = Yoti::SSL.decipher(unwrapped_key, encrypted_data.iv, encrypted_data.cipher_text)
+        Protobuf.attribute_list(decrypted_data)
       end
     end
   end

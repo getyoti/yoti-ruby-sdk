@@ -13,6 +13,10 @@ module Yoti
     POSTAL_ADDRESS = 'postal_address'
     STRUCTURED_POSTAL_ADDRESS = 'structured_postal_address'
     DOCUMENT_IMAGES = 'document_images'
+    APPLICATION_NAME = 'application_name'
+    APPLICATION_LOGO = 'application_logo'
+    APPLICATION_URL = 'application_url'
+    APPLICATION_RECEIPT_BGCOLOR = 'application_receipt_bgcolor'
 
     attr_reader :name, :value, :sources, :verifiers
 

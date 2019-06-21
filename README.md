@@ -311,7 +311,7 @@ Visiting `https://localhost:4567/` should show a Yoti Connect button
   * [X] Timestamp `timestamp`
   * [X] Base64 Selfie URI `base64_selfie_uri`
   * [X] Age verified `age_verified`
-  * [X] User Profile `profile`
+  * [X] Profile `profile`
     * [X] Selfie `selfie`
     * [X] Full Name `full_name`
     * [X] Given Names `given_names`

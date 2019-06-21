@@ -28,7 +28,7 @@ module Yoti
     # @return [String] Receipt ID identifying a completed activity
     attr_reader :receipt_id
 
-    # @return [String] Time and date of the sharing activity
+    # @return [Time] Time and date of the sharing activity
     attr_reader :timestamp
 
     # @param receipt [Hash] the receipt from the API request

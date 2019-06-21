@@ -42,6 +42,15 @@ module Yoti
     attr_reader :parent_remember_me_id
 
     #
+    # The decoded profile attributes
+    #
+    # @deprecated replaced by :profile
+    #
+    # @return [Hash]
+    #
+    attr_reader :user_profile
+
+    #
     # Base64 encoded selfie image
     #
     # @return [String]
@@ -82,6 +91,7 @@ module Yoti
       @timestamp = receipt['timestamp'] ? Time.parse(receipt['timestamp']) : nil
       @extended_user_profile = process_decrypted_profile(decrypted_profile)
       @extended_application_profile = process_decrypted_profile(decrypted_application_profile)
+      @user_profile = process_user_profile
     end
 
     #
@@ -112,23 +122,6 @@ module Yoti
     #
     def application_profile
       Yoti::ApplicationProfile.new(@extended_application_profile)
-    end
-
-    #
-    # The decoded profile attributes
-    #
-    # @deprecated replaced by :profile
-    #
-    # @return [Hash]
-    #
-    def user_profile
-      if @extended_user_profile.nil?
-        {}
-      else
-        @extended_user_profile.map do |name, attribute|
-          [name, attribute.value]
-        end.to_h
-      end
     end
 
     protected
@@ -165,6 +158,25 @@ module Yoti
 
     def process_age_verified(attribute)
       @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)
+    end
+
+    private
+
+    #
+    # Processes the extended user profile to user profile hash
+    #
+    # @deprecated :user_profile will be replaced by :profile
+    #
+    # @return [Hash]
+    #
+    def process_user_profile
+      if @extended_user_profile.nil?
+        {}
+      else
+        @extended_user_profile.map do |name, attribute|
+          [name, attribute.value]
+        end.to_h
+      end
     end
   end
 end

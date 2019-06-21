@@ -126,9 +126,16 @@ module Yoti
 
     protected
 
+    #
+    # Process the decrypted profile to into hash
+    #
+    # @param [Yoti::Protobuf::Attrpubapi::AttributeList] decrypted_profile
+    #
+    # @return [Hash]
+    #
     def process_decrypted_profile(decrypted_profile)
-      return nil unless decrypted_profile.is_a?(Object)
-      return nil unless decrypted_profile.respond_to?(:attributes)
+      return {} unless decrypted_profile.is_a?(Object)
+      return {} unless decrypted_profile.respond_to?(:attributes)
 
       profile_data = {}
       decrypted_profile.attributes.each do |attribute|
@@ -142,7 +149,17 @@ module Yoti
       profile_data
     end
 
+    #
+    # Converts protobuf attribute into Attribute
+    #
+    # @param [Yoti::rotobuf::Attrpubapi::Attribute] attribute
+    #
+    # @return [Attribute, nil]
+    #
     def process_attribute(attribute)
+      # Application Logo can be empty, return nil when this occurs.
+      return nil if attribute.name == Yoti::Attribute::APPLICATION_LOGO && attribute.value == ''
+
       attr_value = Yoti::Protobuf.value_based_on_content_type(attribute.value, attribute.content_type)
       attr_value = Yoti::Protobuf.value_based_on_attribute_name(attr_value, attribute.name)
 
@@ -156,6 +173,11 @@ module Yoti
       Yoti::Attribute.new(attribute.name, attr_value, anchors_list['sources'], anchors_list['verifiers'])
     end
 
+    #
+    # Processes age verification
+    #
+    # @param [Yoti::Protobuf::Attrpubapi::Attribute] attribute
+    #
     def process_age_verified(attribute)
       @age_verified = attribute.value == 'true' if Yoti::AgeProcessor.is_age_verification(attribute.name)
     end

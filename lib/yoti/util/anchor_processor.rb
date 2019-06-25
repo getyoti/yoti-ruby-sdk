@@ -7,15 +7,6 @@ module Yoti
   #
   class AnchorProcessor
     #
-    # Mapping of anchor types.
-    #
-    ANCHOR_TYPES = {
-      'SOURCE' => '1.3.6.1.4.1.47127.1.1.1',
-      'VERIFIER' => '1.3.6.1.4.1.47127.1.1.2',
-      'UNKNOWN' => ''
-    }.freeze
-
-    #
     # @param [Array<Yoti::Protobuf::Attrpubapi::Anchor>]
     #
     def initialize(anchors_list)
@@ -183,6 +174,15 @@ module Yoti
     attr_reader :get_next
 
     private
+
+    #
+    # Mapping of anchor types.
+    #
+    ANCHOR_TYPES = {
+      'SOURCE' => '1.3.6.1.4.1.47127.1.1.1',
+      'VERIFIER' => '1.3.6.1.4.1.47127.1.1.2',
+      'UNKNOWN' => ''
+    }.freeze
 
     #
     # Get anchor type by oid.

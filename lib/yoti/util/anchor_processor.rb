@@ -7,6 +7,15 @@ module Yoti
   #
   class AnchorProcessor
     #
+    # Mapping of anchor types.
+    #
+    ANCHOR_TYPES = {
+      'SOURCE' => '1.3.6.1.4.1.47127.1.1.1',
+      'VERIFIER' => '1.3.6.1.4.1.47127.1.1.2',
+      'UNKNOWN' => ''
+    }.freeze
+
+    #
     # @param [Array<Yoti::Protobuf::Attrpubapi::Anchor>]
     #
     def initialize(anchors_list)
@@ -20,17 +29,19 @@ module Yoti
     # @return [Array<Yoti::Anchor>]
     #
     def process
-      result_data = { 'sources' => [], 'verifiers' => [] }
-      anchor_types = self.anchor_types
+      result_data = anchor_types.map { |key, _value| [key, []] }.to_h
 
       @anchors_list.each do |anchor|
         x509_certs_list = convert_certs_list_to_X509(anchor.origin_server_certs)
-        yoti_signed_time_stamp = process_signed_time_stamp(anchor.signed_time_stamp)
+        signed_time_stamp = process_signed_time_stamp(anchor.signed_time_stamp)
 
-        anchor.origin_server_certs.each do |cert|
-          anchor_types.each do |type, oid|
-            yoti_anchor = get_anchor_by_oid(cert, oid, anchor.sub_type, yoti_signed_time_stamp, x509_certs_list)
-            result_data[type].push(yoti_anchor) unless yoti_anchor.nil?
+        x509_certs_list.each do |cert|
+          cert.extensions.each do |anchor_extension|
+            yoti_anchor = get_anchor(anchor_extension, anchor.sub_type, signed_time_stamp, x509_certs_list)
+            next if yoti_anchor.nil?
+
+            anchor_list_key = get_anchor_list_key_by_type(yoti_anchor.type)
+            result_data[anchor_list_key].push(yoti_anchor)
           end
         end
       end
@@ -48,10 +59,8 @@ module Yoti
     def convert_certs_list_to_X509(certs_list)
       x509_certs_list = []
       certs_list.each do |cert|
-        x509_cert = OpenSSL::X509::Certificate.new cert
-        x509_certs_list.push x509_cert
+        x509_certs_list.push OpenSSL::X509::Certificate.new(cert)
       end
-
       x509_certs_list
     end
 
@@ -69,17 +78,30 @@ module Yoti
       Yoti::SignedTimeStamp.new(signed_time_stamp.version, date_time)
     end
 
+    #
+    # Return Anchor for provided oid.
+    #
+    # @deprecated no longer in use
+    #
+    # @param [OpenSSL::X509::Certificate] cert
+    # @param [String] oid
+    # @param [String] sub_type
+    # @param [Yoti::SignedTimeStamp] signed_time_stamp
+    # @param [Array<OpenSSL::X509::Certificate>] x509_certs_list
+    #
+    # @return [Yoti::Anchor, nil]
+    #
     def get_anchor_by_oid(cert, oid, sub_type, signed_time_stamp, x509_certs_list)
       asn1_obj = OpenSSL::ASN1.decode(cert)
       anchor_value = get_anchor_value_by_oid(asn1_obj, oid)
 
-      return nil if anchor_value.nil?
-
-      Yoti::Anchor.new(anchor_value, sub_type, signed_time_stamp, x509_certs_list)
+      Yoti::Anchor.new(anchor_value, sub_type, signed_time_stamp, x509_certs_list) unless anchor_value.nil?
     end
 
     #
     # Return Anchor value for provided oid.
+    #
+    # @deprecated no longer in use
     #
     # @param [OpenSSL::ASN1::Sequence, OpenSSL::ASN1::ASN1Data, Array] obj
     # @param [String] oid
@@ -101,6 +123,8 @@ module Yoti
     #
     # Return Anchor value for ASN1 data.
     #
+    # @deprecated no longer in use
+    #
     # @param [OpenSSL::ASN1::ASN1Data] value
     # @param [String] oid
     #
@@ -110,10 +134,8 @@ module Yoti
       if value.respond_to?(:to_s) && value == oid
         @get_next = true
       elsif value.respond_to?(:to_s) && @get_next
-        raw_value = OpenSSL::ASN1.decode(value)
-        anchor_value = raw_value.value[0].value
         @get_next = false
-        return anchor_value
+        return OpenSSL::ASN1.decode(value).value[0].value
       end
 
       get_anchor_value_by_oid(value, oid)
@@ -121,6 +143,8 @@ module Yoti
 
     #
     # Return Anchor value for ASN1 sequence.
+    #
+    # @deprecated no longer in use
     #
     # @param [OpenSSL::ASN1::Sequence, Array] obj
     # @param [String] oid
@@ -141,8 +165,9 @@ module Yoti
     # @return [Hash]
     #
     def anchor_types
-      { 'sources' => '1.3.6.1.4.1.47127.1.1.1',
-        'verifiers' => '1.3.6.1.4.1.47127.1.1.2' }
+      { 'sources' => ANCHOR_TYPES['SOURCE'],
+        'verifiers' => ANCHOR_TYPES['VERIFIER'],
+        'unknown' => ANCHOR_TYPES['UNKNOWN'] }
     end
 
     protected
@@ -151,8 +176,69 @@ module Yoti
     # Define whether the search function get_anchor_value_by_oid
     # should return the next value in the array
     #
+    # @deprecated no longer in use
+    #
     # @return [Boolean]
     #
     attr_reader :get_next
+
+    private
+
+    #
+    # Get anchor type by oid.
+    #
+    # @param [String] oid
+    #
+    def get_anchor_type_by_oid(oid)
+      if (type = ANCHOR_TYPES.find { |_key, value| value == oid })
+        return type.first
+      end
+
+      'UNKNOWN'
+    end
+
+    #
+    # Get anchor list key by type.
+    #
+    # @param [String] type
+    #
+    def get_anchor_list_key_by_type(type)
+      anchor_types.find { |_key, value| value == ANCHOR_TYPES[type] }.first
+    end
+
+    #
+    # Return an anchor for privided extension.
+    #
+    # @param [OpenSSL::X509::Extension] anchor_extension
+    # @param [String] sub_type
+    # @param [Yoti::SignedTimeStamp] signed_time_stamp
+    # @param [Array<OpenSSL::X509::Certificate>] x509_certs_list
+    #
+    # @return [Yoti::Anchor]
+    #
+    def get_anchor(anchor_extension, sub_type, signed_time_stamp, x509_certs_list)
+      type = get_anchor_type_by_oid(anchor_extension.oid)
+      value = ANCHOR_TYPES[type].nil? || ANCHOR_TYPES[type].empty? ? '' : get_anchor_value(anchor_extension)
+      return nil if value.nil?
+
+      Yoti::Anchor.new(value, sub_type, signed_time_stamp, x509_certs_list, type)
+    end
+
+    #
+    # Return Anchor value.
+    #
+    # @param [OpenSSL::X509::Extension] anchor_extension
+    #
+    # @return [String, nil]
+    #
+    def get_anchor_value(anchor_extension)
+      value = OpenSSL::ASN1.decode(anchor_extension).value[1].value
+      if value.is_a?(String)
+        decoded = OpenSSL::ASN1.decode(value)
+        return decoded.value[0].value if decoded.value[0].is_a?(OpenSSL::ASN1::ASN1Data)
+      end
+
+      nil
+    end
   end
 end

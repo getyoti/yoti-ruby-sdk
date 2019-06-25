@@ -20,7 +20,7 @@ module Yoti
     # @return [Array<Yoti::Anchor>]
     #
     def process
-      result_data = anchor_types.map { |key, _value| [key, []] }.to_h
+      result_data = ANCHOR_LIST_KEYS.map { |key, _value| [key, []] }.to_h
 
       @anchors_list.each do |anchor|
         x509_certs_list = convert_certs_list_to_X509(anchor.origin_server_certs)
@@ -153,12 +153,12 @@ module Yoti
     #
     # Mapping of anchor types to oid.
     #
+    # @deprecated no longer in use
+    #
     # @return [Hash]
     #
     def anchor_types
-      { 'sources' => ANCHOR_TYPES['SOURCE'],
-        'verifiers' => ANCHOR_TYPES['VERIFIER'],
-        'unknown' => ANCHOR_TYPES['UNKNOWN'] }
+      ANCHOR_LIST_KEYS
     end
 
     protected
@@ -185,6 +185,15 @@ module Yoti
     }.freeze
 
     #
+    # Mapping of anchor list keys.
+    #
+    ANCHOR_LIST_KEYS = {
+      'sources' => ANCHOR_TYPES['SOURCE'],
+      'verifiers' => ANCHOR_TYPES['VERIFIER'],
+      'unknown' => ANCHOR_TYPES['UNKNOWN']
+    }.freeze
+
+    #
     # Get anchor type by oid.
     #
     # @param [String] oid
@@ -203,7 +212,7 @@ module Yoti
     # @param [String] type
     #
     def get_anchor_list_key_by_type(type)
-      anchor_types.find { |_key, value| value == ANCHOR_TYPES[type] }.first
+      ANCHOR_LIST_KEYS.find { |_key, value| value == ANCHOR_TYPES[type] }.first
     end
 
     #
@@ -219,9 +228,8 @@ module Yoti
     def get_anchor(anchor_extension, sub_type, signed_time_stamp, x509_certs_list)
       type = get_anchor_type_by_oid(anchor_extension.oid)
       value = ANCHOR_TYPES[type].blank? ? '' : get_anchor_value(anchor_extension)
-      return nil if value.nil?
 
-      Yoti::Anchor.new(value, sub_type, signed_time_stamp, x509_certs_list, type)
+      Yoti::Anchor.new(value, sub_type, signed_time_stamp, x509_certs_list, type) unless value.nil?
     end
 
     #

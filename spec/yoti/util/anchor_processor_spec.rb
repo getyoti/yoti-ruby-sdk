@@ -145,4 +145,14 @@ describe 'Yoti::AnchorProcessor' do
       end
     end
   end
+  describe '.anchor_types' do
+    it 'should return anchor type mapping' do
+      processor = Yoti::AnchorProcessor.new([])
+      expect(processor.anchor_types).to eql(
+        'sources' => '1.3.6.1.4.1.47127.1.1.1',
+        'verifiers' => '1.3.6.1.4.1.47127.1.1.2',
+        'unknown' => ''
+      )
+    end
+  end
 end

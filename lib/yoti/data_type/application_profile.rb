@@ -31,7 +31,7 @@ module Yoti
     end
 
     #
-    # The background colour that will be displayed on each receipt the user gets, as a result
+    # The background color that will be displayed on each receipt the user gets, as a result
     # of a share with the application.
     #
     # @return [Attribute, nil]

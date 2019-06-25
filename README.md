@@ -194,17 +194,18 @@ Where `your_user_search_function` is a piece of logic in your app that is suppos
 You can retrieve the sources and verifiers for each attribute as follows:
 
 ```ruby
-given_names_sources = profile.given_names.sources // list of anchors
-given_names_verifiers = profile.given_names.verifiers // list of anchors
+given_names_sources = profile.given_names.sources # list of anchors
+given_names_verifiers = profile.given_names.verifiers # list of anchors
 ```
 You can also retrieve further properties from these respective anchors in the following way:
 
 ```ruby
-// Retrieving properties of the first anchor
-value = given_names_sources[0].value // string
-sub_type = given_names_sources[0].sub_type // string
-time_stamp = given_names_sources[0].signed_time_stamp.time_stamp // DateTime object
-origin_server_certs = given_names_sources[0].origin_server_certs // list of X509 certificates
+# Retrieving properties of the first anchor
+type = given_names_sources[0].type # string
+value = given_names_sources[0].value # string
+sub_type = given_names_sources[0].sub_type # string
+time_stamp = given_names_sources[0].signed_time_stamp.time_stamp # DateTime object
+origin_server_certs = given_names_sources[0].origin_server_certs # list of X509 certificates
 ```
 
 In case you want to prove the sources and verifiers of the helper`ActivityDetails.age_verified` on `Age Over 18` set as age derivation, please retrieve it's original attribute from the profile as follow:

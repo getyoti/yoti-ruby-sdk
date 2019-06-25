@@ -42,11 +42,26 @@ module Yoti
     #
     attr_reader :origin_server_certs
 
-    def initialize(value, sub_type, signed_time_stamp, origin_server_certs)
+    #
+    # Gets the type of the given anchor.
+    #
+    # @return [String]
+    #
+    attr_reader :type
+
+    #
+    # @param [String] value
+    # @param [String] sub_type
+    # @param [Yoti::SignedTimeStamp] signed_time_stamp
+    # @param [Array<OpenSSL::X509::Certificate>] origin_server_certs
+    # @param [String] type
+    #
+    def initialize(value, sub_type, signed_time_stamp, origin_server_certs, type = nil)
       @value = value
       @sub_type = sub_type
       @signed_time_stamp = signed_time_stamp
       @origin_server_certs = origin_server_certs
+      @type = type
     end
   end
 end

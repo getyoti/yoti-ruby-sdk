@@ -326,7 +326,7 @@ Visiting `https://localhost:4567/` should show a Yoti Connect button
     * [X] Name `name`
     * [X] URL `url`
     * [X] Logo `logo`
-    * [X] Receipt Background Colour `receipt_bgcolor`
+    * [X] Receipt Background Color `receipt_bgcolor`
 
 ## Support
 

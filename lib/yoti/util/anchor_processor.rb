@@ -218,7 +218,7 @@ module Yoti
     #
     def get_anchor(anchor_extension, sub_type, signed_time_stamp, x509_certs_list)
       type = get_anchor_type_by_oid(anchor_extension.oid)
-      value = ANCHOR_TYPES[type].nil? || ANCHOR_TYPES[type].empty? ? '' : get_anchor_value(anchor_extension)
+      value = ANCHOR_TYPES[type].blank? ? '' : get_anchor_value(anchor_extension)
       return nil if value.nil?
 
       Yoti::Anchor.new(value, sub_type, signed_time_stamp, x509_certs_list, type)

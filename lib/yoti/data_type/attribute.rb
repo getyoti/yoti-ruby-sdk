@@ -71,14 +71,31 @@ module Yoti
     # @param [String] value
     # @param [Array<Yoti::Anchor>] sources
     # @param [Array<Yoti::Anchor>] verifiers
-    # @param [Array<Yoti::Anchor>] anchors
+    # @param [Hash<String => Array>] anchor_lists
     #
-    def initialize(name, value, sources, verifiers, anchors = nil)
+    def initialize(name, value, sources, verifiers, anchor_lists = nil)
       @name = name
       @value = value
       @sources = sources
       @verifiers = verifiers
-      @anchors = anchors
+      @anchors = process_anchor_lists(anchor_lists)
+    end
+
+    private
+
+    #
+    # Flattens anchor lists into single array.
+    #
+    # @param [Hash<String => Array>] anchor_lists
+    #
+    # @return [Array<Yoti::Anchor>] <description>
+    #
+    def process_anchor_lists(anchor_lists)
+      anchors = []
+      return anchors if anchor_lists.nil?
+
+      anchor_lists.each { |_type, anchor_list| anchors += anchor_list }
+      anchors
     end
   end
 end

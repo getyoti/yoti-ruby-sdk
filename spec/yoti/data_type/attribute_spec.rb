@@ -12,7 +12,11 @@ describe 'Yoti::Attribute' do
   dl_sources_list = process_anchors_list(dl_source_anchor)['sources']
   dl_verifiers_list = process_anchors_list(dl_verifier_anchor)['verifiers']
   unknown_anchors_list = process_anchors_list(unknown_anchor)['unknown']
-  anchors_list = dl_sources_list + dl_verifiers_list + unknown_anchors_list
+  anchors_list = {
+    'sources' => dl_sources_list,
+    'verifiers' => dl_verifiers_list,
+    'unknown' => unknown_anchors_list
+  }
   yoti_attribute = Yoti::Attribute.new('test_given_names', 'Test GIVEN NAMES', dl_sources_list, dl_verifiers_list, anchors_list)
 
   describe '.name' do

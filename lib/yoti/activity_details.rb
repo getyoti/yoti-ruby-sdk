@@ -172,7 +172,7 @@ module Yoti
       end
 
       anchors_list = Yoti::AnchorProcessor.new(attribute.anchors).process
-      Yoti::Attribute.new(attribute.name, attr_value, anchors_list['sources'], anchors_list['verifiers'])
+      Yoti::Attribute.new(attribute.name, attr_value, anchors_list['sources'], anchors_list['verifiers'], anchors_list)
     end
 
     #

@@ -4,6 +4,7 @@ describe 'Yoti::Client' do
   describe '.get_activity_details' do
     let(:encrypted_connect_token) { File.read('spec/sample-data/encrypted_connect_token.txt', encoding: 'utf-8') }
     let(:profile) { activity_details.user_profile }
+    let(:extended_profile) { activity_details.profile }
     let(:outcome) { activity_details.outcome }
     let(:user_id) { activity_details.user_id }
     let(:remember_me_id) { activity_details.remember_me_id }
@@ -66,6 +67,24 @@ describe 'Yoti::Client' do
       it 'contains the base64_selfie_uri value' do
         selfie = File.read('spec/sample-data/selfie.txt', encoding: 'utf-8')
         expect(base64_selfie_uri).to eql(selfie)
+      end
+
+      it 'contains the extended profile' do
+        expect(extended_profile).to be_a(Yoti::Profile)
+      end
+
+      it 'contains the phone number attribute value' do
+        expect(extended_profile.phone_number.value).to eql('+447474747474')
+      end
+
+      it 'contains the phone number attribute anchors' do
+        expect(extended_profile.phone_number.anchors[0]).to be_a(Yoti::Anchor)
+        expect(extended_profile.phone_number.anchors[0].type).to eql('UNKNOWN')
+      end
+
+      it 'contains the selfie attribute value' do
+        selfie = File.read('spec/sample-data/selfie.txt', encoding: 'utf-8')
+        expect('data:image/jpeg;base64,'.concat(Base64.strict_encode64(extended_profile.selfie.value))).to eql(selfie)
       end
     end
 

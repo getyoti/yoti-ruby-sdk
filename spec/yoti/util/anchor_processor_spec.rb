@@ -73,7 +73,7 @@ describe 'Yoti::AnchorProcessor' do
         expect(pp_source_anchor.value).to eql(expected_value)
       end
 
-      it 'should return empty sub_type' do
+      it 'should return OCR sub_type' do
         expect(pp_source_anchor.sub_type).to eql('OCR')
       end
 
@@ -87,6 +87,40 @@ describe 'Yoti::AnchorProcessor' do
         expected_value = '277870515583559162487099305254898397834'
         cert_serial = pp_source_anchor.origin_server_certs[0].serial.to_s
         expect(cert_serial).to eql(expected_value)
+      end
+
+      it 'should return /CN=passport-registration-server as issuer' do
+        expect(pp_source_anchor.origin_server_certs[0].issuer.to_s)
+          .to eql('/CN=passport-registration-server')
+      end
+    end
+
+    context 'when processing unknown anchor data' do
+      unknown_anchor_data = File.read('spec/sample-data/anchors/unknown-anchor.txt')
+      yoti_anchors = process_anchors_list(unknown_anchor_data)
+      unknown_anchor = yoti_anchors['unknown'][0]
+
+      it 'should return empty string as value' do
+        expect(unknown_anchor.value).to eql('')
+      end
+
+      it 'should return empty sub_type' do
+        expect(unknown_anchor.sub_type).to eql('')
+      end
+
+      it 'should return 2018-04-12 14:14:32 as timestamp' do
+        date_time_str = unknown_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S')
+        expect(date_time_str).to eql('2018-04-11 12:13:03')
+      end
+
+      it 'should return /CN=driving-licence-registration-server as issuer' do
+        expect(unknown_anchor.origin_server_certs[0].issuer.to_s)
+          .to eql('/CN=driving-licence-registration-server')
+      end
+
+      it 'should return 46131813624213904216516051554755262812 as serial' do
+        expect(unknown_anchor.origin_server_certs[0].serial.to_s)
+          .to eql('46131813624213904216516051554755262812')
       end
     end
   end

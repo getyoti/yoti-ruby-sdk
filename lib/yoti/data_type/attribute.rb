@@ -1,5 +1,13 @@
 module Yoti
-  # Encapsulates profile attribute
+  #
+  # A class to represent a Yoti attribute.
+  #
+  # A Yoti attribute consists of the attribute name, an associated
+  # attribute value, and a list of Anchors from Yoti.
+  #
+  # It may hold one or more anchors, which specify how an attribute has been provided
+  # and how it has been verified within the Yoti platform.
+  #
   class Attribute
     FAMILY_NAME = 'family_name'
     GIVEN_NAMES = 'given_names'
@@ -18,13 +26,59 @@ module Yoti
     APPLICATION_URL = 'application_url'
     APPLICATION_RECEIPT_BGCOLOR = 'application_receipt_bgcolor'
 
-    attr_reader :name, :value, :sources, :verifiers
+    #
+    # Gets the name of the attribute.
+    #
+    # @return [String]
+    #
+    attr_reader :name
 
-    def initialize(name, value, sources, verifiers)
+    #
+    # Retrieves the value of an attribute. If this is null, the default value for
+    # the type is returned.
+    #
+    # @return [String]
+    #
+    attr_reader :value
+
+    #
+    # Sources are a subset of the anchors associated with an attribute, where the
+    # anchor type is SOURCE.
+    #
+    # @return [Array<Yoti::Anchor>]
+    #
+    attr_reader :sources
+
+    #
+    # Verifiers are a subset of the anchors associated with an attribute, where the
+    # anchor type is VERIFIER.
+    #
+    # @return [Array<Yoti::Anchor>]
+    #
+    attr_reader :verifiers
+
+    #
+    # Get the anchors for an attribute. If an attribute has only one SOURCE
+    # Anchor with the value set to "USER_PROVIDED" and zero VERIFIER Anchors,
+    # then the attribute is a self-certified one.
+    #
+    # @return [Array<Yoti::Anchor>]
+    #
+    attr_reader :anchors
+
+    #
+    # @param [String] name
+    # @param [String] value
+    # @param [Array<Yoti::Anchor>] sources
+    # @param [Array<Yoti::Anchor>] verifiers
+    # @param [Array<Yoti::Anchor>] anchors
+    #
+    def initialize(name, value, sources, verifiers, anchors = nil)
       @name = name
       @value = value
       @sources = sources
       @verifiers = verifiers
+      @anchors = anchors
     end
   end
 end

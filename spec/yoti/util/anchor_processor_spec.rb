@@ -124,4 +124,25 @@ describe 'Yoti::AnchorProcessor' do
       end
     end
   end
+  describe '.getAnchorByOid' do
+    context 'when processing DL Source Anchor data' do
+      dl_source_anchor = File.read('spec/sample-data/anchors/dl-source.txt')
+      anchor = Yoti::Protobuf::Attrpubapi::Anchor.decode(Base64.decode64(dl_source_anchor))
+      processor = Yoti::AnchorProcessor.new([])
+      x509_certs_list = processor.convert_certs_list_to_X509(anchor.origin_server_certs)
+
+      yoti_anchor = processor.get_anchor_by_oid(
+        x509_certs_list[0],
+        '1.3.6.1.4.1.47127.1.1.1',
+        anchor.sub_type,
+        processor.process_signed_time_stamp(anchor.signed_time_stamp),
+        x509_certs_list
+      )
+
+      it 'should return DRIVING_LICENCE as value' do
+        expected_value = 'DRIVING_LICENCE'
+        expect(yoti_anchor.value).to eql(expected_value)
+      end
+    end
+  end
 end

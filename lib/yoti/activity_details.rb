@@ -154,7 +154,7 @@ module Yoti
     #
     # Converts protobuf attribute into Attribute
     #
-    # @param [Yoti::rotobuf::Attrpubapi::Attribute] attribute
+    # @param [Yoti::Protobuf::Attrpubapi::Attribute] attribute
     #
     # @return [Attribute, nil]
     #

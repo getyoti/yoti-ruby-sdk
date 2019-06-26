@@ -64,9 +64,8 @@ module Yoti
     #
     def process_signed_time_stamp(signed_time_stamp_binary)
       signed_time_stamp = Yoti::Protobuf::Compubapi::SignedTimestamp.decode(signed_time_stamp_binary)
-      time_in_sec = signed_time_stamp.timestamp / 1000000
-      date_time = Time.parse(Time.at(time_in_sec).to_s)
-      Yoti::SignedTimeStamp.new(signed_time_stamp.version, date_time)
+      time_in_sec = signed_time_stamp.timestamp.quo(1000000)
+      Yoti::SignedTimeStamp.new(signed_time_stamp.version, Time.at(time_in_sec))
     end
 
     #

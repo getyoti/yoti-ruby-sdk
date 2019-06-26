@@ -73,7 +73,7 @@ module Yoti
     # @param [Array<Yoti::Anchor>] verifiers
     # @param [Hash<String => Array>] anchors_list
     #
-    def initialize(name, value, sources, verifiers, anchors_list = nil)
+    def initialize(name, value, sources, verifiers, anchors_list = {})
       @name = name
       @value = value
       @sources = sources
@@ -92,8 +92,6 @@ module Yoti
     #
     def process_anchors_list(anchors_list)
       anchors = []
-      return anchors if anchors_list.nil?
-
       anchors_list.each { |_type, list| anchors += list }
       anchors
     end

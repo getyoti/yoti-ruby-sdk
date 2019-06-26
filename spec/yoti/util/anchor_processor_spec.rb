@@ -23,9 +23,9 @@ describe 'Yoti::AnchorProcessor' do
         expect(dl_first_anchor.sub_type).to eql('')
       end
 
-      it 'should return 2018-04-11 13:13:03 as timestamp' do
-        expected_value = Time.utc(2018, 4, 11, 12, 13, 3).strftime('%Y-%m-%d %H:%M:%S')
-        date_time_str = dl_first_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S')
+      it 'should return 2018-04-11 13:13:03.923537 as timestamp' do
+        expected_value = Time.utc(2018, 4, 11, 12, 13, 3.923537).strftime('%Y-%m-%d %H:%M:%S.%6N')
+        date_time_str = dl_first_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S.%6N')
         expect(date_time_str).to eql(expected_value)
       end
 
@@ -50,9 +50,9 @@ describe 'Yoti::AnchorProcessor' do
         expect(verifier_first_anchor.sub_type).to eql('')
       end
 
-      it 'should return 2018-04-11 13:13:04 as timestamp' do
-        expected_value = Time.utc(2018, 4, 11, 12, 13, 4).strftime('%Y-%m-%d %H:%M:%S')
-        date_time_str = verifier_first_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S')
+      it 'should return 2018-04-11 13:13:04.095238 as timestamp' do
+        expected_value = Time.utc(2018, 4, 11, 12, 13, 4.095238).strftime('%Y-%m-%d %H:%M:%S.%6N')
+        date_time_str = verifier_first_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S.%6N')
         expect(date_time_str).to eql(expected_value)
       end
 
@@ -77,9 +77,9 @@ describe 'Yoti::AnchorProcessor' do
         expect(pp_source_anchor.sub_type).to eql('OCR')
       end
 
-      it 'should return 2018-04-12 14:14:32 as timestamp' do
-        expected_value = Time.utc(2018, 4, 12, 13, 14, 32).strftime('%Y-%m-%d %H:%M:%S')
-        date_time_str = pp_source_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S')
+      it 'should return 2018-04-12 14:14:32.835537 as timestamp' do
+        expected_value = Time.utc(2018, 4, 12, 13, 14, 32.835537).strftime('%Y-%m-%d %H:%M:%S.%6N')
+        date_time_str = pp_source_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S.%6N')
         expect(date_time_str).to eql(expected_value)
       end
 
@@ -108,9 +108,10 @@ describe 'Yoti::AnchorProcessor' do
         expect(unknown_anchor.sub_type).to eql('')
       end
 
-      it 'should return 2018-04-12 14:14:32 as timestamp' do
-        date_time_str = unknown_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S')
-        expect(date_time_str).to eql('2018-04-11 12:13:03')
+      it 'should return 2018-04-12 14:14:32.923537 as timestamp' do
+        expected_value = Time.utc(2018, 4, 11, 12, 13, 3.923537).strftime('%Y-%m-%d %H:%M:%S.%6N')
+        date_time_str = unknown_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S.%6N')
+        expect(date_time_str).to eql(expected_value)
       end
 
       it 'should return /CN=driving-licence-registration-server as issuer' do

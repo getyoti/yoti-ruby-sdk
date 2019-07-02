@@ -239,9 +239,11 @@ module Yoti
     # @return [String, nil]
     #
     def get_anchor_value(anchor_extension)
-      value = OpenSSL::ASN1.decode(anchor_extension).value[1].value
-      if value.is_a?(String)
-        decoded = OpenSSL::ASN1.decode(value)
+      decoded_extension = OpenSSL::ASN1.decode(anchor_extension)
+      extension_value = decoded_extension.value[1] if decoded_extension.value.is_a?(Array)
+      extension_value_item = extension_value.value if extension_value.is_a?(OpenSSL::ASN1::OctetString)
+      if extension_value_item.is_a?(String)
+        decoded = OpenSSL::ASN1.decode(extension_value_item)
         return decoded.value[0].value if decoded.value[0].is_a?(OpenSSL::ASN1::ASN1Data)
       end
 

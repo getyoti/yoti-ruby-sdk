@@ -320,6 +320,7 @@ Visiting `https://localhost:4567/` should show a Yoti Connect button
     * [X] Email Address `email_address`
     * [X] Age / Date of Birth `date_of_birth`
     * [X] Address `postal_address`
+    * [X] Structured Postal Address `structured_postal_address`
     * [X] Gender `gender`
     * [X] Nationality `nationality`
   * [X] Application Profile `application_profile`

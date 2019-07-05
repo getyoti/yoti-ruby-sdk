@@ -196,6 +196,7 @@ You can retrieve the sources and verifiers for each attribute as follows:
 ```ruby
 given_names_sources = profile.given_names.sources # list of anchors
 given_names_verifiers = profile.given_names.verifiers # list of anchors
+given_names_anchors = profile.given_names.anchors # list of anchors
 ```
 You can also retrieve further properties from these respective anchors in the following way:
 
@@ -214,6 +215,7 @@ In case you want to prove the sources and verifiers of the helper`ActivityDetail
 age_attribute = profile.get_attribute('age_over:18')
 sources = age_attribute.sources
 verifiers = age_attribute.verifiers
+anchors = age_attribute.anchors
 ```
 
 ## AML Integration

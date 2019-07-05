@@ -39,6 +39,16 @@ attributes = [
     "label"=> "Nationality",
     "obj"=> @profile.nationality,
     "icon"=> "yoti-icon-nationality"
+  },
+  {
+    "label"=> "Structure Postal Address",
+    "obj"=> @profile.structured_postal_address,
+    "icon"=> "yoti-icon-profile"
+  },
+  {
+    "label"=> "Document Images",
+    "obj"=> @profile.document_images,
+    "icon"=> "yoti-icon-profile"
   }
 ]
 
@@ -97,7 +107,21 @@ full_name = @profile.full_name
                   </div>
 
                   <div class="yoti-attribute-value">
-                    <div class="yoti-attribute-value-text"><%= attr['label_prefix'] %><%= attr['obj'] && attr['obj'].value %></div>
+                    <div class="yoti-attribute-value-text"><%= attr['label_prefix'] %>
+                      <% case attr['obj'].name %>
+                      <% when 'structured_postal_address' %>
+                        <table>
+                          <% attr['obj'].value.each do |key, value| %>
+                            <tr>
+                                <td><%= key %></td>
+                                <td><%= value %></td>
+                            </tr>
+                          <% end %>
+                        </table>
+                      <% else %>
+                        <%= attr['obj'] && attr['obj'].value %>
+                      <% end %>
+                    </div>
                   </div>
 
                   <div class="yoti-attribute-anchors-layout">

@@ -1,6 +1,6 @@
 class YotiController < ApplicationController
   def index
-    @yoti_application_id = ENV['YOTI_APPLICATION_ID']
+    @yoti_scenario_id = ENV['YOTI_SCENARIO_ID']
   end
 
   def profile

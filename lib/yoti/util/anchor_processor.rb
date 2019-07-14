@@ -25,16 +25,9 @@ module Yoti
       @anchors_list.each do |anchor|
         x509_certs_list = convert_certs_list_to_X509(anchor.origin_server_certs)
         signed_time_stamp = process_signed_time_stamp(anchor.signed_time_stamp)
-
-        x509_certs_list.each do |cert|
-          cert.extensions.each do |anchor_extension|
-            yoti_anchor = get_anchor(anchor_extension, anchor.sub_type, signed_time_stamp, x509_certs_list)
-            next if yoti_anchor.nil?
-
-            anchor_list_key = get_anchor_list_key_by_type(yoti_anchor.type)
-            result_data[anchor_list_key].push(yoti_anchor)
-          end
-        end
+        yoti_anchor = get_anchor_from_certs(x509_certs_list, anchor.sub_type, signed_time_stamp)
+        anchor_list_key = get_anchor_list_key_by_type(yoti_anchor.type)
+        result_data[anchor_list_key].push(yoti_anchor)
       end
 
       result_data
@@ -198,11 +191,7 @@ module Yoti
     # @param [String] oid
     #
     def get_anchor_type_by_oid(oid)
-      if (type = ANCHOR_TYPES.find { |_key, value| value == oid })
-        return type.first
-      end
-
-      'UNKNOWN'
+      ANCHOR_TYPES.find { |_key, value| value == oid }.first
     end
 
     #
@@ -215,20 +204,45 @@ module Yoti
     end
 
     #
-    # Return an anchor for privided extension.
+    # Get anchor from provided certificate list.
     #
-    # @param [OpenSSL::X509::Extension] anchor_extension
+    # @param [Array<OpenSSL::X509::Certificate>] x509_certs_list
     # @param [String] sub_type
     # @param [Yoti::SignedTimeStamp] signed_time_stamp
-    # @param [Array<OpenSSL::X509::Certificate>] x509_certs_list
     #
     # @return [Yoti::Anchor]
     #
-    def get_anchor(anchor_extension, sub_type, signed_time_stamp, x509_certs_list)
-      type = get_anchor_type_by_oid(anchor_extension.oid)
-      value = ANCHOR_TYPES[type].blank? ? '' : get_anchor_value(anchor_extension)
+    def get_anchor_from_certs(x509_certs_list, sub_type, signed_time_stamp)
+      x509_certs_list.each do |cert|
+        ANCHOR_TYPES.each do |_type, oid|
+          anchor_extension = get_extension_by_oid(cert, oid)
+          next if anchor_extension.nil?
 
-      Yoti::Anchor.new(value, sub_type, signed_time_stamp, x509_certs_list, type) unless value.nil?
+          return Yoti::Anchor.new(
+            get_anchor_value(anchor_extension),
+            sub_type,
+            signed_time_stamp,
+            x509_certs_list,
+            get_anchor_type_by_oid(oid)
+          )
+        end
+      end
+      Yoti::Anchor.new('', sub_type, signed_time_stamp, x509_certs_list, 'UNKNOWN')
+    end
+
+    #
+    # Get extension for provided oid.
+    #
+    # @param [OpenSSL::X509::Certificate] cert
+    # @param [String] oid
+    #
+    # @return [OpenSSL::X509::Extension]
+    #
+    def get_extension_by_oid(cert, oid)
+      cert.extensions.each do |extension|
+        return extension if extension.oid == oid
+      end
+      nil
     end
 
     #

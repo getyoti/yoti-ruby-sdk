@@ -105,23 +105,23 @@ describe 'Yoti::AnchorProcessor' do
       end
 
       it 'should return empty sub_type' do
-        expect(unknown_anchor.sub_type).to eql('')
+        expect(unknown_anchor.sub_type).to eql('TEST UNKNOWN SUB TYPE')
       end
 
-      it 'should return 2018-04-12 14:14:32.923537 as timestamp' do
-        expected_value = Time.utc(2018, 4, 11, 12, 13, 3.923537).strftime('%Y-%m-%d %H:%M:%S.%6N')
+      it 'should return 2019-03-05 10:45:11.840037 as timestamp' do
+        expected_value = Time.utc(2019, 3, 5, 10, 45, 11.840037).strftime('%Y-%m-%d %H:%M:%S.%6N')
         date_time_str = unknown_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S.%6N')
         expect(date_time_str).to eql(expected_value)
       end
 
-      it 'should return /CN=driving-licence-registration-server as issuer' do
+      it 'should return /CN=document-registration-server as issuer' do
         expect(unknown_anchor.origin_server_certs[0].issuer.to_s)
-          .to eql('/CN=driving-licence-registration-server')
+          .to eql('/CN=document-registration-server')
       end
 
-      it 'should return 46131813624213904216516051554755262812 as serial' do
+      it 'should return 228164395157066285041920465780950248577 as serial' do
         expect(unknown_anchor.origin_server_certs[0].serial.to_s)
-          .to eql('46131813624213904216516051554755262812')
+          .to eql('228164395157066285041920465780950248577')
       end
     end
   end

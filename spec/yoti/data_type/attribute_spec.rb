@@ -53,6 +53,7 @@ describe 'Yoti::Attribute' do
       anchors.each do |anchor|
         expect(anchor).to be_a(Yoti::Anchor)
       end
+      expect(anchors.count).to eql(3)
       expect(anchors[0].type).to eql('SOURCE')
       expect(anchors[1].type).to eql('VERIFIER')
       expect(anchors[2].type).to eql('UNKNOWN')

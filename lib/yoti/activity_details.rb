@@ -129,7 +129,7 @@ module Yoti
     protected
 
     #
-    # Process the decrypted profile to into hash
+    # Process the decrypted profile into key-value hash
     #
     # @param [Yoti::Protobuf::Attrpubapi::AttributeList] decrypted_profile
     #

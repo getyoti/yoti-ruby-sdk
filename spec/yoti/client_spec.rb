@@ -138,7 +138,7 @@ describe 'Yoti::Client' do
         expect(application_profile.name.value).to eql('Node SDK Test')
       end
 
-      it 'contains the application logo is nil' do
+      it 'has the application logo set to nil' do
         expect(application_profile.logo).to be_nil
       end
 

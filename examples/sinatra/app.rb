@@ -15,7 +15,10 @@ Yoti.configure do |config|
 end
 
 get '/' do
-  erb :index, locals: { yoti_scenario_id: ENV['YOTI_SCENARIO_ID'] }
+  erb :index, locals: {
+    yoti_scenario_id: ENV['YOTI_SCENARIO_ID'],
+    yoti_client_sdk_id: ENV['YOTI_CLIENT_SDK_ID']
+  }
 end
 
 # /profile is the callback route

@@ -19,7 +19,7 @@ Welcome to the Yoti Ruby SDK. This repository contains the tools you need to qui
 ## An Architectural view
 
 To integrate your application with Yoti, your back-end must expose a GET endpoint that Yoti will use to forward tokens.
-The endpoint is configured in the [Yoti Dashboard](https://www.yoti.com/dashboard) where you create/update your application. To see an example of how this is configured, see the [Running the Examples](#running-the-examples) section.
+The endpoint is configured in the [Yoti Hub](https://hub.yoti.com) where you create/update your application. To see an example of how this is configured, see the [Running the Examples](#running-the-examples) section.
 
 The image below shows how your application back-end and Yoti integrate into the context of a Login flow.
 Yoti SDK carries out for you steps 6, 7, 8 and the profile decryption in step 9.
@@ -98,7 +98,7 @@ end
 
 Make sure the following environment variables can be accessed by your app:
 
-`YOTI_CLIENT_SDK_ID` - found on the Key settings page on your application dashboard
+`YOTI_CLIENT_SDK_ID` - found on the Key settings page on your Yoti Hub
 
 `YOTI_KEY_FILE_PATH` - the full path to your security key downloaded from the *Keys* settings page (e.g. /Users/developer/access-security.pem)
 
@@ -161,7 +161,7 @@ else
 end
 ```
 
-The `profile` object provides a set of attributes corresponding to user attributes. Whether the attributes are present or not depends on the settings you have applied to your app on Yoti Dashboard.
+The `profile` object provides a set of attributes corresponding to user attributes. Whether the attributes are present or not depends on the settings you have applied to your app on Yoti Hub.
 
 ### Handling Users
 
@@ -228,11 +228,11 @@ Yoti will provide a boolean result on the following checks:
 * Fraud list - Verify against  US Social Security Administration Fraud (SSN Fraud) list
 * Watch list - Verify against watch lists from the Office of Foreign Assets Control
 
-To use this functionality you must ensure your application is assigned to your organisation in the Yoti Dashboard - please see [here](https://www.yoti.com/developers/documentation/#1-creating-an-organisation) for further information.
+To use this functionality you must ensure your application is assigned to your organisation in the Yoti Hub - please see [here](https://www.yoti.com/developers/documentation/#1-creating-an-organisation) for further information.
 
 For the AML check you will need to provide the following:
 
-* Data provided by Yoti (please ensure you have selected the Given name(s) and Family name attributes from the Data tab in the Yoti Dashboard)
+* Data provided by Yoti (please ensure you have selected the Given name(s) and Family name attributes from the Data tab in the Yoti Hub)
   * Given name(s)
   * Family name
 * Data that must be collected from the user:
@@ -269,7 +269,7 @@ The examples can be found in the [examples folder](examples).
 
 ### Ruby on Rails
 
-1. Create your application in the [Yoti Dashboard](https://www.yoti.com/dashboard/applications)
+1. Create your application in the [Yoti Hub](https://hub.yoti.com)
 1. Set the application domain of your app to `localhost:3000`
 1. Set the scenario callback URL to `/profile`
 1. Rename the [.env.example](examples/rails/.env.example) file to `.env` 
@@ -285,7 +285,7 @@ Visiting `https://localhost:3001/` should show a Yoti Connect button
 
 ### Sinatra
 
-1. Create your application in the [Yoti Dashboard](https://www.yoti.com/dashboard/applications)
+1. Create your application in the [Yoti Hub](https://hub.yoti.com)
 1. Set the application domain of your app to `localhost:4567`
 1. Set the scenario callback URL to `/profile`
 1. Rename the [.env.example](examples/sinatra/.env.example) file to `.env`

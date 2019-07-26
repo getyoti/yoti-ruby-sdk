@@ -232,7 +232,7 @@ To use this functionality you must ensure your application is assigned to your o
 
 For the AML check you will need to provide the following:
 
-* Data provided by Yoti (please ensure you have selected the Given name(s) and Family name attributes from the Data tab in the Yoti Hub)
+* Data provided by Yoti (please ensure you have selected the Given name(s) and Family name attributes for your scenario on the Yoti Hub)
   * Given name(s)
   * Family name
 * Data that must be collected from the user:

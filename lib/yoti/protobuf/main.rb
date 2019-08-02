@@ -46,6 +46,8 @@ module Yoti
 
       def value_based_on_attribute_name(value, attr_name)
         case attr_name
+        when Yoti::Attribute::DOCUMENT_DETAILS
+          Yoti::DocumentDetails.new(value)
         when Yoti::Attribute::DOCUMENT_IMAGES
           raise(TypeError, 'Document Images could not be decoded') unless value.is_a?(Yoti::MultiValue)
 

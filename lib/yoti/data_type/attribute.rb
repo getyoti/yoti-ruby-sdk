@@ -21,6 +21,7 @@ module Yoti
     POSTAL_ADDRESS = 'postal_address'
     STRUCTURED_POSTAL_ADDRESS = 'structured_postal_address'
     DOCUMENT_IMAGES = 'document_images'
+    DOCUMENT_DETAILS = 'document_details'
     APPLICATION_NAME = 'application_name'
     APPLICATION_LOGO = 'application_logo'
     APPLICATION_URL = 'application_url'

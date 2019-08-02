@@ -116,6 +116,15 @@ module Yoti
       get_attribute(Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS)
     end
 
+    #
+    # Document Details.
+    #
+    # @return [Attribute, nil]
+    #
+    def document_details
+      get_attribute(Yoti::Attribute::DOCUMENT_DETAILS)
+    end
+
     protected
 
     #

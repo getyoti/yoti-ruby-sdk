@@ -10,7 +10,8 @@ describe 'Yoti::Profile' do
                      Yoti::Attribute::NATIONALITY => 'test_nationality',
                      Yoti::Attribute::POSTAL_ADDRESS => 'test_postal_address',
                      Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS => 'test_structured_address',
-                     Yoti::Attribute::DOCUMENT_IMAGES => 'test_document_images' }
+                     Yoti::Attribute::DOCUMENT_IMAGES => 'test_document_images',
+                     Yoti::Attribute::DOCUMENT_DETAILS => 'test_document_details' }
 
   profile_data = profile_values.map do |name, value|
     [name, Yoti::Attribute.new(name, value, {}, {})]
@@ -107,6 +108,12 @@ describe 'Yoti::Profile' do
     end
   end
 
+  describe '.document_details' do
+    it 'should return test_document_details' do
+      expect(profile.document_details.value).to eql('test_document_details')
+    end
+  end
+
   describe '.get_attribute' do
     profile_values.each do |key, value|
       it "'#{key}' should return '#{value}''" do
@@ -117,7 +124,7 @@ describe 'Yoti::Profile' do
 
   describe '.attributes' do
     it 'should return all attributes' do
-      expect(profile.attributes.length).to eql(12)
+      expect(profile.attributes.length).to eql(13)
       profile_values.each do |key, value|
         expect(profile.attributes[key].value).to eql(value)
       end

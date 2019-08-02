@@ -208,6 +208,21 @@ describe 'Yoti::Protobuf' do
       end
     end
 
+    context 'when the name is document_details' do
+      let(:value) { 'PASSPORT GBR 01234567 2016-05-01 DVLA' }
+      let(:attr_name) { Yoti::Attribute::DOCUMENT_DETAILS }
+
+      it 'returns document details object' do
+        expect(subject).to be_a_kind_of(Yoti::DocumentDetails)
+        expect(subject.type).to eql('PASSPORT')
+        expect(subject.issuing_country).to eql('GBR')
+        expect(subject.document_number).to eql('01234567')
+        expect(subject.issuing_authority).to eql('DVLA')
+        expect(subject.expiration_date).to be_a_kind_of(DateTime)
+        expect(subject.expiration_date.to_s).to eql('2016-05-01T00:00:00+00:00')
+      end
+    end
+
     context 'when the name is document_images and the value is not a multi value' do
       let(:value) { 'a string' }
       let(:attr_name) { Yoti::Attribute::DOCUMENT_IMAGES }

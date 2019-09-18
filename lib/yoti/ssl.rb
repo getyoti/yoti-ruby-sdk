@@ -60,9 +60,10 @@ module Yoti
       end
 
       # Reset and reload the Private Key used for SSL functions
-      def reload
+      def reload!
         @private_key = nil
         @pem = nil
+        nil
       end
 
       private

@@ -33,6 +33,8 @@ require_relative 'yoti/client'
 
 require_relative 'yoti/protobuf/main'
 
+require_relative 'yoti/dynamic_share_service/policy/wanted_attribute'
+
 # The main module namespace of the Yoti gem
 module Yoti
   class << self

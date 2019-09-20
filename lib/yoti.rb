@@ -37,6 +37,7 @@ require_relative 'yoti/dynamic_share_service/policy/wanted_attribute'
 require_relative 'yoti/dynamic_share_service/policy/dynamic_policy'
 require_relative 'yoti/dynamic_share_service/dynamic_scenario'
 require_relative 'yoti/dynamic_share_service/extension/extension'
+require_relative 'yoti/dynamic_share_service/extension/location_constraint_extension'
 
 # The main module namespace of the Yoti gem
 module Yoti

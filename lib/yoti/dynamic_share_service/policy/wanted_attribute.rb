@@ -40,7 +40,7 @@ module Yoti
       end
 
       def build
-        @attribute
+        Marshal.load Marshal.dump @attribute
       end
     end
   end

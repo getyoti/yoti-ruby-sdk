@@ -31,11 +31,11 @@ describe 'Yoti::DynamicSharingService::LocationConstraintExtension' do
       let :ext do
         Yoti::DynamicSharingService::LocationConstraintExtension
           .builder
-          .with_longitude(99)
+          .with_longitude(75)
           .build
       end
       it 'sets a longitude' do
-        expect(ext.content[:expected_device_location][:longitude]).to eql 99
+        expect(ext.content[:expected_device_location][:longitude]).to eql 75
       end
     end
 

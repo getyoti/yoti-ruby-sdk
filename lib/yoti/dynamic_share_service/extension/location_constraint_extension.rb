@@ -29,33 +29,28 @@ module Yoti
     # Builder for LocationConstraintExtension
     class LocationConstraintExtensionBuilder
       def with_latitude(latitude)
-        if !latitude.is_a?(Integer) && !latitude.is_a?(Float)
-          raise ArgumentError('Latitude must be Integer or Float')
-        end
-        if latitude < -90 || latitude > 90
-          raise ArgumentError('Latitude must be between -90 and 90')
-        end
+        raise ArgumentError('Latitude must be Integer or Float')\
+          unless latitude.is_a?(Integer) || latitude.is_a?(Float)
+        raise ArgumentError('Latitude must be between -90 and 90')\
+          unless latitude >= -90 && latitude <= 90
 
         @latitude = latitude
         self
       end
 
       def with_longitude(longitude)
-        if !longitude.is_a?(Integer) && !longitude.is_a?(Float)
-          raise ArgumentError('Longitude must be Integer or Float')
-        end
-        if longitude < -90 || longitude > 90
-          raise ArgumentError('Longitude must be between -90 and 90')
-        end
+        raise ArgumentError('Longitude must be Integer or Float')\
+          unless longitude.is_a?(Integer) || longitude.is_a?(Float)
+        raise ArgumentError('Longitude must be between -90 and 90')\
+          unless longitude >= -90 && longitude <= 90
 
         @longitude = longitude
         self
       end
 
       def with_radius(radius)
-        if !radius.is_a?(Integer) && !radius.is_a?(Float)
-          raise ArgumentError('Radius must be Integer or Float')
-        end
+        raise ArgumentError('Radius must be Integer or Float')\
+          unless radius.is_a?(Integer) || radius.is_a?(Float)
         raise ArgumentError('Radius must be >= 0') unless radius >= 0
 
         @radius = radius
@@ -63,9 +58,8 @@ module Yoti
       end
 
       def with_uncertainty(uncertainty)
-        if !uncertainty.is_a?(Integer) && !uncertainty.is_a?(Float)
-          raise ArgumentError('Uncertainty must be Integer or Float')
-        end
+        raise ArgumentError('Uncertainty must be Integer or Float')\
+          unless uncertainty.is_a?(Integer) || uncertainty.is_a?(Float)
         raise ArgumentError('Uncertainty must be >= 0') unless uncertainty >= 0
 
         @uncertainty = uncertainty

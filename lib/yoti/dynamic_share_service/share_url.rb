@@ -40,6 +40,10 @@ module Yoti
         http.request signed_request
       end
 
+      create_share_url_parse_response response
+    end
+
+    def self.create_share_url_parse_response(response)
       if response.code.to_i < 200 || response.code.to_i >= 300
         case response.code
         when '400'

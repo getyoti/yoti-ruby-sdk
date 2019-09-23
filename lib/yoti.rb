@@ -33,6 +33,7 @@ require_relative 'yoti/client'
 
 require_relative 'yoti/protobuf/main'
 
+require_relative 'yoti/dynamic_share_service/share_url'
 require_relative 'yoti/dynamic_share_service/policy/wanted_attribute'
 require_relative 'yoti/dynamic_share_service/policy/dynamic_policy'
 require_relative 'yoti/dynamic_share_service/dynamic_scenario'

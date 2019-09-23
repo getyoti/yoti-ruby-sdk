@@ -29,10 +29,10 @@ module Yoti
     # Builder for LocationConstraintExtension
     class LocationConstraintExtensionBuilder
       def with_latitude(latitude)
-        unless latitude.is_a?(Integer) || latitude.is_a?(Float)
+        if !latitude.is_a?(Integer) && !latitude.is_a?(Float)
           raise ArgumentError('Latitude must be Integer or Float')
         end
-        unless latitude >= -90 && latitude <= 90
+        if latitude < -90 || latitude > 90
           raise ArgumentError('Latitude must be between -90 and 90')
         end
 
@@ -41,10 +41,10 @@ module Yoti
       end
 
       def with_longitude(longitude)
-        unless longitude.is_a?(Integer) || longitude.is_a?(Float)
+        if !longitude.is_a?(Integer) && !longitude.is_a?(Float)
           raise ArgumentError('Longitude must be Integer or Float')
         end
-        unless longitude >= -90 && longitude <= 90
+        if longitude < -90 || longitude > 90
           raise ArgumentError('Longitude must be between -90 and 90')
         end
 
@@ -53,7 +53,7 @@ module Yoti
       end
 
       def with_radius(radius)
-        unless radius.is_a?(Integer) || radius.is_a?(Float)
+        if !radius.is_a?(Integer) && !radius.is_a?(Float)
           raise ArgumentError('Radius must be Integer or Float')
         end
         raise ArgumentError('Radius must be >= 0') unless radius >= 0
@@ -63,7 +63,7 @@ module Yoti
       end
 
       def with_uncertainty(uncertainty)
-        unless uncertainty.is_a?(Integer) || uncertainty.is_a?(Float)
+        if !uncertainty.is_a?(Integer) && !uncertainty.is_a?(Float)
           raise ArgumentError('Uncertainty must be Integer or Float')
         end
         raise ArgumentError('Uncertainty must be >= 0') unless uncertainty >= 0

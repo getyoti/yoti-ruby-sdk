@@ -41,11 +41,14 @@ module Yoti
       end
 
       if response.code.to_i < 200 || response.code.to_i >= 300
-        raise InvalidDataError if response.code == '400'
-
-        raise ApplicationNotFoundError if response.code == '404'
-
-        raise UnknownHTTPError, response.code
+        case response.code
+        when '400'
+          raise InvalidDataError
+        when '404'
+          raise ApplicationNotFoundError
+        else
+          raise UnknownHTTPError, response.code
+        end
       end
 
       Share.new JSON.parse response.body

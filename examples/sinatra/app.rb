@@ -21,6 +21,22 @@ get '/' do
   }
 end
 
+get '/dynamic-share' do
+  scenario = Yoti::DynamicSharingService::DynamicScenario.builder.with_policy(
+    Yoti::DynamicSharingService::DynamicPolicy.builder
+    .with_full_name
+    .with_age_over(18)
+    .with_pin_auth
+    .build
+  ).with_callback_endpoint('/profile').build
+
+  share = Yoti::DynamicSharingService.create_share_url scenario
+  erb :dynamic_share, locals: {
+    yoti_client_sdk_id: ENV['YOTI_CLIENT_SDK_ID'],
+    share_url: share.share_url
+  }
+end
+
 # /profile is the callback route
 get '/profile' do
   one_time_use_token = params[:token]

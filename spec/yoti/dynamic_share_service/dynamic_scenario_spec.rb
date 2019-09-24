@@ -30,7 +30,8 @@ describe 'Yoti::DynamicSharingService::DynamicScenario' do
         .build
     end
     it 'marshals the scenario' do
-      expected = '{"extensions":[{"type":"TEST TYPE","content":"TEST CONTENT"}],"policy":{"wanted_auth_types":[2],"wanted":[{"name":"full_name"},{"name":"date_of_birth","derivation":"age_over:18"}]},"callback_endpoint":"127.0.0.1"}'
+      expected = '{"policy":{"wanted_auth_types":[2],"wanted":[{"name":"full_name"},{"name":"date_of_birth","derivation":"age_over:18"}]},"extensions":[{"type":"TEST TYPE","content":"TEST CONTENT"}],"callback_endpoint":"127.0.0.1"}'
+      puts "VALUE #{scenario.to_json}"
       expect(scenario.to_json).to eql expected
     end
   end

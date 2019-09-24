@@ -12,6 +12,18 @@ module Yoti
         @extensions = []
       end
 
+      def to_json(*args)
+        as_json.to_json(*args)
+      end
+
+      def as_json(*_args)
+        {
+          policy: @policy,
+          extensions: @extensions,
+          callback_endpoint: @callback_endpoint
+        }
+      end
+
       def self.builder
         DynamicScenarioBuilder.new
       end

@@ -16,7 +16,6 @@ class YotiController < ApplicationController
     ).with_callback_endpoint('/profile').build
 
     @share = Yoti::DynamicSharingService.create_share_url(scenario)
-    puts "!DEBUG! #{@share}"
     @share_url = @share.share_url
   end
 

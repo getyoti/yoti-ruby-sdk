@@ -13,6 +13,18 @@ module Yoti
         false
       end
 
+      def to_json(*_args)
+        as_json.to_json
+      end
+
+      def as_json(*_args)
+        obj = {
+          name: @name
+        }
+        obj[:derivation] = @derivation if derivation
+        obj
+      end
+
       def self.builder
         WantedAttributeBuilder.new
       end

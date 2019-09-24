@@ -16,6 +16,17 @@ module Yoti
         false
       end
 
+      def to_json(*args)
+        as_json.to_json(*args)
+      end
+
+      def as_json(*_args)
+        {
+          wanted_auth_types: @wanted_auth_types,
+          wanted: @wanted
+        }
+      end
+
       def self.builder
         DynamicPolicyBuilder.new
       end

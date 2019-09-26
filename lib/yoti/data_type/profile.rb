@@ -1,3 +1,5 @@
+require_relative 'base_profile'
+
 module Yoti
   #
   # Encapsulates Yoti user profile

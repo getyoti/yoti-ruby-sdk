@@ -76,8 +76,10 @@ module Yoti
       @type = attributes[TYPE_INDEX]
       @issuing_country = attributes[COUNTRY_INDEX]
       @document_number = attributes[NUMBER_INDEX]
-      @expiration_date = parse_date_from_string(attributes[EXPIRATION_INDEX])
-      @issuing_authority = attributes[AUTHORITY_INDEX]
+      if attributes.length > 3
+        @expiration_date = parse_date_from_string(attributes[EXPIRATION_INDEX])
+      end
+      @issuing_authority = attributes[AUTHORITY_INDEX] if attributes.length > 4
     end
 
     #

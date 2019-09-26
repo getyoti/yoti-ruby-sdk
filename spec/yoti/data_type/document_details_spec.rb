@@ -26,6 +26,32 @@ describe 'Yoti::DocumentDetails' do
     end
   end
 
+  context 'when there are no optional attributes' do
+    let :document_details do
+      Yoti::DocumentDetails.new('DRIVING_LICENCE GBR 1234abc')
+    end
+    describe '.type' do
+      it 'should return DRIVING_LICENCE' do
+        expect(document_details.type).to eql 'DRIVING_LICENCE'
+      end
+    end
+    describe '.issuing_country' do
+      it 'should return GBR' do
+        expect(document_details.issuing_country).to eql 'GBR'
+      end
+    end
+    describe '.document_number' do
+      it 'should return 1234abc' do
+        expect(document_details.document_number).to eql('1234abc')
+      end
+    end
+    describe '.expiration_date' do
+      it 'should return nil' do
+        expect(document_details.expiration_date).to be_nil
+      end
+    end
+  end  
+
   context 'when there are two optional attributes' do
     document_details = Yoti::DocumentDetails.new('DRIVING_LICENCE GBR 1234abc 2016-05-01 DVLA')
     describe '.type' do

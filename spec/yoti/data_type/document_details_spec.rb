@@ -50,7 +50,7 @@ describe 'Yoti::DocumentDetails' do
         expect(document_details.expiration_date).to be_nil
       end
     end
-  end  
+  end
 
   context 'when there are two optional attributes' do
     document_details = Yoti::DocumentDetails.new('DRIVING_LICENCE GBR 1234abc 2016-05-01 DVLA')

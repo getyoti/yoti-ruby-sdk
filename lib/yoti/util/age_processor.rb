@@ -1,5 +1,9 @@
 module Yoti
+  #
   # Process age attribute
+  #
+  # @deprecated 2.0.0 - replaced by Yoti::AgeVerification
+  #
   class AgeProcessor
     AGE_PATTERN = 'age_(over|under):[1-9][0-9]?[0-9]?'
 

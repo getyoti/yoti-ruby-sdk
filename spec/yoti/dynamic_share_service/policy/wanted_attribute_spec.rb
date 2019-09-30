@@ -51,7 +51,7 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
           .build
       end
       it 'contains self asserted in the json dump' do
-        expect(attribute.to_json).to eql '{\"name\":null,\"accept_self_asserted\":true}'
+        expect(attribute.to_json).to eql '{"name":null,"accept_self_asserted":true}'
       end
       it 'accepts self asserted' do
         expect(attribute.accept_self_asserted).to eql true
@@ -63,11 +63,11 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
           .builder
           .build
       end
-      it 'doesn\'t accept self asserted by default' do
+      it 'doesn\'t add self asserted to the payload' do
         expect(attribute.accept_self_asserted).to eql false
       end
       it 'doesn\'t contain self asserted in the json dump' do
-        expect(attribute.to_json).to eql '{\"name\":null}'
+        expect(attribute.to_json).to eql '{"name":null}'
       end
     end
   end

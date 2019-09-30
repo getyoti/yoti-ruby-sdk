@@ -16,14 +16,33 @@ describe 'Yoti::DynamicSharingService::LocationConstraintExtension' do
 
   describe '.builder' do
     describe '.with_latitude' do
-      let :ext do
-        Yoti::DynamicSharingService::LocationConstraintExtension
-          .builder
-          .with_latitude(50)
-          .build
+      context 'with valid latitude' do
+        [90, 50, 3.0, -90].each do |num|
+          context num.to_s do
+            let :ext do
+              Yoti::DynamicSharingService::LocationConstraintExtension
+                .builder
+                .with_latitude(num)
+                .build
+            end
+            it 'sets a latitude' do
+              expect(ext.content[:expected_device_location][:latitude]).to eql num
+            end
+          end
+        end
       end
-      it 'sets a latitude' do
-        expect(ext.content[:expected_device_location][:latitude]).to eql 50
+      context 'with invalid latitude' do
+        [91, 90.01, 150, -150, 'a string'].each do |num|
+          context num.to_s do
+            let :builder do
+              Yoti::DynamicSharingService::LocationConstraintExtension
+                .builder
+            end
+            it 'throws an exception' do
+              expect { builder.with_latitude(num) }.to raise_error
+            end
+          end
+        end
       end
     end
 

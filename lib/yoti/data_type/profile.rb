@@ -125,6 +125,38 @@ module Yoti
       get_attribute(Yoti::Attribute::DOCUMENT_DETAILS)
     end
 
+    # Finds all the 'Age Over' and 'Age Under' derived attributes returned with the profile,
+    # and returns them wrapped in AgeVerification objects
+    #
+    # @return [Array]
+    #
+    def age_verifications
+      find_all_age_verifications
+      @age_verifications.values
+    end
+
+    #
+    # Searches for an AgeVerification corresponding to an 'Age Over' check for the given age
+    #
+    # @param [Integer] age
+    #
+    # @return [AgeVerification|nil]
+    #
+    def find_age_over_verification(age)
+      find_age_verification(Yoti::Attribute::AGE_OVER, age)
+    end
+
+    #
+    # Searches for an AgeVerification corresponding to an 'Age Under' check for the given age.
+    #
+    # @param [Integer] age
+    #
+    # @return [AgeVerification|nil]
+    #
+    def find_age_under_verification(age)
+      find_age_verification(Yoti::Attribute::AGE_UNDER, age)
+    end
+
     protected
 
     #
@@ -142,6 +174,39 @@ module Yoti
         structured_postal_address.sources,
         structured_postal_address.verifiers
       )
+    end
+
+    private
+
+    #
+    # Searches for an AgeVerification corresponding to provided type and age.
+    #
+    # @param [String] type
+    # @param [Integer] age
+    #
+    # @return [Yoti::AgeVerification|nil]
+    #
+    def find_age_verification(type, age)
+      raise(ArgumentError, "#{age} is not a valid age") unless age.is_a?(Integer)
+
+      find_all_age_verifications
+      @age_verifications[type + age.to_s] || nil
+    end
+
+    #
+    # Find all age verifications and put in key value Hash.
+    #
+    def find_all_age_verifications
+      return @age_verifications unless @age_verifications.nil?
+
+      @age_verifications = {}
+
+      find_attributes_starting_with(Yoti::Attribute::AGE_OVER).each do |_name, attribute|
+        @age_verifications[attribute.name] = Yoti::AgeVerification.new(attribute)
+      end
+      find_attributes_starting_with(Yoti::Attribute::AGE_UNDER).each do |_name, attribute|
+        @age_verifications[attribute.name] = Yoti::AgeVerification.new(attribute)
+      end
     end
   end
 end

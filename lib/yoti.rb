@@ -12,6 +12,7 @@ require_relative 'yoti/http/profile_request'
 require_relative 'yoti/http/request'
 
 require_relative 'yoti/data_type/anchor'
+require_relative 'yoti/data_type/age_verification'
 require_relative 'yoti/data_type/base_profile'
 require_relative 'yoti/data_type/application_profile'
 require_relative 'yoti/data_type/profile'

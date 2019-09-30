@@ -29,5 +29,18 @@ module Yoti
 
       @attributes[attr_name]
     end
+
+    protected
+
+    #
+    # Find attributes starting with provided name.
+    #
+    # @param [String] name
+    #
+    # @returns [Array]
+    #
+    def find_attributes_starting_with(name)
+      @attributes.select { |key| key.to_s.start_with?(name) }
+    end
   end
 end

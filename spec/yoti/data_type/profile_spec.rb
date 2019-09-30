@@ -11,7 +11,11 @@ describe 'Yoti::Profile' do
                      Yoti::Attribute::POSTAL_ADDRESS => 'test_postal_address',
                      Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS => 'test_structured_address',
                      Yoti::Attribute::DOCUMENT_IMAGES => 'test_document_images',
-                     Yoti::Attribute::DOCUMENT_DETAILS => 'test_document_details' }
+                     Yoti::Attribute::DOCUMENT_DETAILS => 'test_document_details',
+                     "#{Yoti::Attribute::AGE_UNDER}18" => 'false',
+                     "#{Yoti::Attribute::AGE_UNDER}21" => 'true',
+                     "#{Yoti::Attribute::AGE_OVER}18" => 'true',
+                     "#{Yoti::Attribute::AGE_OVER}21" => 'false' }
 
   profile_data = profile_values.map do |name, value|
     [name, Yoti::Attribute.new(name, value, {}, {})]
@@ -124,10 +128,62 @@ describe 'Yoti::Profile' do
 
   describe '.attributes' do
     it 'should return all attributes' do
-      expect(profile.attributes.length).to eql(13)
+      expect(profile.attributes.length).to eql(17)
       profile_values.each do |key, value|
         expect(profile.attributes[key].value).to eql(value)
       end
+    end
+  end
+
+  describe '.age_verifications' do
+    it 'should return all age verifications' do
+      expect(profile.age_verifications.length).to eql(4)
+      profile.age_verifications.each do |value|
+        expect(value).to be_a(Yoti::AgeVerification)
+      end
+    end
+    it 'should return empty array when there are no age verifications' do
+      empty_profile = Yoti::Profile.new({})
+      expect(empty_profile.age_verifications).to be_a(Array)
+      expect(empty_profile.age_verifications.length).to eql(0)
+    end
+  end
+
+  describe '.find_age_under_verification' do
+    it 'should find unsuccessful age under verification' do
+      verification = profile.find_age_under_verification(18)
+      expect(verification.age).to eql(18)
+      expect(verification.check_type).to eql('age_under')
+      expect(verification.result).to eql(false)
+    end
+    it 'should find successful age under verification' do
+      verification = profile.find_age_under_verification(21)
+      expect(verification.age).to eql(21)
+      expect(verification.check_type).to eql('age_under')
+      expect(verification.result).to eql(true)
+    end
+    it 'should return NULL for no match' do
+      verification = profile.find_age_under_verification(100)
+      expect(verification).to be_nil
+    end
+  end
+
+  describe '.find_age_over_verification' do
+    it 'should find unsuccessful age over verification' do
+      verification = profile.find_age_over_verification(21)
+      expect(verification.age).to eql(21)
+      expect(verification.check_type).to eql('age_over')
+      expect(verification.result).to eql(false)
+    end
+    it 'should find successful age over verification' do
+      verification = profile.find_age_over_verification(18)
+      expect(verification.age).to eql(18)
+      expect(verification.check_type).to eql('age_over')
+      expect(verification.result).to eql(true)
+    end
+    it 'should return NULL for no match' do
+      verification = profile.find_age_over_verification(100)
+      expect(verification).to be_nil
     end
   end
 end

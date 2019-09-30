@@ -110,6 +110,11 @@ describe 'Yoti::DocumentDetails' do
         expect(document_details.expiration_date).to be_nil
       end
     end
+    describe '.issuing_authority' do
+      it 'should return issuing authority' do
+        expect(document_details.issuing_authority).to eql('CITIZENCARD')
+      end
+    end
   end
 
   context 'when the expiration date is invalid' do

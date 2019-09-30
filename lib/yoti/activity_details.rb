@@ -60,6 +60,11 @@ module Yoti
     #
     # The age under/over attribute
     #
+    # @deprecated 2.0.0 - replaced by:
+    # - Yoti::Profile#age_verifications
+    # - Yoti::Profile#find_age_over_verification
+    # - Yoti::Profile#find_age_under_verification
+    #
     # @return [Boolean]
     #
     attr_reader :age_verified
@@ -99,7 +104,7 @@ module Yoti
     #
     # The user's structured postal address as JSON
     #
-    # @deprecated replaced by Profile.structured_postal_address
+    # @deprecated replaced by Yoti::Profile#structured_postal_address
     #
     # @return [Hash]
     #
@@ -177,6 +182,8 @@ module Yoti
 
     #
     # Processes age verification
+    #
+    # @deprecated 2.0.0
     #
     # @param [Yoti::Protobuf::Attrpubapi::Attribute] attribute
     #

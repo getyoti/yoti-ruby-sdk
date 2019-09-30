@@ -26,6 +26,8 @@ module Yoti
     APPLICATION_LOGO = 'application_logo'
     APPLICATION_URL = 'application_url'
     APPLICATION_RECEIPT_BGCOLOR = 'application_receipt_bgcolor'
+    AGE_OVER = 'age_over:'
+    AGE_UNDER = 'age_under:'
 
     #
     # Gets the name of the attribute.

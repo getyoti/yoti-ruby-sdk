@@ -22,6 +22,7 @@ module Yoti
           name: @name
         }
         obj[:derivation] = @derivation if derivation
+        obj[:accept_self_asserted] = @accept_self_asserted if accept_self_asserted
         obj
       end
 

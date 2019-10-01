@@ -41,6 +41,25 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
       end
     end
 
+    describe '.with_constraint' do
+      let :constraint do
+        Yoti::DynamicSharingService::SourceConstraint
+          .builder
+          .build
+      end
+      let :attribute do
+        Yoti::DynamicSharingService::WantedAttribute
+          .builder
+          .with_constraint(constraint)
+          .build
+      end
+
+      it 'has a source constraint' do
+        expect(attribute.constraints.length).to eql 1
+        expect(attribute.constraints.first.anchors).to eql []
+      end
+    end
+
     describe '.with_accept_self_asserted' do
       let(:attribute) do
         Yoti::DynamicSharingService::WantedAttribute
@@ -55,6 +74,7 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
         expect(attribute.accept_self_asserted).to eql true
       end
     end
+
     describe 'without .with_accept_self_asserted' do
       let :attribute do
         Yoti::DynamicSharingService::WantedAttribute

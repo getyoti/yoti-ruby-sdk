@@ -42,28 +42,76 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
     end
 
     describe '.with_wanted_attribute_by_name' do
-      let :policy do
-        Yoti::DynamicSharingService::DynamicPolicy
-          .builder
-          .with_wanted_attribute_by_name(attribute_name)
-          .build
+      context 'minimal call' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_wanted_attribute_by_name(attribute_name)
+            .build
+        end
+        it 'adds an attribute' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.name).to eql attribute_name
+        end
       end
-      it 'adds an attribute' do
-        expect(policy.wanted.length).to eql 1
-        expect(policy.wanted.first.name).to eql attribute_name
+
+      context 'with a source constraint' do
+        let :source_constraint do
+          Yoti::DynamicSharingService::SourceConstraint
+            .builder
+            .build
+        end
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_wanted_attribute_by_name(
+              attribute_name,
+              constraints: [source_constraint]
+            )
+            .build
+        end
+
+        it 'requests an attribute with a source constraint' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.constraints.length).to eql 1
+          expect(policy.wanted.first.constraints.first.anchors).to eql []
+        end
       end
     end
 
     describe '.with_family_name' do
-      let :policy do
-        Yoti::DynamicSharingService::DynamicPolicy
-          .builder
-          .with_family_name
-          .build
+      context 'with a source constraint' do
+        let :source_constraint do
+          Yoti::DynamicSharingService::SourceConstraint
+            .builder
+            .build
+        end
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_wanted_attribute_by_name(
+              attribute_name,
+              constraints: [source_constraint]
+            )
+            .build
+        end
+        it 'requests family name with a source constraint' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.constraints.length).to eql 1
+          expect(policy.wanted.first.constraints.first.anchors).to eql []
+        end
       end
-      it 'requests family name' do
-        expect(policy.wanted.length).to eql 1
-        expect(policy.wanted.first.name).to eql Yoti::Attribute::FAMILY_NAME
+      context 'without any options' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_family_name
+            .build
+        end
+        it 'requests family name' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.name).to eql Yoti::Attribute::FAMILY_NAME
+        end
       end
     end
 
@@ -123,11 +171,29 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
     end
 
     describe '.with_age_over' do
+      context 'with a source constraint' do
+        let :source_constraint do
+          Yoti::DynamicSharingService::SourceConstraint
+            .builder
+            .build
+        end
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_age_over(21, constraints: [source_constraint])
+            .build
+        end
+        it 'requests an age over 21 with a source constraint' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.constraints.length).to eql 1
+          expect(policy.wanted.first.constraints.first.anchors).to eql []
+        end
+      end
       let :policy do
-        Yoti::DynamicSharingService::DynamicPolicy
-          .builder
-          .with_age_over(21)
-          .build
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_age_over(21)
+            .build
       end
       it 'requests an age over 21' do
         expect(policy.wanted.length).to eql 1
@@ -135,6 +201,22 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
         expect(policy.wanted.first.derivation).to eql(
           Yoti::Attribute::AGE_OVER + 21.to_s
         )
+      end
+
+      context 'without optional parameters' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_age_over(21)
+            .build
+        end
+        it 'requests an age over 21' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.name).to eql Yoti::Attribute::DATE_OF_BIRTH
+          expect(policy.wanted.first.derivation).to eql(
+            Yoti::Attribute::AGE_OVER + 21.to_s
+          )
+        end
       end
     end
 

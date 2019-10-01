@@ -93,81 +93,88 @@ module Yoti
 
       #
       # @param [String] name
+      # @param [Hash] constraints
       #
-      def with_wanted_attribute_by_name(name)
+      def with_wanted_attribute_by_name(name, constraints: nil)
         attribute = WantedAttribute.builder.with_name(name).build
+        attribute_builder = WantedAttribute.builder.with_name(name)
+        constraints&.each do |constraint|
+          attribute_builder.with_constraint constraint
+        end
+        attribute = attribute_builder.build
         with_wanted_attribute attribute
       end
 
-      def with_family_name
-        with_wanted_attribute_by_name Attribute::FAMILY_NAME
+      def with_family_name(options = {})
+        with_wanted_attribute_by_name Attribute::FAMILY_NAME, options
       end
 
-      def with_given_names
-        with_wanted_attribute_by_name Attribute::GIVEN_NAMES
+      def with_given_names(options = {})
+        with_wanted_attribute_by_name Attribute::GIVEN_NAMES, options
       end
 
-      def with_full_name
-        with_wanted_attribute_by_name Attribute::FULL_NAME
+      def with_full_name(options = {})
+        with_wanted_attribute_by_name Attribute::FULL_NAME, options
       end
 
-      def with_date_of_birth
-        with_wanted_attribute_by_name Attribute::DATE_OF_BIRTH
+      def with_date_of_birth(options = {})
+        with_wanted_attribute_by_name Attribute::DATE_OF_BIRTH, options
       end
 
       #
       # @param [String] derivation
+      # @param [Hash] constraints
       #
-      def with_age_derived_attribute(derivation)
-        with_wanted_attribute(
-          WantedAttribute
-          .builder
-          .with_name(Attribute::DATE_OF_BIRTH)
-          .with_derivation(derivation)
-          .build
-        )
-      end
-
-      #
-      # @param [Integer] derivation
-      #
-      def with_age_over(age)
-        with_age_derived_attribute(Attribute::AGE_OVER + age.to_s)
+      def with_age_derived_attribute(derivation, constraints: nil)
+        attribute_builder = WantedAttribute.builder
+        attribute_builder.with_name(Attribute::DATE_OF_BIRTH)
+        attribute_builder.with_derivation(derivation)
+        constraints&.each do |constraint|
+          attribute_builder.with_constraint constraint
+        end
+        with_wanted_attribute(attribute_builder.build)
       end
 
       #
       # @param [Integer] derivation
       #
-      def with_age_under(age)
-        with_age_derived_attribute(Attribute::AGE_UNDER + age.to_s)
+      def with_age_over(age, options = {})
+        with_age_derived_attribute(Attribute::AGE_OVER + age.to_s, options)
       end
 
-      def with_gender
-        with_wanted_attribute_by_name Attribute::GENDER
+      #
+      # @param [Integer] derivation
+      #
+      def with_age_under(age, options = {})
+        with_age_derived_attribute(Attribute::AGE_UNDER + age.to_s, options)
       end
 
-      def with_postal_address
-        with_wanted_attribute_by_name(Attribute::POSTAL_ADDRESS)
+      def with_gender(options = {})
+        with_wanted_attribute_by_name Attribute::GENDER, options
       end
 
-      def with_structured_postal_address
-        with_wanted_attribute_by_name(Attribute::STRUCTURED_POSTAL_ADDRESS)
+      def with_postal_address(options = {})
+        with_wanted_attribute_by_name(Attribute::POSTAL_ADDRESS, options)
       end
 
-      def with_nationality
-        with_wanted_attribute_by_name(Attribute::NATIONALITY)
+      def with_structured_postal_address(options = {})
+        with_wanted_attribute_by_name(Attribute::STRUCTURED_POSTAL_ADDRESS, options)
       end
 
-      def with_phone_number
-        with_wanted_attribute_by_name(Attribute::PHONE_NUMBER)
+      def with_nationality(options = {})
+        with_wanted_attribute_by_name(Attribute::NATIONALITY, options)
       end
 
-      def with_selfie
-        with_wanted_attribute_by_name(Attribute::SELFIE)
+      def with_phone_number(options = {})
+        with_wanted_attribute_by_name(Attribute::PHONE_NUMBER, options)
       end
 
-      def with_email
-        with_wanted_attribute_by_name(Attribute::EMAIL_ADDRESS)
+      def with_selfie(options = {})
+        with_wanted_attribute_by_name(Attribute::SELFIE, options)
+      end
+
+      def with_email(options = {})
+        with_wanted_attribute_by_name(Attribute::EMAIL_ADDRESS, options)
       end
 
       def with_document_details

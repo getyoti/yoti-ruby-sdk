@@ -6,6 +6,11 @@ module Yoti
     class WantedAttribute
       attr_reader :name
       attr_reader :derivation
+      attr_reader :constraints
+
+      def initialize
+        @constraints = []
+      end
 
       def accept_self_asserted
         return true if @accept_self_asserted
@@ -50,6 +55,14 @@ module Yoti
       #
       def with_derivation(derivation)
         @attribute.instance_variable_set(:@derivation, derivation)
+        self
+      end
+
+      #
+      # @param constraint Constraint to apply to the requested attribute
+      #
+      def with_constraint(constraint)
+        @attribute.constraints.push(constraint)
         self
       end
 

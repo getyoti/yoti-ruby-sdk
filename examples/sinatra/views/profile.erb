@@ -47,6 +47,19 @@ attributes = [
   }
 ]
 
+age_verifications = profile.age_verifications;
+unless age_verifications.nil?
+  puts age_verifications
+  age_verifications.each do |age_verification|
+    attributes.push({
+      "label"=> "Age Verification",
+      "obj"=> age_verification.attribute,
+      "age_verification" => age_verification,
+      "icon"=> "yoti-icon-profile"
+    })
+  end
+end
+
 full_name = profile.full_name
 %>
 <!DOCTYPE html>
@@ -124,7 +137,24 @@ full_name = profile.full_name
                               <% end %>
                             </table>
                           <% else %>
-                            <%= attr['obj'] && attr['obj'].value %>
+                            <% unless attr['age_verification'].nil? %>
+                              <table>
+                                <tr>
+                                  <td>Check Type</td>
+                                  <td><%= attr['age_verification'].check_type %></td>
+                                </tr>
+                                <tr>
+                                  <td>Age</td>
+                                  <td><%= attr['age_verification'].age %></td>
+                                </tr>
+                                <tr>
+                                  <td>Result</td>
+                                  <td><%= attr['age_verification'].result %></td>
+                                </tr>
+                              </table>
+                            <% else %>
+                              <%= attr['obj'] && attr['obj'].value %>
+                            <% end %>
                         <% end %>
                       </div>
                     </div>

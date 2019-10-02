@@ -141,6 +141,10 @@ module Yoti
       def with_email
         with_wanted_attribute_by_name(Attribute::EMAIL_ADDRESS)
       end
+
+      def with_document_details
+        with_wanted_attribute_by_name(Attribute::DOCUMENT_DETAILS)
+      end
     end
   end
 end

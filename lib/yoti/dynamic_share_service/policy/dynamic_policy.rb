@@ -51,30 +51,49 @@ module Yoti
         Marshal.load Marshal.dump @policy
       end
 
+      #
+      # @param [Bool] wanted
+      #
       def with_wanted_remember_me(wanted = true)
         @policy.instance_variable_set(:@wanted_remember_me, wanted)
         self
       end
 
+      #
+      # @param [Integer] auth
+      # @param [Bool] wanted
+      #
       def with_wanted_auth_type(auth, wanted = true)
         @wanted_auth_types[auth] = wanted
         self
       end
 
+      #
+      # @param [Bool] wanted
+      #
       def with_selfie_auth(wanted = true)
         with_wanted_auth_type(DynamicPolicy::SELFIE_AUTH_TYPE, wanted)
       end
 
+      #
+      # @param [Bool] wanted
+      #
       def with_pin_auth(wanted = true)
         with_wanted_auth_type(DynamicPolicy::PIN_AUTH_TYPE, wanted)
       end
 
+      #
+      # @param [Yoti::DynamicSharingService::WantedAttribute] attribute
+      #
       def with_wanted_attribute(attribute)
         key = attribute.derivation || attribute.name
         @wanted_attributes[key] = attribute
         self
       end
 
+      #
+      # @param [String] name
+      #
       def with_wanted_attribute_by_name(name)
         attribute = WantedAttribute.builder.with_name(name).build
         with_wanted_attribute attribute
@@ -96,6 +115,9 @@ module Yoti
         with_wanted_attribute_by_name Attribute::DATE_OF_BIRTH
       end
 
+      #
+      # @param [String] derivation
+      #
       def with_age_derived_attribute(derivation)
         with_wanted_attribute(
           WantedAttribute
@@ -106,10 +128,16 @@ module Yoti
         )
       end
 
+      #
+      # @param [Integer] derivation
+      #
       def with_age_over(age)
         with_age_derived_attribute(Attribute::AGE_OVER + age.to_s)
       end
 
+      #
+      # @param [Integer] derivation
+      #
       def with_age_under(age)
         with_age_derived_attribute(Attribute::AGE_UNDER + age.to_s)
       end

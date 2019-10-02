@@ -21,12 +21,14 @@ Metrics/CyclomaticComplexity:
   Max: 9
 
 Metrics/ClassLength:
+  Enabled: false
   Max: 115
 
 Metrics/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
+  Enabled: false
   CountComments: false
   Max: 19
   Exclude:

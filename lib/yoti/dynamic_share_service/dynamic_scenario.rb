@@ -39,16 +39,25 @@ module Yoti
         Marshal.load Marshal.dump @scenario
       end
 
+      #
+      # @param [Yoti::DynamicSharingService::DynamicPolicy] policy
+      #
       def with_policy(policy)
         @scenario.instance_variable_set(:@policy, policy)
         self
       end
 
+      #
+      # @param [Yoti::DynamicSharingService::Extension] extension
+      #
       def with_extension(extension)
         @scenario.instance_variable_get(:@extensions) << extension
         self
       end
 
+      #
+      # @param [String] endpoint
+      #
       def with_callback_endpoint(endpoint)
         @scenario.instance_variable_set(:@callback_endpoint, endpoint)
         self

@@ -37,16 +37,25 @@ module Yoti
         @attribute = WantedAttribute.new
       end
 
+      #
+      # @param [String] name
+      #
       def with_name(name)
         @attribute.instance_variable_set(:@name, name)
         self
       end
 
+      #
+      # @param [String] derivation
+      #
       def with_derivation(derivation)
         @attribute.instance_variable_set(:@derivation, derivation)
         self
       end
 
+      #
+      # @param [Bool] accept
+      #
       def with_accept_self_asserted(accept = true)
         @attribute.instance_variable_set(:@accept_self_asserted, accept)
         self

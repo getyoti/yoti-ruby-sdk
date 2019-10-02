@@ -254,6 +254,11 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
           .with_document_details
           .build
       end
+
+      it 'requests document details' do
+        expect(policy.wanted.length).to eql 1
+        expect(policy.wanted.first.name).to eql Yoti::Attribute::DOCUMENT_DETAILS
+      end
     end
 
     describe '.with_wanted_auth_type' do

@@ -3,6 +3,18 @@
 require 'spec_helper'
 
 describe 'Yoti::DynamicSharingService::LocationConstraintExtension' do
+  describe '.to_json' do
+    let :ext do
+      Yoti::DynamicSharingService::LocationConstraintExtension
+        .builder
+        .build
+    end
+    it 'marshals into json' do
+      expected = '{"type":"LOCATION_CONSTRAINT","content":{"expected_device_location":{"latitude":null,"longitude":null,"radius":null,"uncertainty":null}}}'
+      expect(ext.to_json).to eql expected
+    end
+  end
+
   describe '.type' do
     let :ext do
       Yoti::DynamicSharingService::LocationConstraintExtension

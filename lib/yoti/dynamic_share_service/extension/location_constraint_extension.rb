@@ -21,6 +21,17 @@ module Yoti
         @type = EXTENSION_TYPE
       end
 
+      def as_json
+        {
+          type: @type,
+          content: @content
+        }
+      end
+
+      def to_json(*_args)
+        as_json.to_json
+      end
+
       def self.builder
         LocationConstraintExtensionBuilder.new
       end

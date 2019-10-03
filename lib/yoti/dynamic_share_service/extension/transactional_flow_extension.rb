@@ -12,6 +12,17 @@ module Yoti
         @type = EXTENSION_TYPE
       end
 
+      def to_json(*_args)
+        as_json.to_json
+      end
+
+      def as_json
+        {
+          content: @content.as_json,
+          type: @type
+        }
+      end
+
       def self.builder
         TransactionalFlowExtensionBuilder.new
       end

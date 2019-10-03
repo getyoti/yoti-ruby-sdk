@@ -6,6 +6,17 @@ module Yoti
       attr_reader :type
       attr_reader :content
 
+      def to_json(*_args)
+        as_json.to_json
+      end
+
+      def as_json
+        {
+          type: @type,
+          content: @content.as_json
+        }
+      end
+
       def self.builder
         ExtensionBuilder.new
       end

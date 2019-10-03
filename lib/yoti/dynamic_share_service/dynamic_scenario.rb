@@ -12,14 +12,14 @@ module Yoti
         @extensions = []
       end
 
-      def to_json(*args)
-        as_json.to_json(*args)
+      def to_json(*_args)
+        as_json.to_json
       end
 
       def as_json(*_args)
         {
           policy: @policy,
-          extensions: @extensions,
+          extensions: @extensions.as_json,
           callback_endpoint: @callback_endpoint
         }
       end

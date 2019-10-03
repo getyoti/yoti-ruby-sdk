@@ -3,6 +3,18 @@
 require 'spec_helper'
 
 describe 'Yoti::DynamicSharingService::TransactionalFlowExtension' do
+  describe '.to_json' do
+    let :ext do
+      Yoti::DynamicSharingService::TransactionalFlowExtension
+        .builder
+        .build
+    end
+    it 'marshals into json' do
+      expected = '{"content":null,"type":"TRANSACTIONAL_FLOW"}'
+      expect(ext.to_json).to eql expected
+    end
+  end
+
   describe '.type' do
     let :ext do
       Yoti::DynamicSharingService::TransactionalFlowExtension

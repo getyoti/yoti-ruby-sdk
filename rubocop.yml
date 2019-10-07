@@ -8,6 +8,7 @@ AllCops:
     - 'lib/yoti/protobuf/compubapi/*'
 
 Metrics/AbcSize:
+  Enabled: false
   Max: 23
   Exclude:
     - examples/rails/app/controllers/yoti_controller.rb

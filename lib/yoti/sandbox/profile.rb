@@ -135,7 +135,7 @@ module Sandbox
     def with_structured_postal_address(data, optional: false, anchors: [])
       with_attribute(
         name: Yoti::Attribute::STRUCTURED_POSTAL_ADDRESS,
-        value: data.to_json,
+        value: data.as_json,
         optional: optional,
         anchors: anchors
       )

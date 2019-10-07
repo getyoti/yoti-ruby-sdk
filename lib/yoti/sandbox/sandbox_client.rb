@@ -8,7 +8,7 @@ module Sandbox
     attr_accessor :base_url
     attr_accessor :version_id
 
-    def initialize(app_id:, private_key:, base_url:, version_id: "v1")
+    def initialize(app_id:, private_key:, base_url:, version_id: 'v1')
       @app_id = app_id
       @base_url = base_url
       @key = OpenSSL::PKey::RSA.new(Base64.decode64(private_key))

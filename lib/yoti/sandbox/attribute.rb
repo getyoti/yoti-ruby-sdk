@@ -33,9 +33,9 @@ module Sandbox
       }
     end
 
-    def add_anchor(anchor)
+    def with_anchor(anchor)
       @anchors.push anchor
-      nil
+      self
     end
   end
 

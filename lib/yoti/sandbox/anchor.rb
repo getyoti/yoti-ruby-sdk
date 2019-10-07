@@ -25,7 +25,7 @@ module Sandbox
     end
 
     def to_json(*args)
-      as_json.to_json(args)
+      as_json.to_json(*args)
     end
 
     def self.source(value, sub_type: '', timestamp: Time.now)

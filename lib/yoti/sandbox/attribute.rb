@@ -37,7 +37,10 @@ module Sandbox
       @anchors.push anchor
       nil
     end
+  end
 
+  # Helper functions for building derivation strings
+  module Derivation
     def self.age_over(age)
       "age_over:#{age}"
     end

@@ -6,7 +6,6 @@ require 'yoti/http/signed_request'
 
 require_relative 'sandbox_client'
 require_relative 'profile'
-require_relative 'const'
 require_relative 'anchor'
 require_relative 'attribute'
 
@@ -14,6 +13,9 @@ require 'openssl'
 require 'net/http'
 require 'date'
 require 'securerandom'
+
+require 'dotenv'
+Dotenv.load
 
 # Singleton for sandbox test resources
 module Sandbox
@@ -27,8 +29,10 @@ module Sandbox
     read_dev_key!
     create_application!
     self.sandbox_client = Client.new(
-      application['id'],
-      application['private_key']
+      app_id: application['id'],
+      private_key: application['private_key'],
+      base_url: ENV['SANDBOX_BASE_URL'],
+      version_id: ENV['SANDBOX_VERSION_ID']
     )
     configure_yoti(
       app_id: sandbox_client.app_id,
@@ -42,13 +46,13 @@ module Sandbox
     Yoti.configuration.client_sdk_id = app_id
     Yoti.configuration.key = pem
     Yoti.configuration.key_file_path = ''
-    Yoti.configuration.api_endpoint = "#{SANDBOX_BASE_URL}/v1"
+    Yoti.configuration.api_endpoint = "#{ENV['SANDBOX_BASE_URL']}/v1"
     Yoti::SSL.reload!
   end
 
   def self.create_application_uri
     uri = URI(
-      "#{SANDBOX_BASE_URL}/v1#{SANDBOX_ENDPOINT}?\
+      "#{ENV['SANDBOX_BASE_URL']}/#{ENV['SANDBOX_VERSION_ID']}#{ENV['SANDBOX_ENDPOINT']}?\
 nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
     )
     uri.port = 11_443
@@ -74,7 +78,7 @@ nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
       unsigned.body = payload.to_json
       signed_request = Yoti::SignedRequest.new(
         unsigned,
-        "#{SANDBOX_ENDPOINT}?#{uri.query}",
+        "#{ENV['SANDBOX_ENDPOINT']}?#{uri.query}",
         payload
       ).sign
       puts "Creating application #{signed_request.body}"

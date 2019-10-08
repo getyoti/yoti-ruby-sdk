@@ -10,7 +10,7 @@ module Yoti
         as_json.to_json
       end
 
-      def as_json
+      def as_json(*_args)
         {
           type: @type,
           content: @content.as_json

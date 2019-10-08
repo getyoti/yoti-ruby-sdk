@@ -27,6 +27,7 @@ get '/dynamic-share' do
     .with_full_name
     .with_age_over(18)
     .with_pin_auth
+    .with_extension(Yoti::DynamicSharingService::Extension.builder.build)
     .build
   ).with_callback_endpoint('/profile').build
 

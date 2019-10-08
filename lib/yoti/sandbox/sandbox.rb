@@ -46,7 +46,7 @@ module Sandbox
     Yoti.configuration.client_sdk_id = app_id
     Yoti.configuration.key = pem
     Yoti.configuration.key_file_path = ''
-    Yoti.configuration.api_endpoint = "#{ENV['SANDBOX_BASE_URL']}/v1"
+    Yoti.configuration.api_endpoint = "#{ENV['SANDBOX_BASE_URL']}/#{ENV['SANDBOX_VERSION_ID']}"
     Yoti::SSL.reload!
   end
 
@@ -61,7 +61,7 @@ nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
 
   def self.create_application!
     Yoti.configure do |config|
-      config.key_file_path = 'dev1-dashboard-private-key.pem'
+      config.key_file_path = ENV['SANDBOX_KEY']
       config.client_sdk_id = 'DUMMY'
     end
 

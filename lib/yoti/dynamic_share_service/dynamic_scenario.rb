@@ -19,7 +19,7 @@ module Yoti
       def as_json(*_args)
         {
           policy: @policy,
-          extensions: @extensions.as_json,
+          extensions: @extensions,
           callback_endpoint: @callback_endpoint
         }
       end

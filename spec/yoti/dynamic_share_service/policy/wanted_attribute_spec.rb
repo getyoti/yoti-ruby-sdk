@@ -2,8 +2,6 @@
 
 require 'spec_helper'
 
-require 'pry-byebug'
-
 describe 'Yoti::DynamicSharingService::WantedAttribute' do
   describe '.to_json' do
     let(:attribute) do

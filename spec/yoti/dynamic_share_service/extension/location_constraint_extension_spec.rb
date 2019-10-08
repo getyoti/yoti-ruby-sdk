@@ -10,7 +10,7 @@ describe 'Yoti::DynamicSharingService::LocationConstraintExtension' do
         .build
     end
     it 'marshals into json' do
-      expected = '{"type":"LOCATION_CONSTRAINT","content":{"expected_device_location":{"latitude":null,"longitude":null,"radius":null,"uncertainty":null}}}'
+      expected = '{"type":"LOCATION_CONSTRAINT","content":{"expected_device_location":{"latitude":null,"longitude":null,"radius":150,"max_uncertainty_radius":150}}}'
       expect(ext.to_json).to eql expected
     end
   end
@@ -127,11 +127,11 @@ describe 'Yoti::DynamicSharingService::LocationConstraintExtension' do
             let :ext do
               Yoti::DynamicSharingService::LocationConstraintExtension
                 .builder
-                .with_uncertainty(num)
+                .with_max_uncertainty(num)
                 .build
             end
             it 'sets an uncertainty' do
-              expect(ext.content[:expected_device_location][:uncertainty]).to eql num
+              expect(ext.content[:expected_device_location][:max_uncertainty_radius]).to eql num
             end
           end
         end
@@ -144,7 +144,7 @@ describe 'Yoti::DynamicSharingService::LocationConstraintExtension' do
                 .builder
             end
             it 'throws an exception' do
-              expect { builder.with_uncertainty(num) }.to raise_error ArgumentError
+              expect { builder.with_max_uncertainty(num) }.to raise_error ArgumentError
             end
           end
         end

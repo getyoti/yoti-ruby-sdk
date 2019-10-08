@@ -10,14 +10,7 @@ module Yoti
       attr_reader :type
 
       def initialize
-        @content = {
-          expected_device_location: {
-            latitude: nil,
-            longitude: nil,
-            radius: nil,
-            uncertainty: nil
-          }
-        }
+        @content = {}
         @type = EXTENSION_TYPE
       end
 
@@ -68,7 +61,7 @@ module Yoti
         self
       end
 
-      def with_uncertainty(uncertainty)
+      def with_max_uncertainty(uncertainty)
         raise ArgumentError, 'Uncertainty must be Integer or Float'\
           unless uncertainty.is_a?(Integer) || uncertainty.is_a?(Float)
         raise ArgumentError, 'Uncertainty must be >= 0' unless uncertainty >= 0
@@ -78,12 +71,15 @@ module Yoti
       end
 
       def build
+        @radius ||= 150 unless @radius
+        @uncertainty ||= 150 unless @uncertainty
+
         extension = LocationConstraintExtension.new
         extension.instance_variable_get(:@content)[:expected_device_location] = {
           latitude: @latitude,
           longitude: @longitude,
           radius: @radius,
-          uncertainty: @uncertainty
+          max_uncertainty_radius: @uncertainty
         }
         extension
       end

@@ -13,7 +13,7 @@ module Yoti
       def as_json(*_args)
         {
           type: @type,
-          content: @content.as_json
+          content: @content
         }
       end
 

@@ -6,20 +6,18 @@ module Sandbox
     attr_accessor :app_id
     attr_accessor :key
     attr_accessor :base_url
-    attr_accessor :version_id
 
-    def initialize(app_id:, private_key:, base_url:, version_id: 'v1')
+    def initialize(app_id:, private_key:, base_url:)
       @app_id = app_id
       @base_url = base_url
       @key = OpenSSL::PKey::RSA.new(Base64.decode64(private_key))
-      @version_id = version_id
     end
 
     def setup_sharing_profile(profile)
       endpoint = "/apps/#{app_id}/tokens?\
 nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
       uri = URI(
-        "#{@base_url}/#{@version_id}#{endpoint}"
+        "#{@base_url}/#{endpoint}"
       )
 
       response = Net::HTTP.start(

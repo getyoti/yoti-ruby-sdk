@@ -95,7 +95,7 @@ describe 'Sandbox::Profile' do
       Sandbox::Profile.new.with_structured_postal_address(data, anchors: anchors)
     end
     it 'sets a formatted address' do
-      expected = '{"remember_me_id":"","profile_attributes":[{"name":"structured_postal_address","value":{"FormattedAddress":"Value"},"derivation":"","optional":false,"anchors":[{"type":"SOURCE","value":"","sub_type":"","timestamp":1183680000}]}]}'
+      expected = '{"remember_me_id":"","profile_attributes":[{"name":"structured_postal_address","value":"{\"FormattedAddress\":\"Value\"}","derivation":"","optional":false,"anchors":[{"type":"SOURCE","value":"","sub_type":"","timestamp":1183680000}]}]}'
       expect(profile.to_json).to eql expected
     end
   end

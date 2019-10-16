@@ -29,9 +29,9 @@ get '/dynamic-share' do
     .with_pin_auth
     .build
   )
-                                                         .with_callback_endpoint('/profile')
-                                                         .with_extension(Yoti::DynamicSharingService::TransactionalFlowExtension.builder.with_content({}).build)
-                                                         .build
+    .with_callback_endpoint('/profile')
+    .with_extension(Yoti::DynamicSharingService::TransactionalFlowExtension.builder.with_content({}).build)
+    .build
 
   share = Yoti::DynamicSharingService.create_share_url scenario
   erb :dynamic_share, locals: {

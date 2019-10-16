@@ -22,16 +22,16 @@ get '/' do
 end
 
 get '/dynamic-share' do
-  scenario = Yoti::DynamicSharingService::DynamicScenario.builder.with_policy(
+  builder = Yoti::DynamicSharingService::DynamicScenario.builder.with_policy(
     Yoti::DynamicSharingService::DynamicPolicy.builder
     .with_full_name
     .with_age_over(18)
     .with_pin_auth
     .build
   )
-    .with_callback_endpoint('/profile')
-    .with_extension(Yoti::DynamicSharingService::TransactionalFlowExtension.builder.with_content({}).build)
-    .build
+  builder.with_callback_endpoint('/profile')
+  builder.with_extension(Yoti::DynamicSharingService::TransactionalFlowExtension.builder.with_content({}).build)
+  scenario = builder.build
 
   share = Yoti::DynamicSharingService.create_share_url scenario
   erb :dynamic_share, locals: {

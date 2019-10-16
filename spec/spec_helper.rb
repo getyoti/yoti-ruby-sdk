@@ -6,6 +6,7 @@ $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'webmock/rspec'
 
 require 'yoti'
+require 'yoti/sandbox'
 
 def stub_api_requests_v1(method = :get, response = 'profile', endpoint = '[a-zA-Z]*', status = [200])
   stub_response = File.read("spec/sample-data/responses/#{response}.json")

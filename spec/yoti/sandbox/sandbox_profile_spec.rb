@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'yoti/sandbox'
+require 'spec_helper'
 
 describe 'Sandbox::Profile' do
   let :value do
@@ -15,6 +15,15 @@ describe 'Sandbox::Profile' do
     end
     it 'sets a given name' do
       expected = '{"remember_me_id":"","profile_attributes":[{"name":"given_names","value":"value","derivation":"","optional":false,"anchors":[{"type":"SOURCE","value":"","sub_type":"","timestamp":1183680000}]}]}'
+      expect(profile.to_json).to eql expected
+    end
+  end
+  describe '.with_full_name' do
+    let :profile do
+      Sandbox::Profile.new.with_full_name(value, anchors: anchors)
+    end
+    it 'sets a full name' do
+      expected = '{"remember_me_id":"","profile_attributes":[{"name":"full_name","value":"value","derivation":"","optional":false,"anchors":[{"type":"SOURCE","value":"","sub_type":"","timestamp":1183680000}]}]}'
       expect(profile.to_json).to eql expected
     end
   end
@@ -126,6 +135,18 @@ describe 'Sandbox::Profile' do
     end
     it 'sets document details' do
       expected = '{"remember_me_id":"","profile_attributes":[{"name":"document_details","value":"value","derivation":"","optional":false,"anchors":[{"type":"SOURCE","value":"","sub_type":"","timestamp":1183680000}]}]}'
+      expect(profile.to_json).to eql expected
+    end
+  end
+  describe '.with_remember_me_id' do
+    let :id do
+      'REMEMBER ME'
+    end
+    let :profile do
+      Sandbox::Profile.new.with_remember_me_id(id)
+    end
+    it 'sets the remember me id' do
+      expected = '{"remember_me_id":"REMEMBER ME","profile_attributes":[]}'
       expect(profile.to_json).to eql expected
     end
   end

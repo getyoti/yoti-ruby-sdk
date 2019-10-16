@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'yoti/sandbox'
+require 'spec_helper'
 
 describe 'Sandbox::Attribute' do
   let :name do
@@ -36,6 +36,16 @@ describe 'Sandbox::Attribute' do
     it 'Marshals the attribute' do
       expected = '{"name":"name","value":"value","derivation":"derivation","optional":true,"anchors":[]}'
       expect(attribute.to_json).to eql expected
+    end
+  end
+  describe 'self.age_over' do
+    it 'creates an age over derivation' do
+      expect(Sandbox::Derivation.age_over(18)).to eql 'age_over:18'
+    end
+  end
+  describe 'self.age_under' do
+    it 'creates an age under derivation' do
+      expect(Sandbox::Derivation.age_under(18)).to eql 'age_under:18'
     end
   end
 end

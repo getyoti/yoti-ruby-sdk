@@ -14,7 +14,7 @@ module Yoti
         @type = EXTENSION_TYPE
       end
 
-      def as_json
+      def as_json(*_args)
         {
           type: @type,
           content: @content

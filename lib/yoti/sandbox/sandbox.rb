@@ -26,6 +26,8 @@ module Sandbox
   end
 
   def self.setup!
+    return if application
+
     read_dev_key!
     create_application!
     self.sandbox_client = Client.new(

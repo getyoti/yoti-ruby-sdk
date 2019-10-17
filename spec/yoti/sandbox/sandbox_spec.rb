@@ -72,10 +72,13 @@ describe 'Sandbox' do
     context 'With valid dev key' do
       before :each do
         allow(Sandbox).to receive(:read_dev_key!)
-        allow(Sandbox).to receive(:create_application!)
-        Sandbox.application['id'] = app_id
-        Sandbox.application['private_key'] = private_key
-        Sandbox.application['base_url'] = base_url
+        allow(Sandbox).to receive(:create_application!) {
+          Sandbox.application = {}
+          Sandbox.application['id'] = app_id
+          Sandbox.application['private_key'] = private_key
+          Sandbox.application['base_url'] = base_url
+        }
+        Sandbox.application = nil
       end
       it 'Configures the Sandbox session' do
         expect(Sandbox).to receive(:read_dev_key!)

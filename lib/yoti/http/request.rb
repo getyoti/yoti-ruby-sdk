@@ -14,6 +14,9 @@ module Yoti
     # @return [Hash] the body sent with the request
     attr_accessor :payload
 
+    # @return [Boolean] Whether the X-Auth-Key header should be set to the client's key
+    attr_accessor :set_auth_key
+
     # Makes a HTTP request after signing the headers
     # @return [Hash] the body from the HTTP request
     def body
@@ -21,7 +24,7 @@ module Yoti
       raise RequestError, 'The payload needs to be a hash.' unless @payload.to_s.empty? || @payload.is_a?(Hash)
 
       res = Net::HTTP.start(uri.hostname, Yoti.configuration.api_port, use_ssl: https_uri?) do |http|
-        signed_request = SignedRequest.new(unsigned_request, path, @payload).sign
+        signed_request = SignedRequest.new(unsigned_request, path, @payload).sign(with_auth_key: @set_auth_key)
         http.request(signed_request)
       end
 

@@ -10,13 +10,11 @@ module Yoti
       @auth_key = Yoti::SSL.auth_key_from_pem
     end
 
-    def sign
-      @http_req['X-Yoti-Auth-Key'] = @auth_key
+    def sign(with_auth_key: false)
+      @http_req['X-Yoti-Auth-Key'] = @auth_key if with_auth_key
       @http_req['X-Yoti-Auth-Digest'] = message_signature
       @http_req['X-Yoti-SDK'] = Yoti.configuration.sdk_identifier
       @http_req['X-Yoti-SDK-Version'] = "#{Yoti.configuration.sdk_identifier}-#{Yoti::VERSION}"
-      @http_req['Content-Type'] = 'application/json'
-      @http_req['Accept'] = 'application/json'
       @http_req
     end
 

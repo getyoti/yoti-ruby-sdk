@@ -18,6 +18,7 @@ module Yoti
       yoti_request.encrypted_connect_token = @encrypted_connect_token
       yoti_request.http_method = 'GET'
       yoti_request.endpoint = 'profile'
+      yoti_request.set_auth_key = true
       yoti_request
     end
   end

@@ -16,7 +16,7 @@ describe 'Yoti::SignedRequest' do
   end
 
   describe '#sign' do
-    let(:signed) { signed_request.send(:sign) }
+    let(:signed) { signed_request.sign(with_auth_key: true) }
     it 'return a signed request' do
       expect(signed).to be_a(Net::HTTP::Get)
       expect(signed['X-Yoti-Auth-Key']).to eql('MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs9zAY5K9O92zfmRhxBO0NX8Dg7UyyIaLE5GdbCMimlccew2p8LN6P8EDUoU7hiCbW1EQ/cp4iZVIp7UPA3AO/ecuejs2DjkFQOeMGnSlwD0pk74ZI3ammQtYm2ml47IWGrciMh4dPIPh0SOF+tVD0kHhAB9cMaj96Ij2De60Y7SeqvIXUHCtnoHId7Zk5I71mtewAnb9Gpx+wPnr2gpX/uUqkh+3ZHsF2eNCpw/ICvKj4UkNXopUyBemDp3n/s7u8TFyewp7ipPbFxDmxZKJT9SjZNFFe/jc2V/R2uC9qSFRKpTsxqmXggjiBlH46cpyg2SeYFj1p5bkpKZ10b3iOwIDAQAB')
@@ -24,8 +24,6 @@ describe 'Yoti::SignedRequest' do
       expect(signed['X-Yoti-SDK']).to eql('Ruby')
       expect(signed['X-Yoti-SDK-Version']).to eql("Ruby-#{Yoti::VERSION}")
       expect(signed['X-Yoti-SDK-Version']).to match(/Ruby-\d+\.\d+\.\d+/)
-      expect(signed['Content-Type']).to eql('application/json')
-      expect(signed['Accept']).to eql('application/json')
     end
   end
 

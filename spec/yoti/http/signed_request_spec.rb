@@ -16,10 +16,9 @@ describe 'Yoti::SignedRequest' do
   end
 
   describe '#sign' do
-    let(:signed) { signed_request.sign(with_auth_key: true) }
+    let(:signed) { signed_request.sign }
     it 'return a signed request' do
       expect(signed).to be_a(Net::HTTP::Get)
-      expect(signed['X-Yoti-Auth-Key']).to eql('MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs9zAY5K9O92zfmRhxBO0NX8Dg7UyyIaLE5GdbCMimlccew2p8LN6P8EDUoU7hiCbW1EQ/cp4iZVIp7UPA3AO/ecuejs2DjkFQOeMGnSlwD0pk74ZI3ammQtYm2ml47IWGrciMh4dPIPh0SOF+tVD0kHhAB9cMaj96Ij2De60Y7SeqvIXUHCtnoHId7Zk5I71mtewAnb9Gpx+wPnr2gpX/uUqkh+3ZHsF2eNCpw/ICvKj4UkNXopUyBemDp3n/s7u8TFyewp7ipPbFxDmxZKJT9SjZNFFe/jc2V/R2uC9qSFRKpTsxqmXggjiBlH46cpyg2SeYFj1p5bkpKZ10b3iOwIDAQAB')
       expect(signed['X-Yoti-Auth-Digest']).to eql('X4iPrpUNUXDFbdRWiWjh87P7TOq5sPmPYCaNGsbqsB5EDnsuFi+kG2yeYFBJiUpcvm5QogseXMlBY6pxUD6d1AZv1ftllAp5nA2RcpUBbCvvYneJC8f+MYMxw01pl2i3Xz7FlbEB633PnMaJLOnaXtMTzZgdP1GPzbsjjOLiUxMyeCUonkz700PuKCdHQfI339OmUZUrPKZe3WrKLlqcYEbJFdSIxGo8vnzi7sFoUkWV6gmp5vlfreMfm6mpQbJcomgoyCUQInF3MgeMKetj7V+wifZW0nLI5evZSffUcXvX/0pbJUR9gl41NU8VpXGSVru+7iilT8ytJd0WGNlWjw==')
       expect(signed['X-Yoti-SDK']).to eql('Ruby')
       expect(signed['X-Yoti-SDK-Version']).to eql("Ruby-#{Yoti::VERSION}")

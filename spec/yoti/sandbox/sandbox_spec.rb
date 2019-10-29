@@ -46,8 +46,13 @@ describe 'Sandbox' do
       )
     end
     it 'creates a Sandbox session' do
+      log_output = StringIO.new
+      Yoti::Log.output(log_output)
+
       Sandbox.create_application!
       expect(Sandbox.application).not_to be_nil
+
+      expect(log_output.string).to match(/INFO -- Yoti: Creating application {"name":"Test Run \d+-\d+-\d+T\d+:\d+:\d+\+\d+:\d+"}/)
     end
   end
 

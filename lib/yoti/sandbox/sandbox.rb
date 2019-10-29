@@ -82,7 +82,7 @@ nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
         "#{ENV['SANDBOX_ENDPOINT']}?#{uri.query}",
         payload
       ).sign
-      puts "Creating application #{signed_request.body}"
+      Yoti::Log.logger.info("Creating application #{signed_request.body}")
       http.request signed_request
     end
 

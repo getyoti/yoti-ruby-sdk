@@ -96,7 +96,6 @@ module Yoti
       # @param [Hash] constraints
       #
       def with_wanted_attribute_by_name(name, constraints: nil)
-        attribute = WantedAttribute.builder.with_name(name).build
         attribute_builder = WantedAttribute.builder.with_name(name)
         constraints&.each do |constraint|
           attribute_builder.with_constraint constraint

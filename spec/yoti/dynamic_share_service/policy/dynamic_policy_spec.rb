@@ -190,10 +190,10 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
         end
       end
       let :policy do
-          Yoti::DynamicSharingService::DynamicPolicy
-            .builder
-            .with_age_over(21)
-            .build
+        Yoti::DynamicSharingService::DynamicPolicy
+          .builder
+          .with_age_over(21)
+          .build
       end
       it 'requests an age over 21' do
         expect(policy.wanted.length).to eql 1

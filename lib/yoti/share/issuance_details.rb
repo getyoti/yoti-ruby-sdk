@@ -2,16 +2,17 @@
 
 module Yoti
   module Share
-    attr_reader :token
-    attr_reader :attributes
-    attr_reader :expiry_date
-
     class IssuanceDetails
       attr_reader :token
       attr_reader :attributes
       attr_reader :expiry_date
 
-      def initialize data_entry
+      #
+      # Constructor
+      #
+      # @param [Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute] data_entry
+      #
+      def initialize(data_entry)
         @token = data_entry.issuance_token
         begin
           @expiry_date = DateTime.parse(data_entry.issuing_attributes.expiry_date)

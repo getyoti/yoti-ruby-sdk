@@ -2,13 +2,11 @@
 
 module Yoti
   module Share
-
     attr_reader :token
     attr_reader :attributes
     attr_reader :expiry_date
 
     class IssuanceDetails
-
       attr_reader :token
       attr_reader :attributes
       attr_reader :expiry_date
@@ -25,4 +23,3 @@ module Yoti
     end
   end
 end
-

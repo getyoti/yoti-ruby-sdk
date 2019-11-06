@@ -3,7 +3,6 @@
 module Yoti
   module Share
     class ExtraData
-
       attr_reader :issuance_details
 
       def initialize proto
@@ -19,4 +18,3 @@ module Yoti
     end
   end
 end
-

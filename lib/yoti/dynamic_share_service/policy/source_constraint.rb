@@ -54,19 +54,19 @@ module Yoti
         self
       end
 
-      def with_passport(sub_type)
+      def with_passport(sub_type="")
         with_anchor_by_value(SourceConstraint::PASSPORT, sub_type)
       end
 
-      def with_driving_licence(sub_type)
+      def with_driving_licence(sub_type="")
         with_anchor_by_value(SourceConstraint::DRIVING_LICENCE, sub_type)
       end
 
-      def with_national_id(sub_type)
+      def with_national_id(sub_type="")
         with_anchor_by_value(SourceConstraint::NATIONAL_ID, sub_type)
       end
 
-      def with_passcard(sub_type)
+      def with_passcard(sub_type="")
         with_anchor_by_value(SourceConstraint::PASS_CARD, sub_type)
       end
 

@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'protobuf', '~> 3.6'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'coveralls', '~> 0.8'
   spec.add_development_dependency 'dotenv', '~> 2.2'
   spec.add_development_dependency 'generator_spec', '~> 0.9'
   spec.add_development_dependency 'rake', '~> 12.0'
@@ -35,5 +36,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 3.3'
   spec.add_development_dependency 'yard', '~> 0.9'
   spec.add_development_dependency 'yardstick', '~> 0.9'
-  spec.add_development_dependency 'coveralls', '~> 0.8'
 end

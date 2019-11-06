@@ -1,5 +1,9 @@
+require 'coveralls'
 require 'simplecov'
-SimpleCov.start
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov.start do
+  add_filter 'app/secrets'
+end
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 

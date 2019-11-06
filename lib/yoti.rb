@@ -41,6 +41,9 @@ require_relative 'yoti/dynamic_share_service/extension/extension'
 require_relative 'yoti/dynamic_share_service/extension/location_constraint_extension'
 require_relative 'yoti/dynamic_share_service/extension/transactional_flow_extension'
 
+require_relative 'yoti/share/extra_data'
+require_relative 'yoti/share/issuance_details'
+
 # The main module namespace of the Yoti gem
 module Yoti
   class << self

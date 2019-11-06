@@ -6,6 +6,9 @@ require 'json'
 require_relative 'attrpubapi/List_pb.rb'
 require_relative 'compubapi/EncryptedData_pb.rb'
 require_relative 'compubapi/SignedTimestamp_pb.rb'
+require_relative 'sharepubapi/ExtraData_pb.rb'
+require_relative 'sharepubapi/IssuingAttributes_pb.rb'
+require_relative 'sharepubapi/ThirdPartyAttribute_pb.rb'
 
 module Yoti
   module Protobuf

@@ -27,7 +27,7 @@ def create_thirdparty_data_proto(token, expiry_date, *definitions)
   attribute.issuing_attributes = issuing_attributes
 
   row = Yoti::Protobuf::Sharepubapi::DataEntry.new()
-  row.type = :THIRD_PARTY_ATTRIBUTE 
+  row.type = :THIRD_PARTY_ATTRIBUTE
   row.value = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.encode(attribute)
   row
 end

@@ -7,6 +7,11 @@ module Yoti
       attr_reader :value
       attr_reader :sub_type
 
+      def initialize
+        @value = ""
+        @sub_type = ""
+      end
+
       def to_json(*_args)
         as_json.to_json
       end

@@ -11,7 +11,7 @@ describe 'Yoti::DynamicSharingService::WantedAnchor' do
         .build
     end
     it 'marshals the anchor' do
-      expected = '{"name":"TEST NAME","sub_type":null}'
+      expected = '{"name":"TEST NAME","sub_type":""}'
       expect(anchor.to_json).to eql expected
     end
   end

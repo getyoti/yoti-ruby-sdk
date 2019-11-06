@@ -5,6 +5,11 @@ module Yoti
     class ExtraData
       attr_reader :issuance_details
 
+      #
+      # Constructor
+      #
+      # @param [Yoti::Protobuf::Sharepubapi::ExtraData] proto
+      #
       def initialize proto
         @issuance_details = nil
 

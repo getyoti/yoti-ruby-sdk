@@ -1,5 +1,6 @@
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
+require 'coveralls/rake/task'
 require 'yaml'
 
 ################################
@@ -8,6 +9,13 @@ require 'yaml'
 
 RSpec::Core::RakeTask.new
 task test: :spec
+
+################################
+# Coveralls                    #
+################################
+
+Coveralls::RakeTask::new
+task :test_with_coveralls => [:spec, 'coveralls:push']
 
 ################################
 # Rubocop                      #

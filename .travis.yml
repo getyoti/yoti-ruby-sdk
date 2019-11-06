@@ -1,15 +1,11 @@
 language: ruby
-rvm:
-  - 2.4
-  - 2.5
-  - 2.6
 
 git:
   depth: 1
 
 jobs:
   include:
-    - &test:
+    - &test
       stage: Test
       rvm: 2.4
       before_install:
@@ -27,3 +23,6 @@ jobs:
       name: Coveralls
       script:
         - bundle exec rake :test_with_coveralls
+      if: type = pull_request OR branch = master
+      after_success:
+        - coveralls

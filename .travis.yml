@@ -7,11 +7,23 @@ rvm:
 git:
   depth: 1
 
-before_install:
-  - gem install bundler
-
-install:
-  - bundle install
-
-script:
-  - bundle exec rake
+jobs:
+  include:
+    - &test:
+      stage: Test
+      rvm: 2.4
+      before_install:
+        - gem install bundler
+      install:
+        - bundle install
+      script:
+        - bundle exec rake
+    - <<: *test
+      rvm: 2.5
+    - <<: *test
+      rvm: 2.6
+    - <<: *test
+      stage: coverage
+      name: Coveralls
+      script:
+        - bundle exec rake :test_with_coveralls

@@ -7,7 +7,10 @@ require 'yoti'
 def create_extra_data_proto(*rows)
   extra_data = Yoti::Protobuf::Sharepubapi::ExtraData.new()
   rows.each do |row|
-    extra_data.list += [create_thirdparty_data_proto(*row)]
+    data = Yoti::Protobuf::Sharepubapi::DataEntry.new()
+    data.type = :THIRD_PARTY_ATTRIBUTE
+    data.value = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.encode(create_thirdparty_data_proto(*row))
+    extra_data.list += [data]
   end
   extra_data
 end

@@ -9,6 +9,8 @@ module Yoti
       NATIONAL_ID = 'NATIONAL_ID'
       PASS_CARD = 'PASS_CARD'
 
+      SOURCE_CONSTRAINT = 'SOURCE'
+
       attr_reader :anchors
 
       def soft_preference
@@ -23,9 +25,12 @@ module Yoti
 
       def as_json
         obj = {
-          anchors: @anchors.as_json
+          type: SOURCE_CONSTRAINT,
+          preferred_sources: [
+            anchors: @anchors.as_json
+          ]
         }
-        obj[:soft_preference] = @soft_preference if @soft_preference
+        obj[:preferred_sources][:soft_preference] = @soft_preference if @soft_preference
         obj
       end
 
@@ -54,19 +59,19 @@ module Yoti
         self
       end
 
-      def with_passport(sub_type="")
+      def with_passport(sub_type = nil)
         with_anchor_by_value(SourceConstraint::PASSPORT, sub_type)
       end
 
-      def with_driving_licence(sub_type="")
+      def with_driving_licence(sub_type = nil)
         with_anchor_by_value(SourceConstraint::DRIVING_LICENCE, sub_type)
       end
 
-      def with_national_id(sub_type="")
+      def with_national_id(sub_type = nil)
         with_anchor_by_value(SourceConstraint::NATIONAL_ID, sub_type)
       end
 
-      def with_passcard(sub_type="")
+      def with_passcard(sub_type = nil)
         with_anchor_by_value(SourceConstraint::PASS_CARD, sub_type)
       end
 

@@ -7,11 +7,11 @@ describe 'Yoti::DynamicSharingService::SourceConstraint' do
     let(:source_constraint) do
       Yoti::DynamicSharingService::SourceConstraint
         .builder
-        .with_passport('')
+        .with_passport
         .build
     end
     it 'marshals the source constraint' do
-      expected = '{"anchors":[{"name":"PASSPORT","sub_type":""}]}'
+      expected = '{"type":"SOURCE","preferred_sources":[{"anchors":[{"name":"PASSPORT"}]}]}'
       expect(source_constraint.to_json).to eql expected
     end
   end

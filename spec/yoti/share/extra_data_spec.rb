@@ -5,9 +5,9 @@ require 'spec_helper'
 require 'yoti'
 
 def create_extra_data_proto(*rows)
-  extra_data = Yoti::Protobuf::Sharepubapi::ExtraData.new()
+  extra_data = Yoti::Protobuf::Sharepubapi::ExtraData.new
   rows.each do |row|
-    data = Yoti::Protobuf::Sharepubapi::DataEntry.new()
+    data = Yoti::Protobuf::Sharepubapi::DataEntry.new
     data.type = :THIRD_PARTY_ATTRIBUTE
     data.value = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.encode(create_thirdparty_data_proto(*row))
     extra_data.list += [data]
@@ -16,20 +16,20 @@ def create_extra_data_proto(*rows)
 end
 
 def create_thirdparty_data_proto(token, expiry_date, *definitions)
-  issuing_attributes = Yoti::Protobuf::Sharepubapi::IssuingAttributes.new()
-  issuing_attributes.expiry_date = ""
-  issuing_attributes.expiry_date = expiry_date.iso8601(9) if expiry_date != nil
+  issuing_attributes = Yoti::Protobuf::Sharepubapi::IssuingAttributes.new
+  issuing_attributes.expiry_date = ''
+  issuing_attributes.expiry_date = expiry_date.iso8601(9) if expiry_date
   definitions.each do |s|
-    name = Yoti::Protobuf::Sharepubapi::Definition.new()
+    name = Yoti::Protobuf::Sharepubapi::Definition.new
     name.name = s
     issuing_attributes.definitions += [name]
   end
 
-  attribute = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.new()
+  attribute = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.new
   attribute.issuance_token = token
   attribute.issuing_attributes = issuing_attributes
 
-  row = Yoti::Protobuf::Sharepubapi::DataEntry.new()
+  row = Yoti::Protobuf::Sharepubapi::DataEntry.new
   row.type = :THIRD_PARTY_ATTRIBUTE
   row.value = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.encode(attribute)
   row
@@ -41,7 +41,7 @@ describe 'Yoti::Share::ExtraData' do
   end
   context 'with empty ExtraData' do
     let :proto do
-      Yoti::Protobuf::Sharepubapi::ExtraData.new()
+      Yoti::Protobuf::Sharepubapi::ExtraData.new
     end
     let :extra_data do
       Yoti::Share::ExtraData.new(proto)
@@ -55,15 +55,15 @@ describe 'Yoti::Share::ExtraData' do
 
   context 'with two third party attributes' do
     let :token_value do
-      "tokenValue1"
+      'tokenValue1'
     end
     let :attribute_name do
-      "attributeName1"
+      'attributeName1'
     end
     let :proto do
       create_extra_data_proto(
         [token_value, now, attribute_name],
-        ["tokenValue2", now, "attributeName2"],
+        ['tokenValue2', now, 'attributeName2']
       )
     end
     let :extra_data do
@@ -85,13 +85,13 @@ describe 'Yoti::Share::ExtraData' do
 
   context 'with multiple issuing attributes' do
     let :token_value do
-      "tokenValue"
+      'tokenValue'
     end
     let :attribute1 do
-      "attribute1"
+      'attribute1'
     end
     let :attribute2 do
-      "attribute2"
+      'attribute2'
     end
     let :proto do
       create_extra_data_proto(
@@ -118,10 +118,10 @@ describe 'Yoti::Share::ExtraData' do
 
   context 'with no expiry date' do
     let :token do
-      "tokenValue"
+      'tokenValue'
     end
     let :attribute do
-      "attributeName"
+      'attributeName'
     end
     let :proto do
       create_extra_data_proto(
@@ -147,10 +147,10 @@ describe 'Yoti::Share::ExtraData' do
 
   context 'with no issuing attributes' do
     let :token do
-      "tokenValue"
+      'tokenValue'
     end
     let :attribute do
-      "attributeName"
+      'attributeName'
     end
     let :proto do
       create_extra_data_proto(

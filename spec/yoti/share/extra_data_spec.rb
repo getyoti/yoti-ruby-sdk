@@ -46,9 +46,9 @@ describe 'Yoti::Share::ExtraData' do
     let :extra_data do
       Yoti::Share::ExtraData.new(proto)
     end
-    describe '.issuance_details' do
+    describe '.attribute_issuance_details' do
       it 'is none' do
-        expect(extra_data.issuance_details).to be_nil
+        expect(extra_data.attribute_issuance_details).to be_nil
       end
     end
   end
@@ -69,16 +69,16 @@ describe 'Yoti::Share::ExtraData' do
     let :extra_data do
       Yoti::Share::ExtraData.new(proto)
     end
-    describe '.issuance_details' do
+    describe '.attribute_issuance_details' do
       it 'sets the token' do
-        expect(extra_data.issuance_details.token).to eql token_value
+        expect(extra_data.attribute_issuance_details.token).to eql token_value
       end
       it 'sets the expiry date' do
-        expect(extra_data.issuance_details.expiry_date).to eql now
+        expect(extra_data.attribute_issuance_details.expiry_date).to eql now
       end
       it 'sets the first' do
-        expect(extra_data.issuance_details.attributes.length).to eql 1
-        expect(extra_data.issuance_details.attributes[0].name).to eql attribute_name
+        expect(extra_data.attribute_issuance_details.attributes.length).to eql 1
+        expect(extra_data.attribute_issuance_details.attributes[0].name).to eql attribute_name
       end
     end
   end
@@ -101,17 +101,17 @@ describe 'Yoti::Share::ExtraData' do
     let :extra_data do
       Yoti::Share::ExtraData.new(proto)
     end
-    describe '.issuance_details' do
+    describe '.attribute_issuance_details' do
       it 'sets token value' do
-        expect(extra_data.issuance_details.token).to eql token_value
+        expect(extra_data.attribute_issuance_details.token).to eql token_value
       end
       it 'sets the expiry date' do
-        expect(extra_data.issuance_details.expiry_date).to eql now
+        expect(extra_data.attribute_issuance_details.expiry_date).to eql now
       end
       it 'sets two attributes' do
-        expect(extra_data.issuance_details.attributes.length).to eql 2
-        expect(extra_data.issuance_details.attributes[0].name).to eql attribute1
-        expect(extra_data.issuance_details.attributes[1].name).to eql attribute2
+        expect(extra_data.attribute_issuance_details.attributes.length).to eql 2
+        expect(extra_data.attribute_issuance_details.attributes[0].name).to eql attribute1
+        expect(extra_data.attribute_issuance_details.attributes[1].name).to eql attribute2
       end
     end
   end
@@ -131,16 +131,16 @@ describe 'Yoti::Share::ExtraData' do
     let :extra_data do
       Yoti::Share::ExtraData.new(proto)
     end
-    describe '.issuance_details' do
+    describe '.attribute_issuance_details' do
       it 'has the token value' do
-        expect(extra_data.issuance_details.token).to eql token
+        expect(extra_data.attribute_issuance_details.token).to eql token
       end
       it 'has a nil expiry date' do
-        expect(extra_data.issuance_details.expiry_date).to eql nil
+        expect(extra_data.attribute_issuance_details.expiry_date).to eql nil
       end
       it 'has one attribute' do
-        expect(extra_data.issuance_details.attributes.length).to eql 1
-        expect(extra_data.issuance_details.attributes[0].name).to eql attribute
+        expect(extra_data.attribute_issuance_details.attributes.length).to eql 1
+        expect(extra_data.attribute_issuance_details.attributes[0].name).to eql attribute
       end
     end
   end
@@ -160,15 +160,15 @@ describe 'Yoti::Share::ExtraData' do
     let :extra_data do
       Yoti::Share::ExtraData.new(proto)
     end
-    describe '.issuance_details' do
+    describe '.attribute_issuance_details' do
       it 'sets the token' do
-        expect(extra_data.issuance_details.token).to eql token
+        expect(extra_data.attribute_issuance_details.token).to eql token
       end
       it 'sets the expiry date' do
-        expect(extra_data.issuance_details.expiry_date).to eql now
+        expect(extra_data.attribute_issuance_details.expiry_date).to eql now
       end
       it 'has no attributes' do
-        expect(extra_data.issuance_details.attributes.length).to eql 0
+        expect(extra_data.attribute_issuance_details.attributes.length).to eql 0
       end
     end
   end

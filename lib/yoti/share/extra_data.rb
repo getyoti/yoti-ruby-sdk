@@ -3,7 +3,7 @@
 module Yoti
   module Share
     class ExtraData
-      attr_reader :issuance_details
+      attr_reader :attribute_issuance_details
 
       #
       # Constructor
@@ -11,12 +11,12 @@ module Yoti
       # @param [Yoti::Protobuf::Sharepubapi::ExtraData] proto
       #
       def initialize(proto)
-        @issuance_details = nil
+        @attribute_issuance_details = nil
 
         proto.list.each do |data_entry|
-          if data_entry.type == :THIRD_PARTY_ATTRIBUTE && @issuance_details.nil?
+          if data_entry.type == :THIRD_PARTY_ATTRIBUTE && @attribute_issuance_details.nil?
             attribute = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.decode(data_entry.value)
-            @issuance_details = Yoti::Share::IssuanceDetails.new(attribute)
+            @attribute_issuance_details = Yoti::Share::AttributeIssuanceDetails.new(attribute)
           end
         end
       end

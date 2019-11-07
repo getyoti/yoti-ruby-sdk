@@ -21,7 +21,7 @@ def create_thirdparty_data_proto(token, expiry_date, *definitions)
   attribute
 end
 
-describe 'Yoti::Share::IssuanceDetails' do
+describe 'Yoti::Share::AttributeIssuanceDetails' do
   context 'with a valid thirdparty attribute' do
     let :token do
       'tokenValue'
@@ -36,7 +36,7 @@ describe 'Yoti::Share::IssuanceDetails' do
       create_thirdparty_data_proto(token, now, attribute)
     end
     let :issuance_details do
-      Yoti::Share::IssuanceDetails.new(proto)
+      Yoti::Share::AttributeIssuanceDetails.new(proto)
     end
 
     it 'sets the attribute name' do

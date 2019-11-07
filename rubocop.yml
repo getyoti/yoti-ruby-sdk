@@ -6,6 +6,7 @@ AllCops:
     - 'examples/rails/config/**/*'
     - 'lib/yoti/protobuf/attrpubapi/*'
     - 'lib/yoti/protobuf/compubapi/*'
+    - 'lib/yoti/protobuf/sharepubapi/*'
 
 Metrics/AbcSize:
   Enabled: false

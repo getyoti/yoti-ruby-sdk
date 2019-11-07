@@ -43,6 +43,12 @@ module Yoti
         decipher_profile(receipt['profile_content'], receipt['wrapped_receipt_key'])
       end
 
+      def extra_data(receipt)
+        return nil unless valid_receipt?(receipt)
+
+        decipher_profile(receipt['extra_data'], receipt['wrapped_receipt_key']) if receipt['extra_data']
+      end
+
       def attribute_list(data)
         Yoti::Protobuf::Attrpubapi::AttributeList.decode(data)
       end

@@ -84,10 +84,17 @@ module Yoti
     attr_reader :timestamp
 
     #
+    # Extra data
+    #
+    # @return [ExtraData]
+    #
+    attr_reader :extra_data
+
+    #
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
     #
-    def initialize(receipt, decrypted_profile = nil, decrypted_application_profile = nil)
+    def initialize(receipt, decrypted_profile = nil, decrypted_application_profile = nil, extra_data = nil)
       @remember_me_id = receipt['remember_me_id']
       @user_id = @remember_me_id
       @receipt_id = receipt['receipt_id']
@@ -96,6 +103,7 @@ module Yoti
       @timestamp = receipt['timestamp'] ? Time.parse(receipt['timestamp']) : nil
       @extended_user_profile = process_decrypted_profile(decrypted_profile)
       @extended_application_profile = process_decrypted_profile(decrypted_application_profile)
+      @extra_data = Share::ExtraData(extra_data) if extra_data
       @user_profile = @extended_user_profile.map do |name, attribute|
         [name, attribute.value]
       end.to_h

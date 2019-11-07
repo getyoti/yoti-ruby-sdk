@@ -11,6 +11,10 @@ describe 'Yoti::ProfileRequest' do
 
     let(:yoti_request) { profile_request.instance_variable_get(:@request) }
 
+    it 'sets the X-Yoti-Auth-Key header' do
+      expect(yoti_request.instance_variable_get(:@headers)['X-Yoti-Auth-Key']).to eql 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs9zAY5K9O92zfmRhxBO0NX8Dg7UyyIaLE5GdbCMimlccew2p8LN6P8EDUoU7hiCbW1EQ/cp4iZVIp7UPA3AO/ecuejs2DjkFQOeMGnSlwD0pk74ZI3ammQtYm2ml47IWGrciMh4dPIPh0SOF+tVD0kHhAB9cMaj96Ij2De60Y7SeqvIXUHCtnoHId7Zk5I71mtewAnb9Gpx+wPnr2gpX/uUqkh+3ZHsF2eNCpw/ICvKj4UkNXopUyBemDp3n/s7u8TFyewp7ipPbFxDmxZKJT9SjZNFFe/jc2V/R2uC9qSFRKpTsxqmXggjiBlH46cpyg2SeYFj1p5bkpKZ10b3iOwIDAQAB'
+    end
+
     it 'sets the instance variable @request' do
       expect(yoti_request).to be_a(Yoti::Request)
 

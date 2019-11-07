@@ -15,10 +15,11 @@ module Yoti
       receipt = Yoti::ProfileRequest.new(encrypted_connect_token).receipt
       user_profile = Protobuf.user_profile(receipt)
       application_profile = Protobuf.application_profile(receipt)
+      extra_data = Protobuf.extra_data(receipt)
 
       return ActivityDetails.new(receipt) if user_profile.nil?
 
-      ActivityDetails.new(receipt, user_profile, application_profile)
+      ActivityDetails.new(receipt, user_profile, application_profile, extra_data)
     end
 
     def self.aml_check(aml_profile)

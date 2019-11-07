@@ -8,8 +8,8 @@ module Yoti
       attr_reader :sub_type
 
       def initialize
-        @value = ""
-        @sub_type = ""
+        @value = ''
+        @sub_type = nil
       end
 
       def to_json(*_args)
@@ -18,9 +18,9 @@ module Yoti
 
       def as_json
         obj = {
-          name: @value,
-          sub_type: @sub_type
+          name: @value
         }
+        obj[:sub_type] = @sub_type if @sub_type
         obj
       end
 
@@ -40,7 +40,7 @@ module Yoti
         self
       end
 
-      def with_sub_type(sub_type)
+      def with_sub_type(sub_type = nil)
         @anchor.instance_variable_set(:@sub_type, sub_type)
         self
       end

@@ -10,11 +10,11 @@ module Yoti
       #
       # @param [Yoti::Protobuf::Sharepubapi::ExtraData] proto
       #
-      def initialize proto
+      def initialize(proto)
         @issuance_details = nil
 
         proto.list.each do |data_entry|
-          if data_entry.type == :THIRD_PARTY_ATTRIBUTE and @issuance_details == nil
+          if data_entry.type == :THIRD_PARTY_ATTRIBUTE && @issuance_details.nil?
             attribute = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.decode(data_entry.value)
             @issuance_details = Yoti::Share::IssuanceDetails.new(attribute)
           end

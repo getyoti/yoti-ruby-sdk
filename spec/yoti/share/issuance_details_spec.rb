@@ -5,32 +5,32 @@ require 'spec_helper'
 require 'yoti'
 
 def create_thirdparty_data_proto(token, expiry_date, *definitions)
-  issuing_attributes = Yoti::Protobuf::Sharepubapi::IssuingAttributes.new()
-  issuing_attributes.expiry_date = ""
-  issuing_attributes.expiry_date = expiry_date.iso8601(9) if expiry_date != nil
+  issuing_attributes = Yoti::Protobuf::Sharepubapi::IssuingAttributes.new
+  issuing_attributes.expiry_date = ''
+  issuing_attributes.expiry_date = expiry_date.iso8601(9) if expiry_date
   definitions.each do |s|
-    name = Yoti::Protobuf::Sharepubapi::Definition.new()
+    name = Yoti::Protobuf::Sharepubapi::Definition.new
     name.name = s
     issuing_attributes.definitions += [name]
   end
 
-  attribute = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.new()
+  attribute = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.new
   attribute.issuance_token = token
   attribute.issuing_attributes = issuing_attributes
 
-  return attribute
+  attribute
 end
 
 describe 'Yoti::Share::IssuanceDetails' do
   context 'with a valid thirdparty attribute' do
     let :token do
-      "tokenValue"
+      'tokenValue'
     end
     let :now do
       DateTime.now
     end
     let :attribute do
-      "attributeName"
+      'attributeName'
     end
     let :proto do
       create_thirdparty_data_proto(token, now, attribute)

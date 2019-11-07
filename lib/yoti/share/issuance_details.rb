@@ -2,7 +2,7 @@
 
 module Yoti
   module Share
-    class IssuanceDetails
+    class AttributeIssuanceDetails
       attr_reader :token
       attr_reader :attributes
       attr_reader :expiry_date

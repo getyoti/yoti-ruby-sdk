@@ -45,6 +45,7 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
       let :constraint do
         Yoti::DynamicSharingService::SourceConstraint
           .builder
+          .with_passport
           .build
       end
       let :attribute do
@@ -56,7 +57,10 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
 
       it 'has a source constraint' do
         expect(attribute.constraints.length).to eql 1
-        expect(attribute.constraints.first.anchors).to eql []
+      end
+
+      it 'marshals to json' do
+        expect(attribute.to_json).to eql '{"name":null,"constraints":[{"type":"SOURCE","preferred_sources":[{"anchors":[{"name":"PASSPORT"}]}]}]}'
       end
     end
 

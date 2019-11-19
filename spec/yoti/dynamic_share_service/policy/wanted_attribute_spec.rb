@@ -60,7 +60,7 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
       end
 
       it 'marshals to json' do
-        expect(attribute.to_json).to eql '{"name":null,"constraints":[{"type":"SOURCE","preferred_sources":[{"anchors":[{"name":"PASSPORT"}]}]}]}'
+        expect(attribute.to_json).to eql '{"name":null,"constraints":[{"type":"SOURCE","preferred_sources":{"anchors":[{"name":"PASSPORT"}]}}]}'
       end
     end
 

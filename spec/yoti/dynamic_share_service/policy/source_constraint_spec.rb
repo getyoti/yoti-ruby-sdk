@@ -11,7 +11,7 @@ describe 'Yoti::DynamicSharingService::SourceConstraint' do
         .build
     end
     it 'marshals the source constraint' do
-      expected = '{"type":"SOURCE","preferred_sources":[{"anchors":[{"name":"PASSPORT"}]}]}'
+      expected = '{"type":"SOURCE","preferred_sources":{"anchors":[{"name":"PASSPORT"}]}}'
       expect(source_constraint.to_json).to eql expected
     end
   end

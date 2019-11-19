@@ -28,7 +28,7 @@ module Yoti
         }
         obj[:derivation] = @derivation if derivation
         obj[:accept_self_asserted] = @accept_self_asserted if accept_self_asserted
-        obj[:constraints] = @constraints.as_json unless constraints.empty?
+        obj[:constraints] = @constraints.map {|constraint| constraint.as_json} unless constraints.empty?
         obj
       end
 

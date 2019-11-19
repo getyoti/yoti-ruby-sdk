@@ -27,7 +27,7 @@ module Yoti
         obj = {
           type: SOURCE_CONSTRAINT,
           preferred_sources: {
-            anchors: @anchors.map {|anchor| anchor.as_json}
+            anchors: @anchors.map(&:as_json)
           }
         }
         obj[:preferred_sources][:soft_preference] = @soft_preference if @soft_preference

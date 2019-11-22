@@ -30,7 +30,7 @@ module Yoti
             anchors: @anchors.map(&:as_json)
           }
         }
-        obj[:preferred_sources][:soft_preference] = @soft_preference if @soft_preference
+        obj[:preferred_sources][:soft_preference] = @soft_preference unless @soft_preference.nil?
         obj
       end
 

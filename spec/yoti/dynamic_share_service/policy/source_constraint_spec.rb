@@ -105,6 +105,26 @@ describe 'Yoti::DynamicSharingService::SourceConstraint' do
         it 'has soft preference set true' do
           expect(constraint.soft_preference).to be true
         end
+
+        it 'includes soft preference in the json' do
+          expected = '{"type":"SOURCE","preferred_sources":{"anchors":[],"soft_preference":true}}'
+          expect(constraint.to_json).to eql expected
+        end
+      end
+
+      context 'set false' do
+        let :constraint do
+          builder.with_soft_preference(false).build
+        end
+
+        it 'has soft preference set false' do
+          expect(constraint.soft_preference).to be false
+        end
+
+        it 'includes soft preference in the json' do
+          expected = '{"type":"SOURCE","preferred_sources":{"anchors":[],"soft_preference":false}}'
+          expect(constraint.to_json).to eql expected
+        end
       end
 
       context 'by default' do
@@ -114,6 +134,11 @@ describe 'Yoti::DynamicSharingService::SourceConstraint' do
 
         it 'does not have soft preference set' do
           expect(constraint.soft_preference).to be false
+        end
+
+        it 'minimises the json' do
+          expected = '{"type":"SOURCE","preferred_sources":{"anchors":[]}}'
+          expect(constraint.to_json).to eql expected
         end
       end
     end

@@ -33,6 +33,7 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
       let(:attribute) do
         Yoti::DynamicSharingService::WantedAttribute
           .builder
+          .with_name('Test')
           .with_derivation('TEST VALUE')
           .build
       end
@@ -51,6 +52,7 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
       let :attribute do
         Yoti::DynamicSharingService::WantedAttribute
           .builder
+          .with_name('Test')
           .with_constraint(constraint)
           .build
       end
@@ -60,7 +62,7 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
       end
 
       it 'marshals to json' do
-        expect(attribute.to_json).to eql '{"name":null,"constraints":[{"type":"SOURCE","preferred_sources":{"anchors":[{"name":"PASSPORT"}]}}]}'
+        expect(attribute.to_json).to eql '{"name":"Test","constraints":[{"type":"SOURCE","preferred_sources":{"anchors":[{"name":"PASSPORT"}]}}]}'
       end
     end
 
@@ -68,11 +70,12 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
       let(:attribute) do
         Yoti::DynamicSharingService::WantedAttribute
           .builder
+          .with_name('Test')
           .with_accept_self_asserted
           .build
       end
       it 'contains self asserted in the json dump' do
-        expect(attribute.to_json).to eql '{"name":null,"accept_self_asserted":true}'
+        expect(attribute.to_json).to eql '{"name":"Test","accept_self_asserted":true}'
       end
       it 'accepts self asserted' do
         expect(attribute.accept_self_asserted).to eql true
@@ -83,13 +86,14 @@ describe 'Yoti::DynamicSharingService::WantedAttribute' do
       let :attribute do
         Yoti::DynamicSharingService::WantedAttribute
           .builder
+          .with_name('Test')
           .build
       end
       it 'doesn\'t add self asserted to the payload' do
         expect(attribute.accept_self_asserted).to eql false
       end
       it 'doesn\'t contain self asserted in the json dump' do
-        expect(attribute.to_json).to eql '{"name":null}'
+        expect(attribute.to_json).to eql '{"name":"Test"}'
       end
     end
   end

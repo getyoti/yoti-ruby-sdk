@@ -76,6 +76,8 @@ module Yoti
       end
 
       def build
+        raise 'Attribute name missing' if @attribute.name.nil? || @attribute.name == ''
+
         Marshal.load Marshal.dump @attribute
       end
     end

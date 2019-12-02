@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'base64'
+
 module Yoti
   module Share
     class AttributeIssuanceDetails
@@ -13,7 +15,7 @@ module Yoti
       # @param [Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute] data_entry
       #
       def initialize(data_entry)
-        @token = data_entry.issuance_token
+        @token = Base64.encode64(data_entry.issuance_token)
         begin
           @expiry_date = DateTime.parse(data_entry.issuing_attributes.expiry_date)
         rescue ArgumentError

@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+require 'base64'
 require 'yoti'
 
 def create_thirdparty_data_proto(token, expiry_date, *definitions)
@@ -26,6 +27,9 @@ describe 'Yoti::Share::AttributeIssuanceDetails' do
     let :token do
       'tokenValue'
     end
+    let :b64token do
+      Base64.encode64 token
+    end
     let :now do
       DateTime.now
     end
@@ -44,7 +48,7 @@ describe 'Yoti::Share::AttributeIssuanceDetails' do
       expect(issuance_details.attributes[0].name).to eql attribute
     end
     it 'sets the token value' do
-      expect(issuance_details.token).to eql token
+      expect(issuance_details.token).to eql b64token
     end
     it 'sets the expiry date' do
       expect(issuance_details.expiry_date).to eql now

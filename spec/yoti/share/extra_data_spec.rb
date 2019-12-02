@@ -57,6 +57,9 @@ describe 'Yoti::Share::ExtraData' do
     let :token_value do
       'tokenValue1'
     end
+    let :b64token do
+      Base64.encode64 token_value
+    end
     let :attribute_name do
       'attributeName1'
     end
@@ -71,7 +74,7 @@ describe 'Yoti::Share::ExtraData' do
     end
     describe '.attribute_issuance_details' do
       it 'sets the token' do
-        expect(extra_data.attribute_issuance_details.token).to eql token_value
+        expect(extra_data.attribute_issuance_details.token).to eql b64token
       end
       it 'sets the expiry date' do
         expect(extra_data.attribute_issuance_details.expiry_date).to eql now
@@ -86,6 +89,9 @@ describe 'Yoti::Share::ExtraData' do
   context 'with multiple issuing attributes' do
     let :token_value do
       'tokenValue'
+    end
+    let :b64token do
+      Base64.encode64 token_value
     end
     let :attribute1 do
       'attribute1'
@@ -103,7 +109,7 @@ describe 'Yoti::Share::ExtraData' do
     end
     describe '.attribute_issuance_details' do
       it 'sets token value' do
-        expect(extra_data.attribute_issuance_details.token).to eql token_value
+        expect(extra_data.attribute_issuance_details.token).to eql b64token
       end
       it 'sets the expiry date' do
         expect(extra_data.attribute_issuance_details.expiry_date).to eql now
@@ -120,6 +126,9 @@ describe 'Yoti::Share::ExtraData' do
     let :token do
       'tokenValue'
     end
+    let :b64token do
+      Base64.encode64 token
+    end
     let :attribute do
       'attributeName'
     end
@@ -133,7 +142,7 @@ describe 'Yoti::Share::ExtraData' do
     end
     describe '.attribute_issuance_details' do
       it 'has the token value' do
-        expect(extra_data.attribute_issuance_details.token).to eql token
+        expect(extra_data.attribute_issuance_details.token).to eql b64token
       end
       it 'has a nil expiry date' do
         expect(extra_data.attribute_issuance_details.expiry_date).to eql nil
@@ -149,6 +158,9 @@ describe 'Yoti::Share::ExtraData' do
     let :token do
       'tokenValue'
     end
+    let :b64token do
+      Base64.encode64 token
+    end
     let :attribute do
       'attributeName'
     end
@@ -162,7 +174,7 @@ describe 'Yoti::Share::ExtraData' do
     end
     describe '.attribute_issuance_details' do
       it 'sets the token' do
-        expect(extra_data.attribute_issuance_details.token).to eql token
+        expect(extra_data.attribute_issuance_details.token).to eql b64token
       end
       it 'sets the expiry date' do
         expect(extra_data.attribute_issuance_details.expiry_date).to eql now

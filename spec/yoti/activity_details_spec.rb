@@ -43,6 +43,7 @@ describe 'Yoti::ActivityDetails' do
       expect(activity_details.outcome).to eql('SUCCESS')
       expect(activity_details.timestamp).to be_an_instance_of(Time)
       expect(activity_details.timestamp.to_s).to eql('2016-07-19 08:55:38 UTC')
+      expect(activity_details.extra_data).to be_nil
     end
   end
 
@@ -55,6 +56,25 @@ describe 'Yoti::ActivityDetails' do
         activity_details = activity_details(receipt, [])
 
         expect(activity_details.timestamp.strftime('%F %H:%M:%S.%6N')).to eql('2016-07-19 08:55:38.123456')
+      end
+    end
+  end
+
+  describe '#extra_data' do
+    context 'with extra data' do
+      let :extra_data do
+        instance_double('ExtraData', list: [])
+      end
+      let :activity_details do
+        Yoti::ActivityDetails.new({
+                                    'remember_me_id' => 'test_remember_me_id',
+                                    'parent_remember_me_id' => 'test_parent_remember_me_id',
+                                    'sharing_outcome' => 'SUCCESS',
+                                    'timestamp' => '2016-07-19T08:55:38Z'
+                                  }, nil, nil, extra_data)
+      end
+      it 'returns the extra data' do
+        expect(activity_details.extra_data).to be_kind_of(Yoti::Share::ExtraData)
       end
     end
   end

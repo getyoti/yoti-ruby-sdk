@@ -15,6 +15,17 @@ module Yoti
     end
 
     #
+    # Returns the full list of all attributes
+    #
+    # @return [Array<Yoti::Attribute>>]
+    #
+    def attribute_list
+      @attributes.map do |_, value|
+        [value]
+      end.flatten
+    end
+
+    #
     # @param [Hash{String => Yoti::Attribute},Array<Yoti::Attribute>] profile_data
     #
     def initialize(profile_data)

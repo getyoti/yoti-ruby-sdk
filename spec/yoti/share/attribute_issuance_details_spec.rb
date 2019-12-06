@@ -5,7 +5,7 @@ require 'spec_helper'
 require 'base64'
 require 'yoti'
 
-def create_thirdparty_data_proto(token, expiry_date, *definitions)
+def create_thirdparty_attribute_proto(token, expiry_date, *definitions)
   issuing_attributes = Yoti::Protobuf::Sharepubapi::IssuingAttributes.new
   issuing_attributes.expiry_date = ''
   issuing_attributes.expiry_date = expiry_date.iso8601(9) if expiry_date
@@ -16,6 +16,7 @@ def create_thirdparty_data_proto(token, expiry_date, *definitions)
   end
 
   attribute = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.new
+  expect(attribute).to be_a(Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute)
   attribute.issuance_token = token
   attribute.issuing_attributes = issuing_attributes
 
@@ -37,21 +38,23 @@ describe 'Yoti::Share::AttributeIssuanceDetails' do
       'attributeName'
     end
     let :proto do
-      create_thirdparty_data_proto(token, now, attribute)
+      proto = create_thirdparty_attribute_proto(token, now, attribute)
+      expect(proto).to be_a(Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute)
+      proto
     end
-    let :issuance_details do
+    let :attribute_issuance_details do
       Yoti::Share::AttributeIssuanceDetails.new(proto)
     end
 
     it 'sets the attribute name' do
-      expect(issuance_details.attributes.length).to eql 1
-      expect(issuance_details.attributes[0].name).to eql attribute
+      expect(attribute_issuance_details.attributes.length).to eql 1
+      expect(attribute_issuance_details.attributes[0].name).to eql attribute
     end
     it 'sets the token value' do
-      expect(issuance_details.token).to eql b64token
+      expect(attribute_issuance_details.token).to eql b64token
     end
     it 'sets the expiry date' do
-      expect(issuance_details.expiry_date).to eql now
+      expect(attribute_issuance_details.expiry_date).to eql now
     end
   end
 

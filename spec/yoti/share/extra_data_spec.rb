@@ -9,30 +9,10 @@ def create_extra_data_proto(*rows)
   rows.each do |row|
     data = Yoti::Protobuf::Sharepubapi::DataEntry.new
     data.type = :THIRD_PARTY_ATTRIBUTE
-    data.value = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.encode(create_thirdparty_data_proto(*row))
+    data.value = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.encode(create_thirdparty_attribute_proto(*row))
     extra_data.list += [data]
   end
   extra_data
-end
-
-def create_thirdparty_data_proto(token, expiry_date, *definitions)
-  issuing_attributes = Yoti::Protobuf::Sharepubapi::IssuingAttributes.new
-  issuing_attributes.expiry_date = ''
-  issuing_attributes.expiry_date = expiry_date.iso8601(9) if expiry_date
-  definitions.each do |s|
-    name = Yoti::Protobuf::Sharepubapi::Definition.new
-    name.name = s
-    issuing_attributes.definitions += [name]
-  end
-
-  attribute = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.new
-  attribute.issuance_token = token
-  attribute.issuing_attributes = issuing_attributes
-
-  row = Yoti::Protobuf::Sharepubapi::DataEntry.new
-  row.type = :THIRD_PARTY_ATTRIBUTE
-  row.value = Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute.encode(attribute)
-  row
 end
 
 describe 'Yoti::Share::ExtraData' do

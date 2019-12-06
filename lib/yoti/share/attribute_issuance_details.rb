@@ -4,6 +4,19 @@ require 'base64'
 
 module Yoti
   module Share
+    class Definition
+      attr_reader :name
+
+      #
+      # Constructor
+      #
+      # @param [String] name
+      #
+      def initialize(name)
+        @name = name
+      end
+    end
+
     class AttributeIssuanceDetails
       attr_reader :token
       attr_reader :attributes
@@ -21,7 +34,9 @@ module Yoti
         rescue ArgumentError
           @expiry_date = nil
         end
-        @attributes = data_entry.issuing_attributes.definitions
+        @attributes = data_entry.issuing_attributes.definitions.map do |defn|
+          Definition.new(defn.name)
+        end
       end
     end
   end

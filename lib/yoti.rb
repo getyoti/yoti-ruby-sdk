@@ -42,6 +42,7 @@ require_relative 'yoti/dynamic_share_service/dynamic_scenario'
 require_relative 'yoti/dynamic_share_service/extension/extension'
 require_relative 'yoti/dynamic_share_service/extension/location_constraint_extension'
 require_relative 'yoti/dynamic_share_service/extension/transactional_flow_extension'
+require_relative 'yoti/dynamic_share_service/extension/thirdparty_attribute_extension'
 
 require_relative 'yoti/share/extra_data'
 require_relative 'yoti/share/attribute_issuance_details'

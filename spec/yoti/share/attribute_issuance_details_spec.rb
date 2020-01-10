@@ -62,4 +62,29 @@ describe 'Yoti::Share::AttributeIssuanceDetails' do
     it 'sets a nil value for date' do
     end
   end
+
+  context 'with any RFC3339 date' do
+    [
+      ['2006-01-02T22:04:05Z', DateTime.new(2006, 1, 2, 22, 4, 5)],
+      ['2006-01-02T22:04:05.1Z', DateTime.new(2006, 1, 2, 22, 4, 5.1)],
+      ['2006-01-02T22:04:05.12Z', DateTime.new(2006, 1, 2, 22, 4, 5.12)],
+      ['2006-01-02T22:04:05.123Z', DateTime.new(2006, 1, 2, 22, 4, 5.123)],
+      ['2006-01-02T22:04:05.1234Z', DateTime.new(2006, 1, 2, 22, 4, 5.1234)],
+      ['2006-01-02T22:04:05.12345Z', DateTime.new(2006, 1, 2, 22, 4, 5.12345)],
+      ['2006-01-02T22:04:05.123456Z', DateTime.new(2006, 1, 2, 22, 4, 5.123456)],
+      ['2002-10-02T10:00:00-05:00', DateTime.new(2002, 10, 2, 15, 0, 0)],
+      ['2002-10-02T10:00:00+11:00', DateTime.new(2002, 10, 1, 23, 0, 0)],
+      ['1920-03-13T19:50:53.999999', DateTime.new(1920, 3, 13, 19, 50, 53.999999)],
+      ['1920-03-13T19:50:54.000001', DateTime.new(1920, 3, 13, 19, 50, 54.000001)]
+    ].each do |input, expected|
+      it "Parses #{input} to #{expected}" do
+        protostruct = Struct.new(:issuance_token, :issuing_attributes)
+        attributestruct = Struct.new(:expiry_date, :definitions)
+        proto = protostruct.new('', attributestruct.new(input, []))
+
+        details = Yoti::Share::AttributeIssuanceDetails.new(proto)
+        expect(details.expiry_date).to eql expected
+      end
+    end
+  end
 end

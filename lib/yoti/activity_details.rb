@@ -101,12 +101,13 @@ module Yoti
       @parent_remember_me_id = receipt['parent_remember_me_id']
       @outcome = receipt['sharing_outcome']
       @timestamp = receipt['timestamp'] ? Time.parse(receipt['timestamp']) : nil
-      @extended_user_profile = process_decrypted_profile(decrypted_profile)
-      @extended_application_profile = process_decrypted_profile(decrypted_application_profile)
+      @extended_user_profile = process_decrypted_profile_as_list(decrypted_profile)
+      @extended_application_profile = process_decrypted_profile_as_list(decrypted_application_profile)
       @extra_data = Share::ExtraData.new(extra_data) if extra_data
-      @user_profile = @extended_user_profile.map do |name, attribute|
-        [name, attribute.value]
-      end.to_h
+      @user_profile = {}
+      @extended_user_profile.each do |attribute|
+        @user_profile[attribute.name] = attribute.value
+      end
     end
 
     #
@@ -144,6 +145,9 @@ module Yoti
     #
     # Process the decrypted profile into key-value hash
     #
+    # Deprecated, to be removed in version 2.0. Use
+    # process_decrypted_profile_as_list instead
+    #
     # @param [Yoti::Protobuf::Attrpubapi::AttributeList] decrypted_profile
     #
     # @return [Hash]
@@ -157,6 +161,29 @@ module Yoti
         begin
           profile_data[attribute.name] = process_attribute(attribute)
           process_age_verified(attribute)
+        rescue StandardError => e
+          Yoti::Log.logger.warn("#{e.message} (Attribute: #{attribute.name})")
+        end
+      end
+      profile_data
+    end
+
+    #
+    # Process the decrypted profile into a list
+    #
+    # @param [Yoti::Protobuf::Attrpubapi::AttributeList] decrypted_profile
+    #
+    # @return [Array<Attribute>]
+    #
+    def process_decrypted_profile_as_list(decrypted_profile)
+      return {} unless decrypted_profile.is_a? Object
+      return {} unless decrypted_profile.respond_to? :attributes
+
+      profile_data = []
+      decrypted_profile.attributes.each do |attribute|
+        begin
+          profile_data.push process_attribute attribute
+          process_age_verified attribute
         rescue StandardError => e
           Yoti::Log.logger.warn("#{e.message} (Attribute: #{attribute.name})")
         end

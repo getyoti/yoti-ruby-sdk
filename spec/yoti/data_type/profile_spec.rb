@@ -186,4 +186,44 @@ describe 'Yoti::Profile' do
       expect(verification).to be_nil
     end
   end
+
+  context 'with multiple attributes of the same name' do
+    let :multiname_profile do
+      Yoti::Profile.new([
+                          Yoti::Attribute.new(Yoti::Attribute::FULL_NAME, 'Name 1', {}, {}),
+                          Yoti::Attribute.new(Yoti::Attribute::FULL_NAME, 'Name 2', {}, {}),
+                          Yoti::Attribute.new(Yoti::Attribute::FULL_NAME, 'Name 3', {}, {})
+                        ])
+    end
+
+    describe '.get_all_attributes_by_name' do
+      it 'returns all the names' do
+        expect(
+          multiname_profile.get_all_attributes_by_name(Yoti::Attribute::FULL_NAME)
+          .length
+        ).to eql 3
+        expect(
+          multiname_profile.get_all_attributes_by_name(Yoti::Attribute::FULL_NAME)[0]
+          .value
+        ).to eql 'Name 1'
+        expect(
+          multiname_profile.get_all_attributes_by_name(Yoti::Attribute::FULL_NAME)[1]
+          .value
+        ).to eql 'Name 2'
+        expect(
+          multiname_profile.get_all_attributes_by_name(Yoti::Attribute::FULL_NAME)[2]
+          .value
+        ).to eql 'Name 3'
+      end
+    end
+
+    describe '.attribute_list' do
+      it 'returns all the attributes' do
+        expect(multiname_profile.attribute_list.length).to eql 3
+        expect(multiname_profile.attribute_list[0].value).to eql 'Name 1'
+        expect(multiname_profile.attribute_list[1].value).to eql 'Name 2'
+        expect(multiname_profile.attribute_list[2].value).to eql 'Name 3'
+      end
+    end
+  end
 end

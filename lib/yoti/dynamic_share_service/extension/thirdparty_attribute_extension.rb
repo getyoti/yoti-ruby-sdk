@@ -13,10 +13,8 @@ module Yoti
         self
       end
 
-      def with_definitions(*names)
-        names.each do |s|
-          @definitions += [{ name: s }]
-        end
+      def with_definitions(*definitions)
+        @definitions += definitions
         self
       end
 

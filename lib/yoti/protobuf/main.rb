@@ -46,7 +46,7 @@ module Yoti
       def extra_data(receipt)
         return nil unless valid_receipt?(receipt)
 
-        decipher_profile(receipt['extra_data'], receipt['wrapped_receipt_key']) if receipt['extra_data']
+        decipher_extra_data(receipt['extra_data_content'], receipt['wrapped_receipt_key']) if receipt['extra_data_content']
       end
 
       def attribute_list(data)
@@ -111,10 +111,20 @@ module Yoti
       end
 
       def decipher_profile(profile_content, wrapped_key)
+        decrypted_data = decipher_data(profile_content, wrapped_key)
+        Protobuf.attribute_list(decrypted_data)
+      end
+
+      def decipher_extra_data(profile_content, wrapped_key)
+        decrypted_data = decipher_data(profile_content, wrapped_key)
+        proto = Yoti::Protobuf::Sharepubapi::ExtraData.decode(decrypted_data)
+        Share::ExtraData.new(proto)
+      end
+
+      def decipher_data(profile_content, wrapped_key)
         encrypted_data = decode_profile(profile_content)
         unwrapped_key = Yoti::SSL.decrypt_token(wrapped_key)
-        decrypted_data = Yoti::SSL.decipher(unwrapped_key, encrypted_data.iv, encrypted_data.cipher_text)
-        Protobuf.attribute_list(decrypted_data)
+        Yoti::SSL.decipher(unwrapped_key, encrypted_data.iv, encrypted_data.cipher_text)
       end
     end
   end

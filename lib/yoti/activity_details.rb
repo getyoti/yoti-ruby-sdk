@@ -103,7 +103,7 @@ module Yoti
       @timestamp = receipt['timestamp'] ? Time.parse(receipt['timestamp']) : nil
       @extended_user_profile = process_decrypted_profile(decrypted_profile)
       @extended_application_profile = process_decrypted_profile(decrypted_application_profile)
-      @extra_data = Share::ExtraData.new(extra_data) if extra_data
+      @extra_data = extra_data
       @user_profile = @extended_user_profile.map do |name, attribute|
         [name, attribute.value]
       end.to_h

@@ -29,7 +29,7 @@ describe 'Yoti::Share::AttributeIssuanceDetails' do
       'tokenValue'
     end
     let :b64token do
-      Base64.encode64 token
+      Base64.strict_encode64 token
     end
     let :now do
       DateTime.now

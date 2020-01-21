@@ -74,7 +74,7 @@ describe 'Yoti::ActivityDetails' do
                                   }, nil, nil, extra_data)
       end
       it 'returns the extra data' do
-        expect(activity_details.extra_data).to be_kind_of(Yoti::Share::ExtraData)
+        expect(activity_details.extra_data).to eql extra_data
       end
     end
   end

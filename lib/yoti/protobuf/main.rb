@@ -45,6 +45,7 @@ module Yoti
 
       def extra_data(receipt)
         return nil unless valid_receipt?(receipt)
+        return nil if receipt['extra_data_content'] == ''
 
         decipher_extra_data(receipt['extra_data_content'], receipt['wrapped_receipt_key']) if receipt['extra_data_content']
       end

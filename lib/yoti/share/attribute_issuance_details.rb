@@ -28,7 +28,7 @@ module Yoti
       # @param [Yoti::Protobuf::Sharepubapi::ThirdPartyAttribute] data_entry
       #
       def initialize(data_entry)
-        @token = Base64.encode64(data_entry.issuance_token)
+        @token = Base64.strict_encode64(data_entry.issuance_token)
         begin
           @expiry_date = DateTime.parse(data_entry.issuing_attributes.expiry_date)
         rescue ArgumentError

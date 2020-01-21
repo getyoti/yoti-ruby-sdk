@@ -38,7 +38,7 @@ describe 'Yoti::Share::ExtraData' do
       'tokenValue1'
     end
     let :b64token do
-      Base64.encode64 token_value
+      Base64.strict_encode64 token_value
     end
     let :attribute_name do
       'attributeName1'
@@ -71,7 +71,7 @@ describe 'Yoti::Share::ExtraData' do
       'tokenValue'
     end
     let :b64token do
-      Base64.encode64 token_value
+      Base64.strict_encode64 token_value
     end
     let :attribute1 do
       'attribute1'
@@ -107,7 +107,7 @@ describe 'Yoti::Share::ExtraData' do
       'tokenValue'
     end
     let :b64token do
-      Base64.encode64 token
+      Base64.strict_encode64 token
     end
     let :attribute do
       'attributeName'
@@ -139,7 +139,7 @@ describe 'Yoti::Share::ExtraData' do
       'tokenValue'
     end
     let :b64token do
-      Base64.encode64 token
+      Base64.strict_encode64 token
     end
     let :attribute do
       'attributeName'

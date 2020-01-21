@@ -12,8 +12,8 @@ describe 'Yoti::DynamicSharingService::ThirdPartyAttributeExtension' do
     end
     let :attr do
       Yoti::DynamicSharingService::WantedAttribute.builder
-        .with_name(attr_name)
-        .build
+                                                  .with_name(attr_name)
+                                                  .build
     end
     let :ext do
       Yoti::DynamicSharingService::ThirdPartyAttributeExtension

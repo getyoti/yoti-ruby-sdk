@@ -10,16 +10,11 @@ describe 'Yoti::DynamicSharingService::ThirdPartyAttributeExtension' do
     let :attr_name do
       'AttributeName'
     end
-    let :attr do
-      Yoti::DynamicSharingService::WantedAttribute.builder
-                                                  .with_name(attr_name)
-                                                  .build
-    end
     let :ext do
       Yoti::DynamicSharingService::ThirdPartyAttributeExtension
         .builder
         .with_expiry_date(expiry_date)
-        .with_definitions(attr)
+        .with_definitions(attr_name)
         .build
     end
     it 'marshals into json' do

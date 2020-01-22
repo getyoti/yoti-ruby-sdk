@@ -2,6 +2,16 @@
 
 module Yoti
   module DynamicSharingService
+    class ThirdPartyAttributeDefinition
+      def initialize(name)
+        @name = name
+      end
+
+      def to_json(*_args)
+        { name: @name }.to_json
+      end
+    end
+
     class ThirdPartyAttributeExtensionBuilder
       def initialize
         @expiry_date = nil
@@ -13,8 +23,10 @@ module Yoti
         self
       end
 
-      def with_definitions(*definitions)
-        @definitions += definitions
+      def with_definitions(*names)
+        @definitions += names.map do |name|
+          ThirdPartyAttributeDefinition.new(name)
+        end
         self
       end
 

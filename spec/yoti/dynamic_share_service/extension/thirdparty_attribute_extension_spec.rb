@@ -2,6 +2,21 @@
 
 require 'spec_helper'
 
+describe 'ThirdPartyAttributeDefinition' do
+  describe 'to_json' do
+    let :name do
+      'AttributeName'
+    end
+    let :defn do
+      Yoti::DynamicSharingService::ThirdPartyAttributeDefinition.new(name)
+    end
+    it 'marshals into json' do
+      expected = '{"name":"AttributeName"}'
+      expect(defn.to_json).to eql expected
+    end
+  end
+end
+
 describe 'Yoti::DynamicSharingService::ThirdPartyAttributeExtension' do
   describe '.to_json' do
     let :expiry_date do

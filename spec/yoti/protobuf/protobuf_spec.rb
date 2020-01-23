@@ -42,6 +42,27 @@ describe 'Yoti::Protobuf' do
     end
   end
 
+  describe '.extra_data' do
+    context 'when the receipt has extra_data_content' do
+      let :extra_data_content do
+        'ChCZK1k2WpNVdi58yu9MvXz5EnDxrDl1CUfUBDCSy/u6uI2+X7/tTrosHXWxu4ksN8qfVU2zdPE9FrEVNYKs7bbwdf3oOQ81q8+yF9Zv7szCUrYflY6WCwKBRJluYEApxXdjcHdvlhmzCXrgMeAV6qHj0n9qWrWXZytx+LT0mLHQPxeU'
+      end
+      let :wrapped_receipt_key do
+        'UqAI7cCcSFZ3NHWqEoXW3YfCXMxmvUBeN+JC2mQ/EVFvCjJ1DUVSzDP87bKtbZqKLqkj8oD0rQvMkS7VcYrUZ8aW6cTh+anX11LJLrP3ZYjr5QRQc5RHkOa+c3cFJV8ZwXzwJPkZny3BlHpEuAUhjcxywAcOPX4PULzO4zPrrkWq0cOtASVRqT+6CpR03RItL3yEY0CFa3RoYgrfkMsE8f8glft0GVVleVs85bAhiPmkfNQY0YZ/Ba12Ofph/S+4qB8ydfk96gpp+amb/Wfbd4gvs2DUCVpHu7U+937JEcEi6NJ08A5ufuWXoBxVKwVN1Tz7PNYDeSLhko77AIrJhg=='
+      end
+      let :receipt do
+        {
+          'extra_data_content' => extra_data_content,
+          'wrapped_receipt_key' => wrapped_receipt_key
+        }
+      end
+
+      it 'returns extra data' do
+        expect(Yoti::Protobuf.extra_data(receipt)).to be_a Yoti::Share::ExtraData
+      end
+    end
+  end
+
   describe '.attribute_list' do
     let(:data) { '' }
 

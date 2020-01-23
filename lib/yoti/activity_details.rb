@@ -93,6 +93,9 @@ module Yoti
     #
     # @param receipt [Hash] the receipt from the API request
     # @param decrypted_profile [Object] Protobuf AttributeList decrypted object containing the profile attributes
+    # @param decrypted_application_profile [Object] Protobuf AttributeList decrypted object containing profile attributes for the application profile
+    # @param extra_data [Yoti::Share::ExtraData|nil] Processed extra data object or nil
+    #   if absent from the receipt
     #
     def initialize(receipt, decrypted_profile = nil, decrypted_application_profile = nil, extra_data = nil)
       @remember_me_id = receipt['remember_me_id']
@@ -103,7 +106,7 @@ module Yoti
       @timestamp = receipt['timestamp'] ? Time.parse(receipt['timestamp']) : nil
       @extended_user_profile = process_decrypted_profile(decrypted_profile)
       @extended_application_profile = process_decrypted_profile(decrypted_application_profile)
-      @extra_data = Share::ExtraData.new(extra_data) if extra_data
+      @extra_data = extra_data
       @user_profile = @extended_user_profile.map do |name, attribute|
         [name, attribute.value]
       end.to_h

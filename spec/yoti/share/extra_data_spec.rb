@@ -141,9 +141,6 @@ describe 'Yoti::Share::ExtraData' do
     let :b64token do
       Base64.strict_encode64 token
     end
-    let :attribute do
-      'attributeName'
-    end
     let :proto do
       create_extra_data_proto(
         [token, now]

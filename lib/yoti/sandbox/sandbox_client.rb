@@ -3,18 +3,14 @@
 module Sandbox
   # Client is responsible for setting up test data in the sandbox instance
   class Client
-    attr_accessor :app_id
-    attr_accessor :key
     attr_accessor :base_url
 
-    def initialize(app_id:, private_key:, base_url:)
-      @app_id = app_id
+    def initialize(base_url:)
       @base_url = base_url
-      @key = OpenSSL::PKey::RSA.new(Base64.decode64(private_key))
     end
 
     def setup_sharing_profile(profile)
-      endpoint = "/apps/#{app_id}/tokens?\
+      endpoint = "/apps/#{Yoti.configuration.client_sdk_id}/tokens?\
 nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
       uri = URI(
         "#{@base_url}/#{endpoint}"
@@ -23,8 +19,7 @@ nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
       response = Net::HTTP.start(
         uri.hostname,
         uri.port,
-        use_ssl: true,
-        verify_mode: OpenSSL::SSL::VERIFY_NONE
+        use_ssl: true
       ) do |http|
         unsigned = Net::HTTP::Post.new uri
         unsigned.body = profile.to_json

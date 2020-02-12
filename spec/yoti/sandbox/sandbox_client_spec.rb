@@ -3,26 +3,17 @@
 require 'spec_helper'
 
 describe 'Sandbox::Client' do
-  let :app_id do
-    '0000-0000-0000-0000'
-  end
   let :base_url do
     'https://example.com'
-  end
-  let :private_key do
-    key = OpenSSL::PKey::RSA.new 1024
-    Base64.encode64(key.to_der)
   end
   let :profile do
     {}
   end
   let :client do
-    Sandbox::Client.new(app_id: app_id, private_key: private_key, base_url: base_url)
+    Sandbox::Client.new(base_url: base_url)
   end
   describe '.initialize' do
     it 'Creates a client' do
-      expect(client.app_id).to eql app_id
-      expect(client.key).not_to be_nil
       expect(client.base_url).to eql base_url
     end
   end

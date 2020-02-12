@@ -59,13 +59,6 @@ module Yoti
         ssl_decipher.update(text) + ssl_decipher.final
       end
 
-      # Reset and reload the Private Key used for SSL functions
-      def reload!
-        @private_key = nil
-        @pem = nil
-        nil
-      end
-
       private
 
       def private_key

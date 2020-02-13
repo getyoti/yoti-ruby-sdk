@@ -142,7 +142,8 @@ describe 'Yoti::DocumentDetails' do
       '\\',
       '"',
       '\'\'',
-      '\''
+      '\'',
+      "\t"
     ].each do |value|
       it "#{value} should be allowed as document number" do
         document_details = Yoti::DocumentDetails.new("some-type some-country #{value} - some-authority")

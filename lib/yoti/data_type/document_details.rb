@@ -62,7 +62,7 @@ module Yoti
     # @param [String] value
     #
     def parse_value(value)
-      attributes = value.split(/\s/)
+      attributes = value.split(/ /)
       raise(ArgumentError, "Invalid value for #{self.class.name}") if attributes.length < 3 || attributes.include?('')
 
       @type = attributes[TYPE_INDEX]

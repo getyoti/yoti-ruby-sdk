@@ -89,4 +89,19 @@ describe 'Yoti::SSL' do
       expect(Yoti::SSL.decipher(key, iv, ciphered_text)).to eql('cipher text')
     end
   end
+
+  describe '.reload' do
+    let(:some_key) { 'some-key' }
+    let(:some_other_key) { 'some-other-key' }
+    it 'should reset pem' do
+      Yoti.configuration.key = some_key
+      expect(Yoti::SSL.pem).to eql(some_key)
+
+      Yoti.configuration.key = some_other_key
+      expect(Yoti::SSL.pem).to eql(some_key)
+
+      Yoti::SSL.reload!
+      expect(Yoti::SSL.pem).to eql(some_other_key)
+    end
+  end
 end

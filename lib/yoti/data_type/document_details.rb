@@ -1,10 +1,10 @@
 module Yoti
   class DocumentDetails
     #
-    # The values of the Document Details are in the format and order as defined in this pattern
-    # e.g PASS_CARD GBR 22719564893 - CITIZENCARD, the last two are optionals
+    # @deprecated 2.0.0 pattern is no longer used for validation.
     #
     VALIDATION_PATTERN = '^([A-Za-z_]*) ([A-Za-z]{3}) ([A-Za-z0-9]{1}).*$'
+
     TYPE_INDEX = 0
     COUNTRY_INDEX = 1
     NUMBER_INDEX = 2
@@ -51,20 +51,10 @@ module Yoti
     # @param [String] value
     #
     def initialize(value)
-      validate_value(value)
       parse_value(value)
     end
 
     private
-
-    #
-    # Asserts provided matches VALIDATION_PATTERN
-    #
-    # @param [String] value
-    #
-    def validate_value(value)
-      raise(ArgumentError, "Invalid value for #{self.class.name}") unless /#{VALIDATION_PATTERN}/.match?(value)
-    end
 
     #
     # Parses provided value into separate attributes
@@ -72,7 +62,9 @@ module Yoti
     # @param [String] value
     #
     def parse_value(value)
-      attributes = value.split(' ')
+      attributes = value.split(/ /)
+      raise(ArgumentError, "Invalid value for #{self.class.name}") if attributes.length < 3 || attributes.include?('')
+
       @type = attributes[TYPE_INDEX]
       @issuing_country = attributes[COUNTRY_INDEX]
       @document_number = attributes[NUMBER_INDEX]

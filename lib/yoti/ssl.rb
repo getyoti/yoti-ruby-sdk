@@ -60,6 +60,7 @@ module Yoti
       end
 
       # Reset and reload the Private Key used for SSL functions
+      # @deprecated 2.0.0
       def reload!
         @private_key = nil
         @pem = nil

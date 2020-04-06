@@ -1,4 +1,5 @@
 require 'net/http'
+require 'time'
 
 module Yoti
   #

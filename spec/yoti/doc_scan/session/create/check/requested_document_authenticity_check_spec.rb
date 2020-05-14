@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe 'Yoti::DocScan::Session::Create::DocumentAuthenticityCheck' do
+describe 'Yoti::DocScan::Session::Create::Check::RequestedDocumentAuthenticityCheck' do
   describe '.to_json' do
     it 'serializes the check' do
-      check = Yoti::DocScan::Session::Create::DocumentAuthenticityCheck
+      check = Yoti::DocScan::Session::Create::Check::RequestedDocumentAuthenticityCheck
               .builder
               .build
 

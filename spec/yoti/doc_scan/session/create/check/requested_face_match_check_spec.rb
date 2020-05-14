@@ -2,11 +2,11 @@
 
 require 'spec_helper'
 
-describe 'Yoti::DocScan::Session::Create::FaceMatchCheck' do
+describe 'Yoti::DocScan::Session::Create::Check::RequestedFaceMatchCheck' do
   describe '.to_json' do
     describe 'with manual check always' do
       it 'serializes the check' do
-        check = Yoti::DocScan::Session::Create::FaceMatchCheck
+        check = Yoti::DocScan::Session::Create::Check::RequestedFaceMatchCheck
                 .builder
                 .with_manual_check_always
                 .build
@@ -25,7 +25,7 @@ describe 'Yoti::DocScan::Session::Create::FaceMatchCheck' do
 
     describe 'with manual check never' do
       it 'serializes the check' do
-        check = Yoti::DocScan::Session::Create::FaceMatchCheck
+        check = Yoti::DocScan::Session::Create::Check::RequestedFaceMatchCheck
                 .builder
                 .with_manual_check_never
                 .build
@@ -44,7 +44,7 @@ describe 'Yoti::DocScan::Session::Create::FaceMatchCheck' do
 
     describe 'with manual check fallback' do
       it 'serializes the check' do
-        check = Yoti::DocScan::Session::Create::FaceMatchCheck
+        check = Yoti::DocScan::Session::Create::Check::RequestedFaceMatchCheck
                 .builder
                 .with_manual_check_fallback
                 .build

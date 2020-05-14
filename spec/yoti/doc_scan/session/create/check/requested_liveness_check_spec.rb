@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe 'Yoti::DocScan::Session::Create::LivenessCheck' do
+describe 'Yoti::DocScan::Session::Create::Check::RequestedLivenessCheck' do
   describe '.to_json' do
     it 'serializes the check' do
-      check = Yoti::DocScan::Session::Create::LivenessCheck
+      check = Yoti::DocScan::Session::Create::Check::RequestedLivenessCheck
               .builder
               .for_zoom_liveness
               .with_max_retries(3)

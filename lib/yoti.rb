@@ -48,6 +48,12 @@ require_relative 'yoti/dynamic_share_service/extension/thirdparty_attribute_exte
 require_relative 'yoti/share/extra_data'
 require_relative 'yoti/share/attribute_issuance_details'
 
+require_relative 'yoti/doc_scan/constants'
+require_relative 'yoti/doc_scan/session/create/check'
+require_relative 'yoti/doc_scan/session/create/document_authenticity_check'
+require_relative 'yoti/doc_scan/session/create/face_match_check'
+require_relative 'yoti/doc_scan/session/create/liveness_check'
+
 # The main module namespace of the Yoti gem
 module Yoti
   class << self

@@ -6,7 +6,7 @@ module Yoti
       module Create
         class DocumentAuthenticityCheck < Check
           def initialize
-            super(Yoti::DocScan::Constants::ID_DOCUMENT_AUTHENTICITY)
+            super(Constants::ID_DOCUMENT_AUTHENTICITY)
           end
 
           def self.builder

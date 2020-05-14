@@ -6,12 +6,7 @@ module Yoti
       module Create
         class Check
           def initialize(type, config = nil)
-            if self.class == Yoti::DocScan::Session::Create::Check
-              raise(
-                TypeError,
-                "#{self.class} cannot be instantiated"
-              )
-            end
+            raise(TypeError, "#{self.class} cannot be instantiated") if self.class == Check
 
             @type = type
             @config = config

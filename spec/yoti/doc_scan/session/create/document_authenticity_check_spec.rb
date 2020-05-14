@@ -3,14 +3,12 @@
 require 'spec_helper'
 
 describe 'Yoti::DocScan::Session::Create::DocumentAuthenticityCheck' do
-  let :check do
-    Yoti::DocScan::Session::Create::DocumentAuthenticityCheck
-      .builder
-      .build
-  end
-
   describe '.to_json' do
     it 'serializes the check' do
+      check = Yoti::DocScan::Session::Create::DocumentAuthenticityCheck
+              .builder
+              .build
+
       expected = {
         type: 'ID_DOCUMENT_AUTHENTICITY'
       }

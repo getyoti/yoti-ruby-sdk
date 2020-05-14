@@ -6,7 +6,7 @@ module Yoti
       module Create
         class FaceMatchCheck < Check
           def initialize(config)
-            super(Yoti::DocScan::Constants::ID_DOCUMENT_FACE_MATCH, config)
+            super(Constants::ID_DOCUMENT_FACE_MATCH, config)
           end
 
           def self.builder

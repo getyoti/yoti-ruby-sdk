@@ -6,7 +6,7 @@ module Yoti
       module Create
         class LivenessCheck < Check
           def initialize(config)
-            super(Yoti::DocScan::Constants::LIVENESS, config)
+            super(Constants::LIVENESS, config)
           end
 
           def self.builder

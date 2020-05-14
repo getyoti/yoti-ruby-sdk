@@ -5,14 +5,12 @@ require 'spec_helper'
 describe 'Yoti::DocScan::Session::Create::FaceMatchCheck' do
   describe '.to_json' do
     describe 'with manual check always' do
-      let :check do
-        Yoti::DocScan::Session::Create::FaceMatchCheck
-          .builder
-          .with_manual_check_always
-          .build
-      end
-
       it 'serializes the check' do
+        check = Yoti::DocScan::Session::Create::FaceMatchCheck
+                .builder
+                .with_manual_check_always
+                .build
+
         expected = {
           type: 'ID_DOCUMENT_FACE_MATCH',
           config: {
@@ -26,14 +24,12 @@ describe 'Yoti::DocScan::Session::Create::FaceMatchCheck' do
     end
 
     describe 'with manual check never' do
-      let :check do
-        Yoti::DocScan::Session::Create::FaceMatchCheck
-          .builder
-          .with_manual_check_never
-          .build
-      end
-
       it 'serializes the check' do
+        check = Yoti::DocScan::Session::Create::FaceMatchCheck
+                .builder
+                .with_manual_check_never
+                .build
+
         expected = {
           type: 'ID_DOCUMENT_FACE_MATCH',
           config: {
@@ -47,14 +43,12 @@ describe 'Yoti::DocScan::Session::Create::FaceMatchCheck' do
     end
 
     describe 'with manual check fallback' do
-      let :check do
-        Yoti::DocScan::Session::Create::FaceMatchCheck
-          .builder
-          .with_manual_check_fallback
-          .build
-      end
-
       it 'serializes the check' do
+        check = Yoti::DocScan::Session::Create::FaceMatchCheck
+                .builder
+                .with_manual_check_fallback
+                .build
+
         expected = {
           type: 'ID_DOCUMENT_FACE_MATCH',
           config: {

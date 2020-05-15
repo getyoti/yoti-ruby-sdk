@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe 'Yoti::DocScan::Session::Create::RequestedLivenessCheck' do
-  describe '.to_json' do
-    it 'serializes the check' do
+  describe 'for zoom liveness and with max retries' do
+    it 'serializes correctly' do
       check = Yoti::DocScan::Session::Create::RequestedLivenessCheck
               .builder
               .for_zoom_liveness
@@ -19,7 +19,6 @@ describe 'Yoti::DocScan::Session::Create::RequestedLivenessCheck' do
         }
       }
 
-      expect(check.as_json).to eql expected
       expect(check.to_json).to eql expected.to_json
     end
   end

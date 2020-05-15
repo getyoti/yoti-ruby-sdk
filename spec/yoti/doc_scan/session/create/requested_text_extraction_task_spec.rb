@@ -2,16 +2,16 @@
 
 require 'spec_helper'
 
-describe 'Yoti::DocScan::Session::Create::RequestedFaceMatchCheck' do
+describe 'Yoti::DocScan::Session::Create::RequestedTextExtractionTask' do
   describe 'with manual check always' do
     it 'serializes correctly' do
-      check = Yoti::DocScan::Session::Create::RequestedFaceMatchCheck
+      check = Yoti::DocScan::Session::Create::RequestedTextExtractionTask
               .builder
               .with_manual_check_always
               .build
 
       expected = {
-        type: 'ID_DOCUMENT_FACE_MATCH',
+        type: 'ID_DOCUMENT_TEXT_DATA_EXTRACTION',
         config: {
           manual_check: 'ALWAYS'
         }
@@ -23,13 +23,13 @@ describe 'Yoti::DocScan::Session::Create::RequestedFaceMatchCheck' do
 
   describe 'with manual check never' do
     it 'serializes correctly' do
-      check = Yoti::DocScan::Session::Create::RequestedFaceMatchCheck
+      check = Yoti::DocScan::Session::Create::RequestedTextExtractionTask
               .builder
               .with_manual_check_never
               .build
 
       expected = {
-        type: 'ID_DOCUMENT_FACE_MATCH',
+        type: 'ID_DOCUMENT_TEXT_DATA_EXTRACTION',
         config: {
           manual_check: 'NEVER'
         }
@@ -41,13 +41,13 @@ describe 'Yoti::DocScan::Session::Create::RequestedFaceMatchCheck' do
 
   describe 'with manual check fallback' do
     it 'serializes correctly' do
-      check = Yoti::DocScan::Session::Create::RequestedFaceMatchCheck
+      check = Yoti::DocScan::Session::Create::RequestedTextExtractionTask
               .builder
               .with_manual_check_fallback
               .build
 
       expected = {
-        type: 'ID_DOCUMENT_FACE_MATCH',
+        type: 'ID_DOCUMENT_TEXT_DATA_EXTRACTION',
         config: {
           manual_check: 'FALLBACK'
         }

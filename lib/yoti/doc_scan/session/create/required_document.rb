@@ -4,15 +4,12 @@ module Yoti
   module DocScan
     module Session
       module Create
-        class RequestedCheck
-          def initialize(type, config)
-            raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequestedCheck
+        class RequiredDocument
+          def initialize(type)
+            raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequiredDocument
 
             Validation.assert_is_a(String, type, 'type')
             @type = type
-
-            Validation.assert_respond_to(:as_json, config, 'config')
-            @config = config
           end
 
           def to_json(*args)
@@ -21,8 +18,7 @@ module Yoti
 
           def as_json(*_args)
             {
-              type: @type,
-              config: @config
+              type: @type
             }
           end
         end

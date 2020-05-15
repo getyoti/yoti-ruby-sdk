@@ -49,10 +49,10 @@ require_relative 'yoti/share/extra_data'
 require_relative 'yoti/share/attribute_issuance_details'
 
 require_relative 'yoti/doc_scan/constants'
-require_relative 'yoti/doc_scan/session/create/check/requested_check'
-require_relative 'yoti/doc_scan/session/create/check/requested_document_authenticity_check'
-require_relative 'yoti/doc_scan/session/create/check/requested_face_match_check'
-require_relative 'yoti/doc_scan/session/create/check/requested_liveness_check'
+require_relative 'yoti/doc_scan/session/create/requested_check'
+require_relative 'yoti/doc_scan/session/create/requested_document_authenticity_check'
+require_relative 'yoti/doc_scan/session/create/requested_face_match_check'
+require_relative 'yoti/doc_scan/session/create/requested_liveness_check'
 
 # The main module namespace of the Yoti gem
 module Yoti

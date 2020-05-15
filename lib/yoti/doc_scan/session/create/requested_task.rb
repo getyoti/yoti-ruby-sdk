@@ -4,9 +4,9 @@ module Yoti
   module DocScan
     module Session
       module Create
-        class RequestedCheck
+        class RequestedTask
           def initialize(type, config)
-            raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequestedCheck
+            raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequestedTask
 
             Validation.assert_is_a(String, type, 'type')
             @type = type

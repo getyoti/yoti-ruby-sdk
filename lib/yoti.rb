@@ -53,6 +53,13 @@ require_relative 'yoti/doc_scan/session/create/requested_check'
 require_relative 'yoti/doc_scan/session/create/requested_document_authenticity_check'
 require_relative 'yoti/doc_scan/session/create/requested_face_match_check'
 require_relative 'yoti/doc_scan/session/create/requested_liveness_check'
+require_relative 'yoti/doc_scan/session/create/requested_task'
+require_relative 'yoti/doc_scan/session/create/requested_text_extraction_task'
+require_relative 'yoti/doc_scan/session/create/document_filter'
+require_relative 'yoti/doc_scan/session/create/document_restrictions_filter'
+require_relative 'yoti/doc_scan/session/create/orthogonal_restrictions_filter'
+require_relative 'yoti/doc_scan/session/create/required_document'
+require_relative 'yoti/doc_scan/session/create/required_id_document'
 
 # The main module namespace of the Yoti gem
 module Yoti

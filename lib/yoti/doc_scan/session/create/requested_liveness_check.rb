@@ -6,6 +6,12 @@ module Yoti
       module Create
         class RequestedLivenessCheck < RequestedCheck
           def initialize(config)
+            Validation.assert_is_a(
+              RequestedLivenessCheckConfig,
+              config,
+              'config'
+            )
+
             super(Constants::LIVENESS, config)
           end
 
@@ -16,7 +22,10 @@ module Yoti
 
         class RequestedLivenessCheckConfig
           def initialize(liveness_type, max_retries)
+            Validation.assert_is_a(String, liveness_type, 'liveness_type')
             @liveness_type = liveness_type
+
+            Validation.assert_is_a(Integer, max_retries, 'max_retries')
             @max_retries = max_retries
           end
 

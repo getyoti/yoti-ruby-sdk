@@ -4,23 +4,23 @@ module Yoti
   module DocScan
     module Session
       module Create
-        class RequestedFaceMatchCheck < RequestedCheck
+        class RequestedTextExtractionTask < RequestedTask
           def initialize(config)
             Validation.assert_is_a(
-              RequestedFaceMatchCheckConfig,
+              RequestedTextExtractionTaskConfig,
               config,
               'config'
             )
 
-            super(Constants::ID_DOCUMENT_FACE_MATCH, config)
+            super(Constants::ID_DOCUMENT_TEXT_DATA_EXTRACTION, config)
           end
 
           def self.builder
-            RequestedFaceMatchCheckBuilder.new
+            RequestedTextExtractionTaskBuilder.new
           end
         end
 
-        class RequestedFaceMatchCheckConfig
+        class RequestedTextExtractionTaskConfig
           def initialize(manual_check)
             Validation.assert_not_nil(manual_check, 'manual_check')
             @manual_check = manual_check
@@ -33,7 +33,7 @@ module Yoti
           end
         end
 
-        class RequestedFaceMatchCheckBuilder
+        class RequestedTextExtractionTaskBuilder
           def with_manual_check_always
             @manual_check = Constants::ALWAYS
             self
@@ -50,8 +50,8 @@ module Yoti
           end
 
           def build
-            config = RequestedFaceMatchCheckConfig.new(@manual_check)
-            RequestedFaceMatchCheck.new(config)
+            config = RequestedTextExtractionTaskConfig.new(@manual_check)
+            RequestedTextExtractionTask.new(config)
           end
         end
       end

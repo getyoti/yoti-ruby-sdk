@@ -6,6 +6,12 @@ module Yoti
       module Create
         class RequestedDocumentAuthenticityCheck < RequestedCheck
           def initialize(config)
+            Validation.assert_is_a(
+              RequestedDocumentAuthenticityCheckConfig,
+              config,
+              'config'
+            )
+
             super(Constants::ID_DOCUMENT_AUTHENTICITY, config)
           end
 

@@ -13,9 +13,9 @@ module Yoti
           end
 
           def as_json(*_args)
-            json = super.as_json
-            json[:filter] = @filter unless @filter.nil?
-            json
+            super.as_json.merge(
+              filter: @filter
+            ).compact
           end
 
           def self.builder

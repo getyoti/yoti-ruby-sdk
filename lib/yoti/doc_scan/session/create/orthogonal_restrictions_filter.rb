@@ -16,11 +16,10 @@ module Yoti
           end
 
           def as_json(*_args)
-            json = super.as_json
-            json.merge({
+            super.as_json.merge(
               country_restriction: @country_restriction,
               type_restriction: @type_restriction
-            }.compact)
+            ).compact
           end
 
           def self.builder

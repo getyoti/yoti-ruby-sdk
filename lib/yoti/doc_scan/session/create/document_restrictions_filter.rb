@@ -16,10 +16,10 @@ module Yoti
           end
 
           def as_json(*_args)
-            json = super.as_json
-            json[:inclusion] = @inclusion
-            json[:documents] = @documents
-            json
+            super.as_json.merge(
+              inclusion: @inclusion,
+              documents: @documents
+            ).compact
           end
 
           def self.builder

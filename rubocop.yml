@@ -55,3 +55,8 @@ Naming/MethodName:
 Naming/PredicateName:
   Exclude:
     - lib/yoti/util/age_processor.rb
+
+Metrics/ParameterLists:
+  Exclude:
+    - lib/yoti/doc_scan/session/create/sdk_config.rb
+    - lib/yoti/doc_scan/session/create/session_specification.rb

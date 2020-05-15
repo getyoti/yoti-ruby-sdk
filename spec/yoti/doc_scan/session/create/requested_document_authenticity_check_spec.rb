@@ -2,15 +2,16 @@
 
 require 'spec_helper'
 
-describe 'Yoti::DocScan::Session::Create::Check::RequestedDocumentAuthenticityCheck' do
+describe 'Yoti::DocScan::Session::Create::RequestedDocumentAuthenticityCheck' do
   describe '.to_json' do
     it 'serializes the check' do
-      check = Yoti::DocScan::Session::Create::Check::RequestedDocumentAuthenticityCheck
+      check = Yoti::DocScan::Session::Create::RequestedDocumentAuthenticityCheck
               .builder
               .build
 
       expected = {
-        type: 'ID_DOCUMENT_AUTHENTICITY'
+        type: 'ID_DOCUMENT_AUTHENTICITY',
+        config: {}
       }
 
       expect(check.as_json).to eql expected

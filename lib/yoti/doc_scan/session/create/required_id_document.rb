@@ -8,7 +8,7 @@ module Yoti
           def initialize(filter = nil)
             super(Constants::ID_DOCUMENT)
 
-            Validation.assert_is_a(DocumentFilter, filter, 'filter') unless filter.nil?
+            Validation.assert_is_a(DocumentFilter, filter, 'filter', true)
             @filter = filter
           end
 

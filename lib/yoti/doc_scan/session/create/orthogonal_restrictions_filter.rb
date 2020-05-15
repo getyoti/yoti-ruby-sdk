@@ -8,18 +8,19 @@ module Yoti
           def initialize(country_restriction, type_restriction)
             super(Constants::ORTHOGONAL_RESTRICTIONS)
 
-            Validation.assert_is_a(CountryRestriction, country_restriction, 'country_restriction') unless country_restriction.nil?
+            Validation.assert_is_a(CountryRestriction, country_restriction, 'country_restriction', true)
             @country_restriction = country_restriction
 
-            Validation.assert_is_a(TypeRestriction, type_restriction, 'type_restriction') unless type_restriction.nil?
+            Validation.assert_is_a(TypeRestriction, type_restriction, 'type_restriction', true)
             @type_restriction = type_restriction
           end
 
           def as_json(*_args)
             json = super.as_json
-            json[:country_restriction] = @country_restriction unless @country_restriction.nil?
-            json[:type_restriction] = @type_restriction unless @type_restriction.nil?
-            json
+            json.merge({
+              country_restriction: @country_restriction,
+              type_restriction: @type_restriction
+            }.compact)
           end
 
           def self.builder

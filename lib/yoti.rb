@@ -60,6 +60,9 @@ require_relative 'yoti/doc_scan/session/create/document_restrictions_filter'
 require_relative 'yoti/doc_scan/session/create/orthogonal_restrictions_filter'
 require_relative 'yoti/doc_scan/session/create/required_document'
 require_relative 'yoti/doc_scan/session/create/required_id_document'
+require_relative 'yoti/doc_scan/session/create/sdk_config'
+require_relative 'yoti/doc_scan/session/create/notification_config'
+require_relative 'yoti/doc_scan/session/create/session_specification'
 
 # The main module namespace of the Yoti gem
 module Yoti

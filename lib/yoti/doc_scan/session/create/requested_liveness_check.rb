@@ -38,13 +38,17 @@ module Yoti
         end
 
         class RequestedLivenessCheckBuilder
+          def initialize
+            @max_retries = 1
+          end
+
           def for_liveness_type(liveness_type)
             @liveness_type = liveness_type
             self
           end
 
           def for_zoom_liveness
-            for_liveness_type('ZOOM')
+            for_liveness_type(Constants::ZOOM)
           end
 
           def with_max_retries(max_retries)

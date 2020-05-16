@@ -105,19 +105,19 @@ module Yoti
       end
 
       def with_family_name(options = {})
-        with_wanted_attribute_by_name Attribute::FAMILY_NAME, options
+        with_wanted_attribute_by_name Attribute::FAMILY_NAME, **options
       end
 
       def with_given_names(options = {})
-        with_wanted_attribute_by_name Attribute::GIVEN_NAMES, options
+        with_wanted_attribute_by_name Attribute::GIVEN_NAMES, **options
       end
 
       def with_full_name(options = {})
-        with_wanted_attribute_by_name Attribute::FULL_NAME, options
+        with_wanted_attribute_by_name Attribute::FULL_NAME, **options
       end
 
       def with_date_of_birth(options = {})
-        with_wanted_attribute_by_name Attribute::DATE_OF_BIRTH, options
+        with_wanted_attribute_by_name Attribute::DATE_OF_BIRTH, **options
       end
 
       #
@@ -138,42 +138,42 @@ module Yoti
       # @param [Integer] derivation
       #
       def with_age_over(age, options = {})
-        with_age_derived_attribute(Attribute::AGE_OVER + age.to_s, options)
+        with_age_derived_attribute(Attribute::AGE_OVER + age.to_s, **options)
       end
 
       #
       # @param [Integer] derivation
       #
       def with_age_under(age, options = {})
-        with_age_derived_attribute(Attribute::AGE_UNDER + age.to_s, options)
+        with_age_derived_attribute(Attribute::AGE_UNDER + age.to_s, **options)
       end
 
       def with_gender(options = {})
-        with_wanted_attribute_by_name Attribute::GENDER, options
+        with_wanted_attribute_by_name Attribute::GENDER, **options
       end
 
       def with_postal_address(options = {})
-        with_wanted_attribute_by_name(Attribute::POSTAL_ADDRESS, options)
+        with_wanted_attribute_by_name(Attribute::POSTAL_ADDRESS, **options)
       end
 
       def with_structured_postal_address(options = {})
-        with_wanted_attribute_by_name(Attribute::STRUCTURED_POSTAL_ADDRESS, options)
+        with_wanted_attribute_by_name(Attribute::STRUCTURED_POSTAL_ADDRESS, **options)
       end
 
       def with_nationality(options = {})
-        with_wanted_attribute_by_name(Attribute::NATIONALITY, options)
+        with_wanted_attribute_by_name(Attribute::NATIONALITY, **options)
       end
 
       def with_phone_number(options = {})
-        with_wanted_attribute_by_name(Attribute::PHONE_NUMBER, options)
+        with_wanted_attribute_by_name(Attribute::PHONE_NUMBER, **options)
       end
 
       def with_selfie(options = {})
-        with_wanted_attribute_by_name(Attribute::SELFIE, options)
+        with_wanted_attribute_by_name(Attribute::SELFIE, **options)
       end
 
       def with_email(options = {})
-        with_wanted_attribute_by_name(Attribute::EMAIL_ADDRESS, options)
+        with_wanted_attribute_by_name(Attribute::EMAIL_ADDRESS, **options)
       end
 
       def with_document_details

@@ -7,13 +7,15 @@ jobs:
   include:
     - &test
       stage: Test
-      rvm: 2.6
+      rvm: 2.7
       before_install:
         - gem install bundler
       install:
         - bundle install
       script:
         - bundle exec rake
+    - <<: *test
+      rvm: 2.6
     - <<: *test
       rvm: 2.5
     - <<: *test
@@ -28,7 +30,7 @@ jobs:
     - &coverage
       stage: coverage
       name: Coveralls
-      rvm: 2.4
+      rvm: 2.7
       before_install:
         - gem install bundler
       install:

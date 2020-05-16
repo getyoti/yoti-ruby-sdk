@@ -7,7 +7,7 @@ jobs:
   include:
     - &test
       stage: Test
-      rvm: 2.4
+      rvm: 2.6
       before_install:
         - gem install bundler
       install:
@@ -17,7 +17,14 @@ jobs:
     - <<: *test
       rvm: 2.5
     - <<: *test
-      rvm: 2.6
+      rvm: 2.4
+      install:
+        # Install google-protobuf version compatible with Ruby 2.4
+        - bundle add google-protobuf -v '~> 3.11.4'
+        - bundle install
+      script:
+        # Run tests only as `bundle add` causes RuboCop offences
+        - bundle exec rake spec
     - &coverage
       stage: coverage
       name: Coveralls

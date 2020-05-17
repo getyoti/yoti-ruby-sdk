@@ -21,8 +21,8 @@ jobs:
     - <<: *test
       rvm: 2.4
       install:
-        # Install google-protobuf version compatible with Ruby 2.4
-        - bundle add google-protobuf -v '~> 3.11.4'
+        # Install dependencies compatible with Ruby 2.4
+        - bundle add google-protobuf -v '~> 3.11.4' --skip-install
         - bundle install
       script:
         # Run tests only as `bundle add` causes RuboCop offences

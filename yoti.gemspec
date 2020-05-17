@@ -23,9 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.4'
 
-  spec.add_dependency 'activesupport', '~> 5.0' # Pin activesupport library to 5.x for Ruby 2.4 support
-  spec.add_dependency 'google-protobuf', '~> 3.7', '>= 3.7.0'
-  spec.add_dependency 'protobuf', '~> 3.6'
+  spec.add_dependency 'google-protobuf', '~> 3.7'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'coveralls', '~> 0.8'

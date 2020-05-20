@@ -12,8 +12,8 @@ module Yoti
             @type = type
           end
 
-          def to_json(*args)
-            as_json.to_json(*args)
+          def to_json(*_args)
+            as_json.to_json
           end
 
           def as_json(*_args)

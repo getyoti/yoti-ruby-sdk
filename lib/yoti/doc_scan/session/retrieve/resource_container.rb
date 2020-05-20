@@ -31,7 +31,7 @@ module Yoti
           end
 
           def zoom_liveness_resources
-            @liveness_capture.filter { |resource| resource.is_a?(ZoomLivenessResourceResponse) }
+            @liveness_capture.select { |resource| resource.is_a?(ZoomLivenessResourceResponse) }
           end
         end
       end

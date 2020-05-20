@@ -27,7 +27,7 @@ module Yoti
           end
 
           def text_extraction_tasks
-            @tasks.filter { |task| task.is_a?(TextExtractionTaskResponse) }
+            @tasks.select { |task| task.is_a?(TextExtractionTaskResponse) }
           end
         end
       end

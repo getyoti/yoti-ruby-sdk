@@ -31,6 +31,10 @@ describe 'Yoti::Configuration' do
   end
 
   describe '#api_endpoint' do
+    it 'uses default values' do
+      expect(configuration.api_endpoint).to eql('https://api.yoti.com/api/v1')
+    end
+
     it 'sets the instance variables' do
       configuration.client_sdk_id = 'client_sdk_id'
       configuration.key = 'key'
@@ -42,6 +46,47 @@ describe 'Yoti::Configuration' do
       configuration.api_endpoint = 'https://full_api_url.com'
 
       expect(configuration.api_endpoint).to eql('https://full_api_url.com')
+    end
+
+    it 'uses environment variable' do
+      stub_const('ENV', { 'YOTI_API_URL' => 'https://some_env_url.com' })
+      expect(configuration.api_endpoint).to eql('https://some_env_url.com')
+    end
+
+    it 'uses instance variable instead of environment variable' do
+      configuration.api_endpoint = 'https://full_api_url.com'
+      stub_const('ENV', { 'YOTI_API_URL' => 'https://some_env_url.com' })
+      expect(configuration.api_endpoint).to eql('https://full_api_url.com')
+    end
+  end
+
+  describe '#doc_scan_api_endpoint' do
+    it 'uses default values' do
+      expect(configuration.doc_scan_api_endpoint).to eql('https://api.yoti.com/idverify/v1')
+    end
+
+    it 'sets the instance variables' do
+      configuration.client_sdk_id = 'client_sdk_id'
+      configuration.key = 'key'
+      configuration.api_url = 'https://api_url.com'
+      configuration.api_version = 'v1'
+
+      expect(configuration.doc_scan_api_endpoint).to eql('https://api_url.com/idverify/v1')
+
+      configuration.doc_scan_api_endpoint = 'https://full_api_url.com'
+
+      expect(configuration.doc_scan_api_endpoint).to eql('https://full_api_url.com')
+    end
+
+    it 'uses environment variable' do
+      stub_const('ENV', { 'YOTI_DOC_SCAN_API_URL' => 'https://some_env_url.com' })
+      expect(configuration.doc_scan_api_endpoint).to eql('https://some_env_url.com')
+    end
+
+    it 'uses instance variable instead of environment variable' do
+      configuration.doc_scan_api_endpoint = 'https://full_api_url.com'
+      stub_const('ENV', { 'YOTI_DOC_SCAN_API_URL' => 'https://some_env_url.com' })
+      expect(configuration.doc_scan_api_endpoint).to eql('https://full_api_url.com')
     end
   end
 

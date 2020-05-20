@@ -48,7 +48,11 @@ require_relative 'yoti/dynamic_share_service/extension/thirdparty_attribute_exte
 require_relative 'yoti/share/extra_data'
 require_relative 'yoti/share/attribute_issuance_details'
 
+require_relative 'yoti/doc_scan/client'
+require_relative 'yoti/doc_scan/error'
 require_relative 'yoti/doc_scan/constants'
+
+require_relative 'yoti/doc_scan/session/create/create_session_result'
 require_relative 'yoti/doc_scan/session/create/requested_check'
 require_relative 'yoti/doc_scan/session/create/requested_document_authenticity_check'
 require_relative 'yoti/doc_scan/session/create/requested_face_match_check'

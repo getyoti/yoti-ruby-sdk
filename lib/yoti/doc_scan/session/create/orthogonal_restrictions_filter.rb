@@ -15,10 +15,10 @@ module Yoti
             @type_restriction = type_restriction
           end
 
-          def as_json(*_args)
-            super.as_json.merge(
-              country_restriction: @country_restriction,
-              type_restriction: @type_restriction
+          def as_json(*args)
+            super(args).merge(
+              country_restriction: @country_restriction.as_json,
+              type_restriction: @type_restriction.as_json
             ).compact
           end
 

@@ -74,8 +74,8 @@ module Yoti
             @country_codes = country_codes
           end
 
-          def to_json(*args)
-            as_json.to_json(*args)
+          def to_json(*_args)
+            as_json.to_json
           end
 
           def as_json(*_args)
@@ -95,8 +95,8 @@ module Yoti
             @document_types = document_types
           end
 
-          def to_json(*args)
-            as_json.to_json(*args)
+          def to_json(*_args)
+            as_json.to_json
           end
 
           def as_json(*_args)

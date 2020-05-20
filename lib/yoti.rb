@@ -90,6 +90,8 @@ require_relative 'yoti/doc_scan/session/retrieve/text_data_check_response'
 require_relative 'yoti/doc_scan/session/retrieve/text_extraction_task_response'
 require_relative 'yoti/doc_scan/session/retrieve/zoom_liveness_resource_response'
 
+require_relative 'yoti/doc_scan/support/supported_documents'
+
 # The main module namespace of the Yoti gem
 module Yoti
   class << self

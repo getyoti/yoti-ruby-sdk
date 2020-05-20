@@ -35,19 +35,19 @@ module Yoti
           end
 
           def authenticity_checks
-            @checks.filter { |check| check.is_a?(AuthenticityCheckResponse) }
+            @checks.select { |check| check.is_a?(AuthenticityCheckResponse) }
           end
 
           def face_match_checks
-            @checks.filter { |check| check.is_a?(FaceMatchCheckResponse) }
+            @checks.select { |check| check.is_a?(FaceMatchCheckResponse) }
           end
 
           def text_data_checks
-            @checks.filter { |check| check.is_a?(TextDataCheckResponse) }
+            @checks.select { |check| check.is_a?(TextDataCheckResponse) }
           end
 
           def liveness_checks
-            @checks.filter { |check| check.is_a?(LivenessCheckResponse) }
+            @checks.select { |check| check.is_a?(LivenessCheckResponse) }
           end
 
           private

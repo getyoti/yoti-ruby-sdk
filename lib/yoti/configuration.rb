@@ -3,7 +3,7 @@ module Yoti
     attr_accessor :client_sdk_id, :key_file_path, :key, :sdk_identifier,
                   :api_url, :api_port, :api_version
 
-    attr_writer :api_endpoint
+    attr_writer :api_endpoint, :doc_scan_api_endpoint
 
     # Set config variables by using a configuration block
     def initialize
@@ -18,7 +18,12 @@ module Yoti
 
     # @return [String] the API endpoint for the selected API version
     def api_endpoint
-      @api_endpoint ||= "#{@api_url}/api/#{@api_version}"
+      @api_endpoint ||= ENV['YOTI_API_URL'] || "#{@api_url}/api/#{@api_version}"
+    end
+
+    # @return [String] the Doc Scan API endpoint
+    def doc_scan_api_endpoint
+      @doc_scan_api_endpoint ||= ENV['YOTI_DOC_SCAN_API_URL'] || "#{@api_url}/idverify/#{@api_version}"
     end
 
     # Validates the configuration values set in instance variables

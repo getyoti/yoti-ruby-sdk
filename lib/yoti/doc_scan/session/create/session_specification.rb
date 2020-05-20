@@ -50,10 +50,10 @@ module Yoti
               resources_ttl: @resources_ttl,
               user_tracking_id: @user_tracking_id,
               notifications: @notifications,
-              requested_checks: @requested_checks,
-              requested_tasks: @requested_tasks,
+              requested_checks: @requested_checks.map(&:as_json),
+              requested_tasks: @requested_tasks.map(&:as_json),
               sdk_config: @sdk_config,
-              required_documents: @required_documents
+              required_documents: @required_documents.map(&:as_json)
             }.compact
           end
 

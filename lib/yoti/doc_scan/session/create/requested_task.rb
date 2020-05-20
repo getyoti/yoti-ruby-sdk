@@ -22,7 +22,7 @@ module Yoti
           def as_json(*_args)
             {
               type: @type,
-              config: @config
+              config: @config.as_json
             }
           end
         end

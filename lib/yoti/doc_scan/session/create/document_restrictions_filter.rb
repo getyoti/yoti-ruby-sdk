@@ -55,10 +55,10 @@ module Yoti
 
         class DocumentRestriction
           def initialize(country_codes, document_types)
-            Validation.assert_is_a(Array, country_codes, 'country_codes') unless country_codes.nil?
+            Validation.assert_is_a(Array, country_codes, 'country_codes', true)
             @country_codes = country_codes
 
-            Validation.assert_is_a(Array, document_types, 'document_types') unless document_types.nil?
+            Validation.assert_is_a(Array, document_types, 'document_types', true)
             @document_types = document_types
           end
 

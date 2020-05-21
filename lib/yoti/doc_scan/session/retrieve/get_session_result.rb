@@ -5,9 +5,30 @@ module Yoti
     module Session
       module Retrieve
         class GetSessionResult
-          attr_reader :client_session_token_ttl, :client_session_token, :session_id, :user_tracking_id,
-                      :state, :checks, :resources
+          # @return [Integer]
+          attr_reader :client_session_token_ttl
 
+          # @return [String]
+          attr_reader :client_session_token
+
+          # @return [String]
+          attr_reader :session_id
+
+          # @return [String]
+          attr_reader :user_tracking_id
+
+          # @return [String]
+          attr_reader :state
+
+          # @return [Array<CheckResponse>]
+          attr_reader :checks
+
+          # @return [ResourceContainer]
+          attr_reader :resources
+
+          #
+          # @param [Hash] response
+          #
           def initialize(response)
             Validation.assert_is_a(Integer, response['client_session_token_ttl'], 'client_session_token_ttl', true)
             @client_session_token_ttl = response['client_session_token_ttl']
@@ -34,24 +55,41 @@ module Yoti
             @resources = ResourceContainer.new(response['resources']) unless response['resources'].nil?
           end
 
+          #
+          # @return [Array<AuthenticityCheckResponse>]
+          #
           def authenticity_checks
             @checks.select { |check| check.is_a?(AuthenticityCheckResponse) }
           end
 
+          #
+          # @return [Array<FaceMatchCheckResponse>]
+          #
           def face_match_checks
             @checks.select { |check| check.is_a?(FaceMatchCheckResponse) }
           end
 
+          #
+          # @return [Array<TextDataCheckResponse>]
+          #
           def text_data_checks
             @checks.select { |check| check.is_a?(TextDataCheckResponse) }
           end
 
+          #
+          # @return [Array<LivenessCheckResponse>]
+          #
           def liveness_checks
             @checks.select { |check| check.is_a?(LivenessCheckResponse) }
           end
 
           private
 
+          #
+          # @param [Array<Hash>] checks
+          #
+          # @return [Array<CheckResponse>]
+          #
           def map_checks(checks)
             checks.map do |check|
               case check['type']

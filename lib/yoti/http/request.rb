@@ -140,10 +140,6 @@ module Yoti
       @uri ||= URI(base_url + path)
     end
 
-    def base_url
-      @base_url ||= Yoti.configuration.api_endpoint
-    end
-
     #
     # @return [String] the path with query string
     #

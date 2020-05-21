@@ -5,8 +5,18 @@ module Yoti
     module Session
       module Retrieve
         class RecommendationResponse
-          attr_reader :value, :reason, :recovery_suggestion
+          # @return [String]
+          attr_reader :value
 
+          # @return [String]
+          attr_reader :reason
+
+          # @return [String]
+          attr_reader :recovery_suggestion
+
+          #
+          # @param [Hash] recommendation
+          #
           def initialize(recommendation)
             Validation.assert_is_a(String, recommendation['value'], 'value', true)
             @value = recommendation['value']

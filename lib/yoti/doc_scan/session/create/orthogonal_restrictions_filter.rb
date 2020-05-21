@@ -5,6 +5,10 @@ module Yoti
     module Session
       module Create
         class OrthogonalRestrictionsFilter < DocumentFilter
+          #
+          # @param [CountryRestriction] country_restriction
+          # @param [TypeRestriction] type_restriction
+          #
           def initialize(country_restriction, type_restriction)
             super(Constants::ORTHOGONAL_RESTRICTIONS)
 
@@ -22,12 +26,20 @@ module Yoti
             ).compact
           end
 
+          #
+          # @return [OrthogonalRestrictionsFilterBuilder]
+          #
           def self.builder
             OrthogonalRestrictionsFilterBuilder.new
           end
         end
 
         class OrthogonalRestrictionsFilterBuilder
+          #
+          # @param [Array<String>] country_codes
+          #
+          # @return [self]
+          #
           def with_whitelisted_countries(country_codes)
             @country_restriction = CountryRestriction.new(
               Constants::INCLUSION_WHITELIST,
@@ -36,6 +48,11 @@ module Yoti
             self
           end
 
+          #
+          # @param [Array<String>] country_codes
+          #
+          # @return [self]
+          #
           def with_blacklisted_countries(country_codes)
             @country_restriction = CountryRestriction.new(
               Constants::INCLUSION_BLACKLIST,
@@ -44,6 +61,11 @@ module Yoti
             self
           end
 
+          #
+          # @param [Array<String>] document_types
+          #
+          # @return [self]
+          #
           def with_whitelisted_document_types(document_types)
             @type_restriction = TypeRestriction.new(
               Constants::INCLUSION_WHITELIST,
@@ -52,6 +74,11 @@ module Yoti
             self
           end
 
+          #
+          # @param [Array<String>] document_types
+          #
+          # @return [self]
+          #
           def with_blacklisted_document_types(document_types)
             @type_restriction = TypeRestriction.new(
               Constants::INCLUSION_BLACKLIST,
@@ -60,12 +87,19 @@ module Yoti
             self
           end
 
+          #
+          # @return [OrthogonalRestrictionsFilter]
+          #
           def build
             OrthogonalRestrictionsFilter.new(@country_restriction, @type_restriction)
           end
         end
 
         class CountryRestriction
+          #
+          # @param [String] inclusion
+          # @param [Array<String>] country_codes
+          #
           def initialize(inclusion, country_codes)
             Validation.assert_is_a(String, inclusion, 'inclusion')
             @inclusion = inclusion
@@ -87,6 +121,10 @@ module Yoti
         end
 
         class TypeRestriction
+          #
+          # @param [String] inclusion
+          # @param [Array<String>] document_types
+          #
           def initialize(inclusion, document_types)
             Validation.assert_is_a(String, inclusion, 'inclusion')
             @inclusion = inclusion

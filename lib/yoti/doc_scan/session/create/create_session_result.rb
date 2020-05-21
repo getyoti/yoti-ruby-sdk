@@ -4,9 +4,35 @@ module Yoti
   module DocScan
     module Session
       module Create
+        #
+        # The response to a successful CreateSession call
+        #
         class CreateSessionResult
-          attr_reader :client_session_token_ttl, :client_session_token, :session_id
+          #
+          # Returns the time-to-live (TTL) for the client session
+          # token for the created session
+          #
+          # @return [Integer]
+          #
+          attr_reader :client_session_token_ttl
 
+          #
+          # Returns the client session token for the created session
+          #
+          # @return [String]
+          #
+          attr_reader :client_session_token
+
+          #
+          # Session ID of the created session
+          #
+          # @return [String]
+          #
+          attr_reader :session_id
+
+          #
+          # @param [Hash] response
+          #
           def initialize(response)
             Validation.assert_is_a(Integer, response['client_session_token_ttl'], 'client_session_token_ttl', true)
             @client_session_token_ttl = response['client_session_token_ttl']

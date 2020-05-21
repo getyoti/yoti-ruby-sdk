@@ -5,9 +5,33 @@ module Yoti
     module Session
       module Retrieve
         class TaskResponse
-          attr_reader :type, :id, :state, :resources_used, :generated_media,
-                      :created, :last_updated, :generated_checks
+          # @return [String]
+          attr_reader :type
 
+          # @return [String]
+          attr_reader :id
+
+          # @return [String]
+          attr_reader :state
+
+          # @return [Array<String>]
+          attr_reader :resources_used
+
+          # @return [Array<GeneratedMedia>]
+          attr_reader :generated_media
+
+          # @return [Array<GeneratedCheckResponse>]
+          attr_reader :generated_checks
+
+          # @return [<DateTime>]
+          attr_reader :created
+
+          # @return [<DateTime>]
+          attr_reader :last_updated
+
+          #
+          # @param [Hash] task
+          #
           def initialize(task)
             Validation.assert_is_a(String, task['type'], 'type', true)
             @type = task['type']
@@ -41,6 +65,11 @@ module Yoti
 
           private
 
+          #
+          # @param [Array<Hash>] generated_checks
+          #
+          # @return [Array<GeneratedCheckResponse>]
+          #
           def map_generated_checks(generated_checks)
             generated_checks.map do |check|
               case check['type']

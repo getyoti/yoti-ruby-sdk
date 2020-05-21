@@ -5,6 +5,9 @@ module Yoti
     module Session
       module Create
         class RequiredDocument
+          #
+          # @param [String] type
+          #
           def initialize(type)
             raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequiredDocument
 

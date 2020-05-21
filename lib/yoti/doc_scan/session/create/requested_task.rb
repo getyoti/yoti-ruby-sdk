@@ -4,7 +4,14 @@ module Yoti
   module DocScan
     module Session
       module Create
+        #
+        # Requests creation of a Task to be performed on each document
+        #
         class RequestedTask
+          #
+          # @param [String] type The type of the Task to create
+          # @param [#as_json] config Configuration to apply to the Task
+          #
           def initialize(type, config)
             raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequestedTask
 

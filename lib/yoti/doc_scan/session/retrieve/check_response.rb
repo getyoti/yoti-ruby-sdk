@@ -5,9 +5,33 @@ module Yoti
     module Session
       module Retrieve
         class CheckResponse
-          attr_reader :type, :id, :state, :resources_used,
-                      :generated_media, :report, :created, :last_updated
+          # @return [String]
+          attr_reader :type
 
+          # @return [String]
+          attr_reader :id
+
+          # @return [String]
+          attr_reader :state
+
+          # @return [Array<String>]
+          attr_reader :resources_used
+
+          # @return [Array<GeneratedMedia>]
+          attr_reader :generated_media
+
+          # @return [<ReportResponse>]
+          attr_reader :report
+
+          # @return [<DateTime>]
+          attr_reader :created
+
+          # @return [<DateTime>]
+          attr_reader :last_updated
+
+          #
+          # @param [Hash] check
+          #
           def initialize(check)
             Validation.assert_is_a(String, check['type'], 'type', true)
             @type = check['type']

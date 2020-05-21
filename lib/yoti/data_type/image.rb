@@ -1,19 +1,11 @@
-require 'base64'
+# frozen_string_literal: true
 
 module Yoti
-  class Image
-    attr_reader :content
-    attr_reader :mime_type
-
+  class Image < Media
     def initialize(content, mime_type)
-      raise(TypeError, 'Image is an abstract class, so cannot be instantiated') if self.class == Yoti::Image
+      raise(TypeError, "#{self.class} is an abstract class, so cannot be instantiated") if self.class == Image
 
-      @content = content
-      @mime_type = mime_type
-    end
-
-    def base64_content
-      "data:#{mime_type};base64,#{Base64.strict_encode64(content)}"
+      super(content, mime_type)
     end
   end
 end

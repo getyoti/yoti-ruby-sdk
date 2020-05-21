@@ -5,8 +5,12 @@ module Yoti
     module Session
       module Retrieve
         class LivenessResourceResponse < ResourceResponse
+          # @return [String]
           attr_reader :liveness_type
 
+          #
+          # @param [Hash] resource
+          #
           def initialize(resource)
             super(resource)
 

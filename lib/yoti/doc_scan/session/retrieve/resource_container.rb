@@ -5,8 +5,15 @@ module Yoti
     module Session
       module Retrieve
         class ResourceContainer
-          attr_reader :id_documents, :liveness_capture
+          # @return [Array<IdDocumentResourceResponse>]
+          attr_reader :id_documents
 
+          # @return [Array<LivenessResourceResponse>]
+          attr_reader :liveness_capture
+
+          #
+          # @param [Hash] resources
+          #
           def initialize(resources)
             if resources['id_documents'].nil?
               @id_documents = []
@@ -30,6 +37,9 @@ module Yoti
             end
           end
 
+          #
+          # @return [Array<ZoomLivenessResourceResponse>]
+          #
           def zoom_liveness_resources
             @liveness_capture.select { |resource| resource.is_a?(ZoomLivenessResourceResponse) }
           end

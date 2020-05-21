@@ -4,7 +4,14 @@ module Yoti
   module DocScan
     module Session
       module Create
+        #
+        # Requests creation of a Check to be performed on a document
+        #
         class RequestedCheck
+          #
+          # @param [String] type The type of the Check to create
+          # @param [#as_json] config The configuration to apply to the Check
+          #
           def initialize(type, config)
             raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequestedCheck
 

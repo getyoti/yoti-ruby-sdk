@@ -5,8 +5,21 @@ module Yoti
     module Session
       module Retrieve
         class IdDocumentResourceResponse < ResourceResponse
-          attr_reader :document_type, :issuing_country, :pages, :document_fields
+          # @return [String]
+          attr_reader :document_type
 
+          # @return [String]
+          attr_reader :issuing_country
+
+          # @return [Array<PageResponse>]
+          attr_reader :pages
+
+          # @return [DocumentFieldsResponse]
+          attr_reader :document_fields
+
+          #
+          # @param [Hash] resource
+          #
           def initialize(resource)
             super(resource)
 
@@ -26,6 +39,9 @@ module Yoti
             @document_fields = DocumentFieldsResponse.new(resource['document_fields']) unless resource['document_fields'].nil?
           end
 
+          #
+          # @return [Array<TextExtractionTaskResponse>]
+          #
           def text_extraction_tasks
             @tasks.select { |task| task.is_a?(TextExtractionTaskResponse) }
           end

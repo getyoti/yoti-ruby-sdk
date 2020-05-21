@@ -5,8 +5,15 @@ module Yoti
     module Session
       module Retrieve
         class GeneratedMedia
-          attr_reader :id, :type
+          # @return [String]
+          attr_reader :id
 
+          # @return [String]
+          attr_reader :type
+
+          #
+          # @param [Hash] media
+          #
           def initialize(media)
             Validation.assert_is_a(String, media['id'], 'id', true)
             @id = media['id']

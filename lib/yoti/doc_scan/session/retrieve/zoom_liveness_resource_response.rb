@@ -5,8 +5,15 @@ module Yoti
     module Session
       module Retrieve
         class ZoomLivenessResourceResponse < LivenessResourceResponse
-          attr_reader :facemap, :frames
+          # @return [FaceMapResponse]
+          attr_reader :facemap
 
+          # @return [Array<FrameResponse>]
+          attr_reader :frames
+
+          #
+          # @param [Hash] resource
+          #
           def initialize(resource)
             super(resource)
 

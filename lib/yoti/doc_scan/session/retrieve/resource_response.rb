@@ -5,8 +5,15 @@ module Yoti
     module Session
       module Retrieve
         class ResourceResponse
-          attr_reader :id, :tasks
+          # @return [String]
+          attr_reader :id
 
+          # @return [Array<TaskResponse>]
+          attr_reader :tasks
+
+          #
+          # @param [Hash] resource
+          #
           def initialize(resource)
             Validation.assert_is_a(String, resource['id'], 'id', true)
             @id = resource['id']

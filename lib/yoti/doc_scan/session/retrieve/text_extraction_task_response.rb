@@ -5,6 +5,9 @@ module Yoti
     module Session
       module Retrieve
         class TextExtractionTaskResponse < TaskResponse
+          #
+          # @return [Array<GeneratedTextDataCheckResponse>]
+          #
           def generated_text_data_checks
             @generated_checks.select { |check| check.is_a?(GeneratedTextDataCheckResponse) }
           end

@@ -5,8 +5,21 @@ module Yoti
     module Session
       module Retrieve
         class MediaResponse
-          attr_reader :id, :type, :created, :last_updated
+          # @return [String]
+          attr_reader :id
 
+          # @return [String]
+          attr_reader :type
+
+          # @return [DateTime]
+          attr_reader :created
+
+          # @return [DateTime]
+          attr_reader :last_updated
+
+          #
+          # @param [Hash] media
+          #
           def initialize(media)
             Validation.assert_is_a(String, media['id'], 'id', true)
             @id = media['id']

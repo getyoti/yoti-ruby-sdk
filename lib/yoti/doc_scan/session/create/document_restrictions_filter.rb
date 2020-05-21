@@ -5,6 +5,10 @@ module Yoti
     module Session
       module Create
         class DocumentRestrictionsFilter < DocumentFilter
+          #
+          # @param [String] inclusion
+          # @param [Array<DocumentRestriction>] documents
+          #
           def initialize(inclusion, documents)
             super(Constants::DOCUMENT_RESTRICTIONS)
 
@@ -22,6 +26,9 @@ module Yoti
             ).compact
           end
 
+          #
+          # @return [DocumentRestrictionsFilterBuilder]
+          #
           def self.builder
             DocumentRestrictionsFilterBuilder.new
           end
@@ -32,28 +39,44 @@ module Yoti
             @documents = []
           end
 
+          #
+          # @return [self]
+          #
           def for_whitelist
             @inclusion = Constants::INCLUSION_WHITELIST
             self
           end
 
+          #
+          # @return [self]
+          #
           def for_blacklist
             @inclusion = Constants::INCLUSION_BLACKLIST
             self
           end
 
+          #
+          # @return [self]
+          #
           def with_document_restriction(document_restriction)
             Validation.assert_is_a(DocumentRestriction, document_restriction, 'document_restriction')
             @documents.push(document_restriction)
             self
           end
 
+          #
+          # @return [DocumentRestrictionsFilter]
+          #
           def build
             DocumentRestrictionsFilter.new(@inclusion, @documents)
           end
         end
 
         class DocumentRestriction
+          #
+          # @param [Array<String>] country_codes
+          # @param [Array<String>] document_types
+          #
           def initialize(country_codes, document_types)
             Validation.assert_is_a(Array, country_codes, 'country_codes', true)
             @country_codes = country_codes
@@ -79,16 +102,29 @@ module Yoti
         end
 
         class DocumentRestrictionBuilder
+          #
+          # @param [Array<String>] document_types
+          #
+          # @return [self]
+          #
           def with_document_types(document_types)
             @document_types = document_types
             self
           end
 
+          #
+          # @param [Array<String>] country_codes
+          #
+          # @return [self]
+          #
           def with_countries(country_codes)
             @country_codes = country_codes
             self
           end
 
+          #
+          # @return [DocumentRestriction]
+          #
           def build
             DocumentRestriction.new(@country_codes, @document_types)
           end

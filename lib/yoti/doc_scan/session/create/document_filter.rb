@@ -5,6 +5,9 @@ module Yoti
     module Session
       module Create
         class DocumentFilter
+          #
+          # @param [String] type
+          #
           def initialize(type)
             raise(TypeError, "#{self.class} cannot be instantiated") if self.class == DocumentFilter
 

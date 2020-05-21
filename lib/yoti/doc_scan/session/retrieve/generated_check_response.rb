@@ -5,8 +5,15 @@ module Yoti
     module Session
       module Retrieve
         class GeneratedCheckResponse
-          attr_reader :id, :type
+          # @return [String]
+          attr_reader :id
 
+          # @return [String]
+          attr_reader :type
+
+          #
+          # @param [Hash] check
+          #
           def initialize(check)
             Validation.assert_is_a(String, check['id'], 'id', true)
             @id = check['id']

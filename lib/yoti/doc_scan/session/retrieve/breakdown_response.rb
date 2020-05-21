@@ -5,8 +5,18 @@ module Yoti
     module Session
       module Retrieve
         class BreakdownResponse
-          attr_reader :sub_check, :result, :details
+          # @return [String]
+          attr_reader :sub_check
 
+          # @return [String]
+          attr_reader :result
+
+          # @return [Array<DetailsResponse>]
+          attr_reader :details
+
+          #
+          # @param [Hash] breakdown
+          #
           def initialize(breakdown)
             Validation.assert_is_a(String, breakdown['sub_check'], 'sub_check', true)
             @sub_check = breakdown['sub_check']

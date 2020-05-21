@@ -4,8 +4,12 @@ module Yoti
   module DocScan
     module Support
       class SupportedDocumentsResponse
+        # @return [Array<SupportedCountry>]
         attr_reader :supported_countries
 
+        #
+        # @param [Hash] response
+        #
         def initialize(response)
           if response['supported_countries'].nil?
             @supported_countries = []
@@ -17,8 +21,15 @@ module Yoti
       end
 
       class SupportedCountry
-        attr_reader :code, :supported_documents
+        # @return [String]
+        attr_reader :code
 
+        # @return [Array<SupportedDocument>]
+        attr_reader :supported_documents
+
+        #
+        # @param [Hash] country
+        #
         def initialize(country)
           Validation.assert_is_a(String, country['code'], 'code', true)
           @code = country['code']
@@ -33,8 +44,12 @@ module Yoti
       end
 
       class SupportedDocument
+        # @return [String]
         attr_reader :type
 
+        #
+        # @param [Hash] document
+        #
         def initialize(document)
           Validation.assert_is_a(String, document['type'], 'type', true)
           @type = document['type']

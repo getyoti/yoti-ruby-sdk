@@ -5,8 +5,15 @@ module Yoti
     module Session
       module Retrieve
         class DetailsResponse
-          attr_reader :name, :value
+          # @return [String]
+          attr_reader :name
 
+          # @return [String]
+          attr_reader :value
+
+          #
+          # @param [Hash] details
+          #
           def initialize(details)
             Validation.assert_is_a(String, details['name'], 'name', true)
             @name = details['name']

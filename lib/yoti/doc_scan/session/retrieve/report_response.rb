@@ -5,8 +5,15 @@ module Yoti
     module Session
       module Retrieve
         class ReportResponse
-          attr_reader :recommendation, :breakdown
+          # @return [RecommendationResponse]
+          attr_reader :recommendation
 
+          # @return [Array<BreakdownResponse>]
+          attr_reader :breakdown
+
+          #
+          # @param [Hash] report
+          #
           def initialize(report)
             @recommendation = RecommendationResponse.new(report['recommendation']) unless report['recommendation'].nil?
 

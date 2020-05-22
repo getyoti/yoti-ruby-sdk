@@ -15,8 +15,8 @@ module Yoti
             @filter = filter
           end
 
-          def as_json(*args)
-            super(args).merge(
+          def as_json(*_args)
+            super.merge(
               filter: @filter
             ).compact
           end

@@ -19,8 +19,8 @@ module Yoti
             @documents = documents
           end
 
-          def as_json(*args)
-            super(args).merge(
+          def as_json(*_args)
+            super.merge(
               inclusion: @inclusion,
               documents: @documents.map(&:as_json)
             ).compact

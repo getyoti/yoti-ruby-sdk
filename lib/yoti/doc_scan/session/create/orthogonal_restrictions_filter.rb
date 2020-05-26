@@ -20,10 +20,10 @@ module Yoti
           end
 
           def as_json(*_args)
-            super.merge(
-              country_restriction: @country_restriction.as_json,
-              type_restriction: @type_restriction.as_json
-            ).compact
+            json = super
+            json[:country_restriction] = @country_restriction.as_json unless @country_restriction.nil?
+            json[:type_restriction] = @type_restriction.as_json unless @type_restriction.nil?
+            json
           end
 
           #

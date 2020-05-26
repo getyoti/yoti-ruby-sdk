@@ -33,6 +33,10 @@ module Yoti
         # The configuration applied when creating a {RequestedLivenessCheck}
         #
         class RequestedLivenessCheckConfig
+          #
+          # @param [String] liveness_type
+          # @param [String] max_retries
+          #
           def initialize(liveness_type, max_retries)
             Validation.assert_is_a(String, liveness_type, 'liveness_type')
             @liveness_type = liveness_type

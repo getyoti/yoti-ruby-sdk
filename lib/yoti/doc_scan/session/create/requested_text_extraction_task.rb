@@ -35,7 +35,7 @@ module Yoti
           #   Describes the manual fallback behaviour applied to each Task
           #
           def initialize(manual_check)
-            Validation.assert_not_nil(manual_check, 'manual_check')
+            Validation.assert_is_a(String, manual_check, 'manual_check')
             @manual_check = manual_check
           end
 

@@ -33,8 +33,11 @@ module Yoti
         # The configuration applied when creating a {RequestedFaceMatchCheck}
         #
         class RequestedFaceMatchCheckConfig
+          #
+          # @param [String] manual_check
+          #
           def initialize(manual_check)
-            Validation.assert_not_nil(manual_check, 'manual_check')
+            Validation.assert_is_a(String, manual_check, 'manual_check')
             @manual_check = manual_check
           end
 

@@ -64,7 +64,7 @@ module Yoti
       #
       # @param [ThirdPartyAttributeExtensionContent] content
       #
-      def initialize(content)
+      def initialize(content = nil)
         @content = content
         @type = EXTENSION_TYPE
       end
@@ -72,7 +72,7 @@ module Yoti
       def as_json(*_args)
         json = {}
         json[:type] = @type
-        json[:content] = @content
+        json[:content] = @content.as_json unless @content.nil?
         json
       end
 

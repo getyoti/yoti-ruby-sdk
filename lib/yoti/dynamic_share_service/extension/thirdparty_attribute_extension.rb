@@ -3,6 +3,9 @@
 module Yoti
   module DynamicSharingService
     class ThirdPartyAttributeDefinition
+      #
+      # @param [String] name
+      #
       def initialize(name)
         @name = name
       end
@@ -18,11 +21,21 @@ module Yoti
         @definitions = []
       end
 
+      #
+      # @param [DateTime] expiry_date
+      #
+      # @return [self]
+      #
       def with_expiry_date(expiry_date)
         @expiry_date = expiry_date
         self
       end
 
+      #
+      # @param [String] *names
+      #
+      # @return [self]
+      #
       def with_definitions(*names)
         @definitions += names.map do |name|
           ThirdPartyAttributeDefinition.new(name)
@@ -30,38 +43,70 @@ module Yoti
         self
       end
 
+      #
+      # @return [ThirdPartyAttributeExtension]
+      #
       def build
-        extension = ThirdPartyAttributeExtension.new
-        extension.instance_variable_get(:@content)[:expiry_date] = @expiry_date
-        extension.instance_variable_get(:@content)[:definitions] = @definitions
-        extension
+        content = ThirdPartyAttributeExtensionContent.new(@expiry_date, @definitions)
+        ThirdPartyAttributeExtension.new(content)
       end
     end
 
     class ThirdPartyAttributeExtension
       EXTENSION_TYPE = 'THIRD_PARTY_ATTRIBUTE'
 
+      # @return [ThirdPartyAttributeExtensionContent]
       attr_reader :content
+
+      # @return [String]
       attr_reader :type
 
-      def initialize
-        @content = {}
+      #
+      # @param [ThirdPartyAttributeExtensionContent] content
+      #
+      def initialize(content)
+        @content = content
         @type = EXTENSION_TYPE
       end
 
       def as_json(*_args)
-        {
-          type: @type,
-          content: @content
-        }
+        json = {}
+        json[:type] = @type
+        json[:content] = @content
+        json
       end
 
       def to_json(*_args)
         as_json.to_json
       end
 
+      #
+      # @return [ThirdPartyAttributeExtensionBuilder]
+      #
       def self.builder
         ThirdPartyAttributeExtensionBuilder.new
+      end
+    end
+
+    class ThirdPartyAttributeExtensionContent
+      #
+      # @param [DateTime] expiry_date
+      # @param [Array<ThirdPartyAttributeDefinition>] definitions
+      #
+      def initialize(expiry_date, definitions)
+        @expiry_date = expiry_date
+        @definitions = definitions
+      end
+
+      def as_json(*_args)
+        json = {}
+        json[:expiry_date] = @expiry_date.utc.rfc3339(3) unless @expiry_date.nil?
+        json[:definitions] = @definitions
+        json
+      end
+
+      def to_json(*_args)
+        as_json.to_json
       end
     end
   end

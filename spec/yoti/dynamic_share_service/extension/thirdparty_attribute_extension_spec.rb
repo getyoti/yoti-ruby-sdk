@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'ThirdPartyAttributeDefinition' do
+describe 'Yoti::DynamicSharingService::ThirdPartyAttributeDefinition' do
   describe '#to_json' do
     let :name do
       'AttributeName'
@@ -42,7 +42,7 @@ describe 'Yoti::DynamicSharingService::ThirdPartyAttributeExtension' do
   end
 end
 
-describe 'ThirdPartyAttributeExtensionContent' do
+describe 'Yoti::DynamicSharingService::ThirdPartyAttributeExtensionContent' do
   let :attr_name do
     'AttributeName'
   end

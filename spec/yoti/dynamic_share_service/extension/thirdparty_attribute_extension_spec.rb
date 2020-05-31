@@ -70,5 +70,21 @@ describe 'ThirdPartyAttributeExtensionContent' do
         expect(content.to_json).to eql expected
       end
     end
+
+    it 'Formats expiry date Time object as UTC' do
+      content = Yoti::DynamicSharingService::ThirdPartyAttributeExtensionContent.new(
+        DateTime.new(2006, 4, 3, 2, 30, 50),
+        [Yoti::DynamicSharingService::ThirdPartyAttributeDefinition.new(attr_name)]
+      )
+
+      expected = {
+        expiry_date: '2006-04-03T02:30:50.000Z',
+        definitions: [
+          { name: attr_name }
+        ]
+      }.to_json
+
+      expect(content.to_json).to eql expected
+    end
   end
 end

@@ -100,7 +100,7 @@ module Yoti
 
       def as_json(*_args)
         json = {}
-        json[:expiry_date] = @expiry_date.utc.rfc3339(3) unless @expiry_date.nil?
+        json[:expiry_date] = @expiry_date.to_time.utc.strftime('%FT%T.%3NZ') unless @expiry_date.nil?
         json[:definitions] = @definitions
         json
       end

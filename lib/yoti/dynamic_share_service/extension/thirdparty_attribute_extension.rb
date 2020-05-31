@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'time'
+
 module Yoti
   module DynamicSharingService
     class ThirdPartyAttributeDefinition
@@ -10,8 +12,12 @@ module Yoti
         @name = name
       end
 
+      def as_json(*_args)
+        { name: @name }
+      end
+
       def to_json(*_args)
-        { name: @name }.to_json
+        as_json.to_json
       end
     end
 
@@ -22,7 +28,7 @@ module Yoti
       end
 
       #
-      # @param [DateTime] expiry_date
+      # @param [DateTime,Time] expiry_date
       #
       # @return [self]
       #
@@ -90,7 +96,7 @@ module Yoti
 
     class ThirdPartyAttributeExtensionContent
       #
-      # @param [DateTime] expiry_date
+      # @param [DateTime,Time] expiry_date
       # @param [Array<ThirdPartyAttributeDefinition>] definitions
       #
       def initialize(expiry_date, definitions)
@@ -101,7 +107,7 @@ module Yoti
       def as_json(*_args)
         json = {}
         json[:expiry_date] = @expiry_date.to_time.utc.strftime('%FT%T.%3NZ') unless @expiry_date.nil?
-        json[:definitions] = @definitions
+        json[:definitions] = @definitions.map(&:as_json)
         json
       end
 

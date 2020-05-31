@@ -94,7 +94,7 @@ module Yoti
         proto_multi_value = Yoti::Protobuf::Attrpubapi::MultiValue.decode(value)
         items = []
         proto_multi_value.values.each do |item|
-          items.append value_based_on_content_type(item.data, item.content_type)
+          items << value_based_on_content_type(item.data, item.content_type)
         end
         MultiValue.new(items)
       end

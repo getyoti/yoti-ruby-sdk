@@ -1,3 +1,5 @@
+require 'securerandom'
+
 module Yoti
   # Manage the API's HTTPS requests
   class Request

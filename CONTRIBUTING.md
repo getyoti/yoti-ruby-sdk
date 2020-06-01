@@ -16,35 +16,6 @@ bundle exec guard
 
 Although this gem supports Ruby 2.0.0, in order to use the latest development dependencies you have to use at least Ruby 2.2.2.
 
-If you wish to compile `.proto` definitions to Ruby, you will need to install [Google's Protocol Buffers](http://code.google.com/p/protobuf).
-
-### OSX
-
-```shell
-brew install protobuf
-```
-
-### Ubuntu
-
-```shell
-sudo apt-get install -y protobuf
-```
-
-This gem relies heavily on the [Ruby Protobuf][] gem. For more information on how Google Protobuf works, please see the [Wiki pages][].
-
-Compiling the common and attribute `.proto` definitions can be done with the following commands:
-
-```shell
-cd lib/yoti/protobuf/v1
-protoc -I definitions/attribute-public-api/attrpubapi_v1 --ruby_out ./attribute_public_api definitions/attribute-public-api/attrpubapi_v1/*.proto
-protoc -I definitions/common-public-api/compubapi_v1/ --ruby_out ./common_public_api definitions/common-public-api/compubapi_v1/*.proto
-```
-
-These commands will overwrite the current protobuf Ruby modules, which have been modified. If the protobuf files have to be updated, a good idea would be to change them manually, or generate the files in a new location, and compare the content.
-
-[Ruby Protobuf]: https://github.com/ruby-protobuf/protobuf/
-[Wiki Pages]:    https://github.com/ruby-protobuf/protobuf/wiki
-
 ## Requirements
 
 ### Code coverage

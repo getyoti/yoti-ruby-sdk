@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'generator_spec'
 require 'generators/yoti/install/install_generator.rb'
 

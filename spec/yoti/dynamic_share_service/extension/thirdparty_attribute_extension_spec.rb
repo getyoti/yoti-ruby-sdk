@@ -73,7 +73,7 @@ describe 'Yoti::DynamicSharingService::ThirdPartyAttributeExtensionContent' do
 
     it 'Formats expiry date Time object as UTC' do
       content = Yoti::DynamicSharingService::ThirdPartyAttributeExtensionContent.new(
-        DateTime.new(2006, 4, 3, 2, 30, 50),
+        Time.new(2006, 4, 3, 2, 30, 50, '+00:00'),
         [Yoti::DynamicSharingService::ThirdPartyAttributeDefinition.new(attr_name)]
       )
 

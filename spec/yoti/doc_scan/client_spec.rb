@@ -9,7 +9,7 @@ def stub_doc_scan_api_request(
   status: 200,
   request_body: nil
 )
-  stub = stub_request(method, %r{https:\/\/api.yoti.com\/idverify\/v1\/#{endpoint}(.)*})
+  stub = stub_request(method, %r{https:\/\/api.yoti.com\/idverify\/v1\/#{endpoint}})
   stub.with(body: request_body) unless request_body.nil?
   stub.to_return(
     status: status,
@@ -58,7 +58,7 @@ describe 'Yoti::DocScan::Client' do
 
   context '.get_session' do
     before(:context) do
-      stub_doc_scan_api_request(method: :get, endpoint: 'sessions/some-id')
+      stub_doc_scan_api_request(method: :get, endpoint: 'sessions/some-id\?nonce=.*&sdkId=.*&timestamp=.*')
     end
 
     it 'gets a session result' do
@@ -70,7 +70,7 @@ describe 'Yoti::DocScan::Client' do
 
   context '.delete_session' do
     before(:context) do
-      stub_doc_scan_api_request(method: :delete, endpoint: 'sessions/some-id')
+      stub_doc_scan_api_request(method: :delete, endpoint: 'sessions/some-id\?nonce=.*&sdkId=.*&timestamp=.*')
     end
 
     it 'deletes a session' do
@@ -80,7 +80,7 @@ describe 'Yoti::DocScan::Client' do
 
   context '.get_media_content' do
     before(:context) do
-      stub_doc_scan_api_request(method: :get, endpoint: 'sessions/some-id/media/some-media-id')
+      stub_doc_scan_api_request(method: :get, endpoint: 'sessions/some-id/media/some-media-id\?nonce=.*&sdkId=.*&timestamp=.*')
     end
 
     it 'gets media content' do
@@ -94,7 +94,7 @@ describe 'Yoti::DocScan::Client' do
 
   context '.delete_media_content' do
     before(:context) do
-      stub_doc_scan_api_request(method: :delete, endpoint: 'sessions/some-id/media/some-media-id')
+      stub_doc_scan_api_request(method: :delete, endpoint: 'sessions/some-id/media/some-media-id\?nonce=.*&sdkId=.*&timestamp=.*')
     end
 
     it 'deletes media content' do
@@ -104,7 +104,7 @@ describe 'Yoti::DocScan::Client' do
 
   context '.supported_documents' do
     before(:context) do
-      stub_doc_scan_api_request(method: :get, endpoint: 'supported-documents')
+      stub_doc_scan_api_request(method: :get, endpoint: 'supported-documents\?nonce=.*&timestamp=.*')
     end
 
     it 'gets supported documents' do

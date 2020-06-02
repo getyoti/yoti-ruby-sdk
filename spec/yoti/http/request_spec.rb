@@ -32,6 +32,16 @@ describe 'Yoti::Request' do
           )
         )
       end
+
+      it 'raises Yoti::RequestError with response object' do
+        request.http_method = 'GET'
+
+        begin
+          raise 'Request did not throw' if request.body
+        rescue Yoti::RequestError => e
+          expect(e.response.body).to eql(response_body)
+        end
+      end
     end
 
     context 'with a HTTP method', type: :api_empty do

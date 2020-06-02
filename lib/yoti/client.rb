@@ -7,9 +7,11 @@ module Yoti
     #
     # Performs all the steps required to get the decrypted profile from an API request
     #
-    # @param encrypted_connect_token [String] token provided as a base 64 string
+    # @param [String] encrypted_connect_token
+    #   Token provided as a base 64 string
     #
-    # @return [Object] an ActivityDetails instance encapsulating the user profile
+    # @return [ActivityDetails]
+    #   An ActivityDetails instance encapsulating the user profile
     #
     def self.get_activity_details(encrypted_connect_token)
       receipt = Yoti::ProfileRequest.new(encrypted_connect_token).receipt
@@ -22,6 +24,13 @@ module Yoti
       ActivityDetails.new(receipt, user_profile, application_profile, extra_data)
     end
 
+    #
+    # Perform AML check
+    #
+    # @param [AmlProfile] aml_profile
+    #
+    # @return [<Hash>]
+    #
     def self.aml_check(aml_profile)
       Yoti::AmlCheckRequest.new(aml_profile).response
     end

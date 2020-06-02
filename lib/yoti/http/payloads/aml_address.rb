@@ -7,6 +7,10 @@ module Yoti
     # @return [String] the postcode required for USA, optional otherwise
     attr_accessor :post_code
 
+    #
+    # @param [String] country
+    # @param [String] post_code
+    #
     def initialize(country, post_code = nil)
       raise AmlError, 'AmlAddress requires a country.' if country.to_s.empty?
 

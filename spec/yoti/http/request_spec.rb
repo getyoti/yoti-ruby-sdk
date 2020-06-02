@@ -16,28 +16,85 @@ describe 'Yoti::Request' do
       end
     end
 
-    context 'with an invalid payload' do
-      it 'raises Yoti::RequestError' do
-        request.http_method = 'GET'
-        request.payload = 'payload'
-
-        error = 'The payload needs to be a hash.'
-        expect { request.body }.to raise_error(Yoti::RequestError, error)
-      end
-    end
-
     context 'when the API call is unsuccessful', type: :api_error do
-      it 'raises Yoti::RequestError' do
-        request.http_method = 'GET'
+      let(:response_body) { File.read('spec/sample-data/responses/profile_error.json') }
+      let(:error) { 'Unsuccessful Yoti API call: Error: ' + response_body }
 
-        error = 'Unsuccessful Yoti API call: Error'
-        expect { request.body }.to raise_error(Yoti::RequestError, error)
+      it 'raises Yoti::RequestError with response body appended to message' do
+        request.http_method = 'GET'
+        expect { request.body }.to raise_error(
+          an_instance_of(Yoti::RequestError)
+          .and(
+            having_attributes(
+              'message' => error,
+              'response' => a_kind_of(Net::HTTPResponse)
+            )
+          )
+        )
       end
     end
 
-    context 'with a HTTP method and a valid payload', type: :api_empty do
+    context 'with a HTTP method', type: :api_empty do
       it 'returns the receipt value' do
         request.http_method = 'GET'
+        expect(request.body).to eql('{}')
+      end
+    end
+  end
+
+  describe '#execute' do
+    context 'with Hash payload' do
+      before(:each) do
+        stub_api_requests_v1(:post, 'empty', 'some-path', 201, { some: 'payload' }.to_json)
+      end
+
+      it 'returns successful response' do
+        request.http_method = 'POST'
+        request.endpoint = 'some-path'
+        request.payload = { some: 'payload' }
+
+        expect(request.body).to eql('{}')
+      end
+    end
+
+    context 'with string payload' do
+      before(:each) do
+        stub_api_requests_v1(:post, 'empty', 'some-path', 201, 'some-string-payload')
+      end
+
+      it 'returns successful response' do
+        request.http_method = 'POST'
+        request.endpoint = 'some-path'
+        request.payload = 'some-string-payload'
+
+        expect(request.body).to eql('{}')
+      end
+    end
+
+    context 'with query params' do
+      before(:each) do
+        stub_api_requests_v1(:get, 'empty', 'some-path?.*&some=param', 200)
+      end
+
+      it 'returns successful response' do
+        request.http_method = 'GET'
+        request.endpoint = 'some-path'
+        request.query_params = { some: 'param' }
+
+        expect(request.body).to eql('{}')
+      end
+    end
+
+    context 'with token' do
+      before(:each) do
+        stub_api_requests_v1(:get, 'empty', "some-path/#{Yoti::SSL.decrypt_token(encrypted_connect_token)}", 200)
+      end
+
+      it 'returns successful response' do
+        request.http_method = 'GET'
+        request.endpoint = 'some-path'
+        request.encrypted_connect_token = encrypted_connect_token
+
         expect(request.body).to eql('{}')
       end
     end

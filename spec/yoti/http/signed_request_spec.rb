@@ -26,20 +26,20 @@ describe 'Yoti::SignedRequest' do
     end
   end
 
-  describe '#payload_string' do
-    let(:payload_string) { signed_request.send(:payload_string) }
+  describe '#base64_payload' do
+    let(:base64_payload) { signed_request.send(:base64_payload) }
 
     context 'without a payload' do
       it 'returns an empty string' do
         signed_request.instance_variable_set(:@payload, nil)
-        expect(payload_string).to be_empty
+        expect(base64_payload).to be_empty
       end
     end
 
-    context 'witha payload' do
+    context 'with a payload' do
       it 'returns a base64 encoded string' do
         signed_request.instance_variable_set(:@payload, payload_aml)
-        expect(payload_string).to eql('&eyJnaXZlbl9uYW1lcyI6IiIsImZhbWlseV9uYW1lIjoiIiwic3NuIjoiIiwiYWRkcmVzcyI6eyJwb3N0X2NvZGUiOiIiLCJjb3VudHJ5IjoiIn19')
+        expect(base64_payload).to eql('&eyJnaXZlbl9uYW1lcyI6IiIsImZhbWlseV9uYW1lIjoiIiwic3NuIjoiIiwiYWRkcmVzcyI6eyJwb3N0X2NvZGUiOiIiLCJjb3VudHJ5IjoiIn19')
       end
     end
   end

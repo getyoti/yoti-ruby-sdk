@@ -65,4 +65,16 @@ describe 'Yoti::DynamicSharingService::create_share_url' do
         )
     end
   end
+
+  context '.create_share_url_query' do
+    it 'returns query string with nonce and timestamp' do
+      expect(Yoti::DynamicSharingService.create_share_url_query).to match(/^\?nonce=.*&timestamp=.*/)
+    end
+  end
+
+  context '.create_share_url_endpoint' do
+    it 'returns path with SDK ID' do
+      expect(Yoti::DynamicSharingService.create_share_url_endpoint).to eql("/qrcodes/apps/#{Yoti.configuration.client_sdk_id}")
+    end
+  end
 end

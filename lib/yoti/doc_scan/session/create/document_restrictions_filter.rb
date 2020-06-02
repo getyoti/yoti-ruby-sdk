@@ -56,6 +56,8 @@ module Yoti
           end
 
           #
+          # @param [DocumentRestriction] document_restriction
+          #
           # @return [self]
           #
           def with_document_restriction(document_restriction)
@@ -96,6 +98,9 @@ module Yoti
             json
           end
 
+          #
+          # @return [DocumentRestrictionBuilder]
+          #
           def self.builder
             DocumentRestrictionBuilder.new
           end

@@ -8,14 +8,15 @@ require 'webmock/rspec'
 
 require 'yoti'
 
-def stub_api_requests_v1(method = :get, response = 'profile', endpoint = '[a-zA-Z]*', status = [200])
-  stub_response = File.read("spec/sample-data/responses/#{response}.json")
-  stub_request(method, %r{https:\/\/api.yoti.com\/api\/v1\/#{endpoint}\/(.)*})
-    .to_return(
-      status: status,
-      body: stub_response,
-      headers: { 'Content-Type' => 'application/json' }
-    )
+def stub_api_requests_v1(method = :get, response = 'profile', endpoint = '[a-zA-Z]*', status = [200], request_body = nil)
+  response_body = File.read("spec/sample-data/responses/#{response}.json")
+  stub = stub_request(method, %r{https:\/\/api.yoti.com\/api\/v1\/#{endpoint}(.)*})
+  stub.with(body: request_body) unless request_body.nil?
+  stub.to_return(
+    status: status,
+    body: response_body,
+    headers: { 'Content-Type' => 'application/json' }
+  )
 end
 
 RSpec.configure do |config|

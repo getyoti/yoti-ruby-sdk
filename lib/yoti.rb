@@ -26,7 +26,8 @@ require_relative 'yoti/data_type/document_details'
 
 require_relative 'yoti/util/age_processor'
 require_relative 'yoti/util/anchor_processor'
-require_relative 'yoti/util/log.rb'
+require_relative 'yoti/util/log'
+require_relative 'yoti/util/validation'
 
 require_relative 'yoti/activity_details'
 require_relative 'yoti/client'

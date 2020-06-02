@@ -16,8 +16,8 @@ module Yoti
         false
       end
 
-      def to_json(*args)
-        as_json.to_json(*args)
+      def to_json(*_args)
+        as_json.to_json
       end
 
       def as_json(*_args)
@@ -135,14 +135,14 @@ module Yoti
       end
 
       #
-      # @param [Integer] derivation
+      # @param [Integer] age
       #
       def with_age_over(age, options = {})
         with_age_derived_attribute(Attribute::AGE_OVER + age.to_s, **options)
       end
 
       #
-      # @param [Integer] derivation
+      # @param [Integer] age
       #
       def with_age_under(age, options = {})
         with_age_derived_attribute(Attribute::AGE_UNDER + age.to_s, **options)

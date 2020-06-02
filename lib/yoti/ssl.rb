@@ -48,7 +48,7 @@ module Yoti
 
       # Uses the decrypted receipt key and the current user's iv to decode the text
       # @param key [String] base 64 decoded key
-      # @param iv [String] base 64 decoded iv
+      # @param user_iv [String] base 64 decoded iv
       # @param text [String] base 64 decoded cyphered text
       # @return [String] base 64 decoded deciphered text
       def decipher(key, user_iv, text)

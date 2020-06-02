@@ -18,9 +18,8 @@ describe 'Yoti::ProfileRequest' do
     it 'sets the instance variable @request' do
       expect(yoti_request).to be_a(Yoti::Request)
 
-      expect(yoti_request.encrypted_connect_token).to eql(encrypted_connect_token)
       expect(yoti_request.http_method).to eql('GET')
-      expect(yoti_request.endpoint).to eql('profile')
+      expect(yoti_request.endpoint).to eql("profile/#{Yoti::SSL.decrypt_token(encrypted_connect_token)}")
     end
   end
 

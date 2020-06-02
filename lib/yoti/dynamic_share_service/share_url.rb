@@ -13,50 +13,33 @@ module Yoti
       end
     end
 
-    def self.create_share_url_endpoint
-      "/qrcodes/apps/#{Yoti.configuration.client_sdk_id}"
-    end
-
-    def self.create_share_url_query
-      "?nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
-    end
-
     def self.create_share_url(scenario)
-      endpoint = "#{create_share_url_endpoint}#{create_share_url_query}"
-      uri = URI("#{Yoti.configuration.api_endpoint}#{endpoint}")
+      yoti_request = Yoti::Request
+                     .builder
+                     .with_http_method('POST')
+                     .with_base_url(Yoti.configuration.api_endpoint)
+                     .with_endpoint("qrcodes/apps/#{Yoti.configuration.client_sdk_id}")
+                     .with_query_param('appId', Yoti.configuration.client_sdk_id)
+                     .with_payload(scenario)
+                     .build
 
-      unsigned = Net::HTTP::Post.new uri
-      unsigned.body = scenario.to_json
+      begin
+        create_share_url_parse_response yoti_request.execute
+      rescue Yoti::RequestError => e
+        raise if e.response.nil?
 
-      signed_request = Yoti::SignedRequest.new(
-        unsigned,
-        endpoint,
-        scenario
-      ).sign
-
-      response = Net::HTTP.start(
-        uri.hostname,
-        uri.port,
-        use_ssl: true
-      ) do |http|
-        http.request signed_request
-      end
-
-      create_share_url_parse_response response
-    end
-
-    def self.create_share_url_parse_response(response)
-      if response.code.to_i < 200 || response.code.to_i >= 300
-        case response.code
+        case e.response.code
         when '400'
           raise InvalidDataError
         when '404'
           raise ApplicationNotFoundError
         else
-          raise UnknownHTTPError, response.code
+          raise UnknownHTTPError, e.response.code
         end
       end
+    end
 
+    def self.create_share_url_parse_response(response)
       Share.new JSON.parse response.body
     end
 
@@ -77,6 +60,16 @@ module Yoti
         msg = "#{msg}: #{code}" unless code.nil?
         super msg
       end
+    end
+
+    # @deprecated no longer used - will be removed in 2.0.0
+    def self.create_share_url_query
+      "?nonce=#{SecureRandom.uuid}&timestamp=#{Time.now.to_i}"
+    end
+
+    # @deprecated no longer used - will be removed in 2.0.0
+    def self.create_share_url_endpoint
+      "/qrcodes/apps/#{Yoti.configuration.client_sdk_id}"
     end
   end
 end

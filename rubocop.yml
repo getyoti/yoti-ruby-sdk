@@ -60,3 +60,4 @@ Metrics/ParameterLists:
   Exclude:
     - lib/yoti/doc_scan/session/create/sdk_config.rb
     - lib/yoti/doc_scan/session/create/session_specification.rb
+    - spec/yoti/doc_scan/client_spec.rb

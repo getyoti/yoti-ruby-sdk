@@ -7,10 +7,12 @@ def stub_doc_scan_api_request(
   endpoint: '[a-zA-Z]*',
   response_body: '{}',
   status: 200,
-  request_body: nil
+  request_body: nil,
+  query: nil
 )
   stub = stub_request(method, %r{https:\/\/api.yoti.com\/idverify\/v1\/#{endpoint}})
   stub.with(body: request_body) unless request_body.nil?
+  stub.with(query: query) unless query.nil?
   stub.to_return(
     status: status,
     body: response_body,
@@ -58,7 +60,15 @@ describe 'Yoti::DocScan::Client' do
 
   context '.get_session' do
     before(:context) do
-      stub_doc_scan_api_request(method: :get, endpoint: 'sessions/some-id\?nonce=.*&sdkId=.*&timestamp=.*')
+      stub_doc_scan_api_request(
+        method: :get,
+        endpoint: 'sessions/some-id\?nonce=.*&sdkId=.*&timestamp=.*',
+        query: hash_including(
+          sdkId: Yoti.configuration.client_sdk_id,
+          nonce: /.*/,
+          timestamp: /.*/
+        )
+      )
     end
 
     it 'gets a session result' do
@@ -70,7 +80,15 @@ describe 'Yoti::DocScan::Client' do
 
   context '.delete_session' do
     before(:context) do
-      stub_doc_scan_api_request(method: :delete, endpoint: 'sessions/some-id\?nonce=.*&sdkId=.*&timestamp=.*')
+      stub_doc_scan_api_request(
+        method: :delete,
+        endpoint: 'sessions/some-id',
+        query: hash_including(
+          sdkId: Yoti.configuration.client_sdk_id,
+          nonce: /.*/,
+          timestamp: /.*/
+        )
+      )
     end
 
     it 'deletes a session' do
@@ -80,7 +98,15 @@ describe 'Yoti::DocScan::Client' do
 
   context '.get_media_content' do
     before(:context) do
-      stub_doc_scan_api_request(method: :get, endpoint: 'sessions/some-id/media/some-media-id\?nonce=.*&sdkId=.*&timestamp=.*')
+      stub_doc_scan_api_request(
+        method: :get,
+        endpoint: 'sessions/some-id/media/some-media-id',
+        query: hash_including(
+          sdkId: Yoti.configuration.client_sdk_id,
+          nonce: /.*/,
+          timestamp: /.*/
+        )
+      )
     end
 
     it 'gets media content' do
@@ -94,7 +120,15 @@ describe 'Yoti::DocScan::Client' do
 
   context '.delete_media_content' do
     before(:context) do
-      stub_doc_scan_api_request(method: :delete, endpoint: 'sessions/some-id/media/some-media-id\?nonce=.*&sdkId=.*&timestamp=.*')
+      stub_doc_scan_api_request(
+        method: :delete,
+        endpoint: 'sessions/some-id/media/some-media-id',
+        query: hash_including(
+          sdkId: Yoti.configuration.client_sdk_id,
+          nonce: /.*/,
+          timestamp: /.*/
+        )
+      )
     end
 
     it 'deletes media content' do
@@ -104,7 +138,14 @@ describe 'Yoti::DocScan::Client' do
 
   context '.supported_documents' do
     before(:context) do
-      stub_doc_scan_api_request(method: :get, endpoint: 'supported-documents\?nonce=.*&timestamp=.*')
+      stub_doc_scan_api_request(
+        method: :get,
+        endpoint: 'supported-documents',
+        query: hash_including(
+          nonce: /.*/,
+          timestamp: /.*/
+        )
+      )
     end
 
     it 'gets supported documents' do

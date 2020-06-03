@@ -41,7 +41,7 @@ module Yoti
 
           response = create_request
                      .with_http_method('GET')
-                     .with_endpoint("sessions/#{session_id}")
+                     .with_endpoint(session_path(session_id))
                      .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
                      .build
                      .execute
@@ -60,7 +60,7 @@ module Yoti
 
           create_request
             .with_http_method('DELETE')
-            .with_endpoint("sessions/#{session_id}")
+            .with_endpoint(session_path(session_id))
             .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
             .build
             .execute
@@ -81,7 +81,7 @@ module Yoti
 
           response = create_request
                      .with_http_method('GET')
-                     .with_endpoint("sessions/#{session_id}/media/#{media_id}")
+                     .with_endpoint(media_path(session_id, media_id))
                      .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
                      .build
                      .execute
@@ -105,7 +105,7 @@ module Yoti
 
           create_request
             .with_http_method('DELETE')
-            .with_endpoint("sessions/#{session_id}/media/#{media_id}")
+            .with_endpoint(media_path(session_id, media_id))
             .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
             .build
             .execute
@@ -127,6 +127,25 @@ module Yoti
         end
 
         private
+
+        #
+        # @param [String] session_id
+        #
+        # @return [String]
+        #
+        def session_path(session_id)
+          "sessions/#{session_id}"
+        end
+
+        #
+        # @param [String] session_id
+        # @param [String] media_id
+        #
+        # @return [String]
+        #
+        def media_path(session_id, media_id)
+          "#{session_path(session_id)}/media/#{media_id}/content"
+        end
 
         #
         # Create a base Doc Scan request

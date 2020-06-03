@@ -100,7 +100,7 @@ describe 'Yoti::DocScan::Client' do
     before(:context) do
       stub_doc_scan_api_request(
         method: :get,
-        endpoint: 'sessions/some-id/media/some-media-id',
+        endpoint: 'sessions/some-id/media/some-media-id/content',
         query: hash_including(
           sdkId: Yoti.configuration.client_sdk_id,
           nonce: /.*/,
@@ -122,7 +122,7 @@ describe 'Yoti::DocScan::Client' do
     before(:context) do
       stub_doc_scan_api_request(
         method: :delete,
-        endpoint: 'sessions/some-id/media/some-media-id',
+        endpoint: 'sessions/some-id/media/some-media-id/content',
         query: hash_including(
           sdkId: Yoti.configuration.client_sdk_id,
           nonce: /.*/,

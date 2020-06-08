@@ -4,6 +4,8 @@ AllCops:
   TargetRubyVersion: 2.4
   Exclude:
     - 'examples/rails/config/**/*'
+    - 'examples/doc_scan/config/**/*'
+    - 'examples/doc_scan/bin/**/*'
     - 'lib/yoti/protobuf/attrpubapi/*'
     - 'lib/yoti/protobuf/compubapi/*'
     - 'lib/yoti/protobuf/sharepubapi/*'

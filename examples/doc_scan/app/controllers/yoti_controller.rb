@@ -87,11 +87,11 @@ class YotiController < ApplicationController
   # Error Page
   #
   def error
-    @error = 'An unknown error occurred'
-
-    unless request.query_parameters[:yotiErrorCode].nil?
-      @error = "Error Code: #{request.query_parameters[:yotiErrorCode]}"
-    end
+    @error = if request.query_parameters[:yotiErrorCode].nil?
+               'An unknown error occurred'
+             else
+               "Error Code: #{request.query_parameters[:yotiErrorCode]}"
+             end
 
     render 'error'
   end

@@ -1,0 +1,119 @@
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>ID</td>
+            <td><%= check.id %></td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td>
+                <span class="badge badge-<%= check.state == 'DONE' ? 'success' : 'secondary' %>">
+                    <%= check.state %>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>Created</td>
+            <td><%= check.created %></td>
+        </tr>
+        <tr>
+            <td>Last Updated</td>
+            <td><%= check.last_updated %></td>
+        </tr>
+        <tr>
+            <td>Resources Used</td>
+            <td><%= check.resources_used.join(', '); %></td>
+        </tr>
+
+
+        <% unless check.report.nil? %>
+
+        <% unless check.report.recommendation.nil? %>
+        <tr>
+            <td>Recommendation</td>
+            <td>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Value</td>
+                            <td><%= check.report.recommendation.value %></td>
+                        </tr>
+                        <tr>
+                            <td>Reason</td>
+                            <td><%= check.report.recommendation.reason %></td>
+                        </tr>
+                        <tr>
+                            <td>Recovery Suggestion</td>
+                            <td><%= check.report.recommendation.recovery_suggestion %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <% end %>
+
+        <% if check.report.breakdown.count.positive? %>
+        <tr>
+            <td>Breakdown</td>
+            <td>
+                <% check.report.breakdown.each do |breakdown| %>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Sub Check</td>
+                            <td><%= breakdown.sub_check %></td>
+                        </tr>
+                        <tr>
+                            <td>Result</td>
+                            <td><%= breakdown.result %></td>
+                        </tr>
+                        <% if breakdown.details.count.positive? %>
+                        <tr>
+                            <td>Details</td>
+                            <td>
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <% breakdown.details.each do |details| %>
+                                        <tr>
+                                            <td><%= details.name %></td>
+                                            <td><%= details.value %></td>
+                                        </tr>
+                                        <% end %>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <% end %>
+            </td>
+        </tr>
+        <% end %>
+
+        <% end %>
+
+        <% if check.generated_media.count.positive? %>
+        <tr>
+            <td>Generated Media</td>
+            <td>
+                <% check.generated_media.each do |media| %>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td><a href="/media?mediaId=<%= media.id %>"><%= media.id %></a></td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td><%= media.type %></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <% end %>
+            </td>
+        </tr>
+        <% end %>
+
+    </tbody>
+</table>

@@ -29,4 +29,6 @@ Rails.application.configure do
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
+
+  config.session_store :cookie_store, key: '_some_app_session'
 end

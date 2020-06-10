@@ -26,7 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'google-protobuf', '~> 3.7'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'coveralls', '~> 0.8'
   spec.add_development_dependency 'dotenv', '~> 2.2'
   spec.add_development_dependency 'generator_spec', '~> 0.9'
   spec.add_development_dependency 'rake', '~> 12.0'

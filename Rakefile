@@ -15,14 +15,6 @@ RSpec::Core::RakeTask.new(:test_generators) do |t|
 end
 
 ################################
-# Coveralls                    #
-################################
-
-require 'coveralls/rake/task'
-Coveralls::RakeTask.new
-task test_with_coveralls: [:spec, 'coveralls:push']
-
-################################
 # Rubocop                      #
 ################################
 

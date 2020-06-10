@@ -23,7 +23,7 @@ module Yoti
   # Raises exceptions related to OpenSSL actions
   class SslError < StandardError; end
 
-  # Raises exceptions realted to an incorrect gem configuration value
+  # Raises exceptions related to an incorrect gem configuration value
   class ConfigurationError < StandardError; end
 
   # Raises exceptions related to AML actions

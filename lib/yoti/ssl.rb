@@ -32,7 +32,7 @@ module Yoti
       end
 
       # Extracts the public key from pem key, converts it to a DER base 64 encoded value
-      # @return [String] base 64 encoded anthentication key
+      # @return [String] base 64 encoded authentication key
       def auth_key_from_pem
         public_key = private_key.public_key
         Base64.strict_encode64(public_key.to_der)

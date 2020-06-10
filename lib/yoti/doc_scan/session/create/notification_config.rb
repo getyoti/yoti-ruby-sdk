@@ -9,7 +9,7 @@ module Yoti
         # by the Relying Business.
         #
         # Notifications can be configured to notified a client backend of certain
-        # events, avoiding the neeed to poll for the state of the Session.
+        # events, avoiding the need to poll for the state of the Session.
         #
         class NotificationConfig
           #

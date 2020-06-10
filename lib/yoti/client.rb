@@ -1,7 +1,7 @@
 module Yoti
   #
-  # Handles all the publicly accesible Yoti methods for
-  # geting data using an encrypted connect token
+  # Handles all the publicly accessible Yoti methods for
+  # getting data using an encrypted connect token
   #
   module Client
     #

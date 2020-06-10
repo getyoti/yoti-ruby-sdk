@@ -17,7 +17,7 @@ describe 'Yoti::DocScan::Session::Create::RequiredIdDocument' do
     it 'serializes correctly' do
       some_filter = Yoti::DocScan::Session::Create::DocumentRestrictionsFilter
                     .builder
-                    .for_whitelist
+                    .for_inclusion
                     .build
 
       document = Yoti::DocScan::Session::Create::RequiredIdDocument

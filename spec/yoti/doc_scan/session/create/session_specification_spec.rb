@@ -34,7 +34,7 @@ describe 'Yoti::DocScan::Session::Create::SessionSpecification' do
                     .with_filter(
                       Yoti::DocScan::Session::Create::DocumentRestrictionsFilter
                       .builder
-                      .for_whitelist
+                      .for_inclusion
                       .build
                     )
                     .build

@@ -6,11 +6,11 @@ describe 'Yoti::DocScan::Session::Create::DocumentRestrictionsFilter' do
       .build
   end
 
-  describe 'for whitelist' do
+  describe 'for inclusion' do
     it 'serializes correctly' do
       filter = Yoti::DocScan::Session::Create::DocumentRestrictionsFilter
                .builder
-               .for_whitelist
+               .for_inclusion
                .build
 
       expected = {
@@ -22,11 +22,11 @@ describe 'Yoti::DocScan::Session::Create::DocumentRestrictionsFilter' do
       expect(filter.to_json).to eql expected.to_json
     end
   end
-  describe 'for whitelist with restriction' do
+  describe 'for inclusion with restriction' do
     it 'serializes correctly' do
       filter = Yoti::DocScan::Session::Create::DocumentRestrictionsFilter
                .builder
-               .for_whitelist
+               .for_inclusion
                .with_document_restriction(some_restriction)
                .build
 
@@ -39,11 +39,11 @@ describe 'Yoti::DocScan::Session::Create::DocumentRestrictionsFilter' do
       expect(filter.to_json).to eql expected.to_json
     end
   end
-  describe 'for blacklist' do
+  describe 'for exclusion' do
     it 'serializes correctly' do
       filter = Yoti::DocScan::Session::Create::DocumentRestrictionsFilter
                .builder
-               .for_blacklist
+               .for_exclusion
                .build
 
       expected = {

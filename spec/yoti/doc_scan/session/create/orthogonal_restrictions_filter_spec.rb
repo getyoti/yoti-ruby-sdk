@@ -6,8 +6,8 @@ describe 'Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter' do
     it 'serializes correctly' do
       filter = Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
                .builder
-               .with_whitelisted_countries(some_country_codes)
-               .with_whitelisted_document_types(some_document_types)
+               .with_included_countries(some_country_codes)
+               .with_included_document_types(some_document_types)
                .build
 
       expected = {
@@ -26,11 +26,11 @@ describe 'Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter' do
     end
   end
 
-  describe 'with blacklisted countries' do
+  describe 'with excluded countries' do
     it 'serializes correctly' do
       filter = Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
                .builder
-               .with_blacklisted_countries(some_country_codes)
+               .with_excluded_countries(some_country_codes)
                .build
 
       expected = {
@@ -45,11 +45,11 @@ describe 'Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter' do
     end
   end
 
-  describe 'with blacklisted document types' do
+  describe 'with excluded document types' do
     it 'serializes correctly' do
       filter = Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
                .builder
-               .with_blacklisted_document_types(some_document_types)
+               .with_excluded_document_types(some_document_types)
                .build
 
       expected = {
@@ -64,11 +64,11 @@ describe 'Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter' do
     end
   end
 
-  describe 'with whitelisted document types' do
+  describe 'with included document types' do
     it 'serializes correctly' do
       filter = Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
                .builder
-               .with_whitelisted_document_types(some_document_types)
+               .with_included_document_types(some_document_types)
                .build
 
       expected = {
@@ -83,11 +83,11 @@ describe 'Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter' do
     end
   end
 
-  describe 'with whitelisted countries' do
+  describe 'with included countries' do
     it 'serializes correctly' do
       filter = Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
                .builder
-               .with_whitelisted_countries(some_country_codes)
+               .with_included_countries(some_country_codes)
                .build
 
       expected = {

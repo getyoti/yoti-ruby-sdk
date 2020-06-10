@@ -40,9 +40,9 @@ module Yoti
           #
           # @return [self]
           #
-          def with_whitelisted_countries(country_codes)
+          def with_included_countries(country_codes)
             @country_restriction = CountryRestriction.new(
-              Constants::INCLUSION_WHITELIST,
+              Constants::INCLUDE,
               country_codes
             )
             self
@@ -53,9 +53,9 @@ module Yoti
           #
           # @return [self]
           #
-          def with_blacklisted_countries(country_codes)
+          def with_excluded_countries(country_codes)
             @country_restriction = CountryRestriction.new(
-              Constants::INCLUSION_BLACKLIST,
+              Constants::EXCLUDE,
               country_codes
             )
             self
@@ -66,9 +66,9 @@ module Yoti
           #
           # @return [self]
           #
-          def with_whitelisted_document_types(document_types)
+          def with_included_document_types(document_types)
             @type_restriction = TypeRestriction.new(
-              Constants::INCLUSION_WHITELIST,
+              Constants::INCLUDE,
               document_types
             )
             self
@@ -79,9 +79,9 @@ module Yoti
           #
           # @return [self]
           #
-          def with_blacklisted_document_types(document_types)
+          def with_excluded_document_types(document_types)
             @type_restriction = TypeRestriction.new(
-              Constants::INCLUSION_BLACKLIST,
+              Constants::EXCLUDE,
               document_types
             )
             self

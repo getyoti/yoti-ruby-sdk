@@ -42,16 +42,16 @@ module Yoti
           #
           # @return [self]
           #
-          def for_whitelist
-            @inclusion = Constants::INCLUSION_WHITELIST
+          def for_inclusion
+            @inclusion = Constants::INCLUDE
             self
           end
 
           #
           # @return [self]
           #
-          def for_blacklist
-            @inclusion = Constants::INCLUSION_BLACKLIST
+          def for_exclusion
+            @inclusion = Constants::EXCLUDE
             self
           end
 

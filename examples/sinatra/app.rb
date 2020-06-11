@@ -51,8 +51,7 @@ get '/profile' do
 
     erb :profile, locals: {
       profile: profile,
-      user_id: yoti_activity_details.user_id,
-      age_verified: yoti_activity_details.age_verified,
+      remember_me_id: yoti_activity_details.remember_me_id,
       base64_selfie_uri: yoti_activity_details.base64_selfie_uri
     }
   else

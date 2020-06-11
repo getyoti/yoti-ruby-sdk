@@ -24,9 +24,8 @@ class YotiController < ApplicationController
     yoti_activity_details = Yoti::Client.get_activity_details(one_time_use_token)
 
     if yoti_activity_details.outcome == 'SUCCESS'
-      @user_id = yoti_activity_details.user_id
+      @remember_me_id = yoti_activity_details.remember_me_id
       @base64_selfie_uri = yoti_activity_details.base64_selfie_uri
-      @age_verified = yoti_activity_details.age_verified
       @profile = yoti_activity_details.profile
 
       # Save the selfie file

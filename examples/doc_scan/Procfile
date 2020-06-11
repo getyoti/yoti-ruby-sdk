@@ -1,0 +1,1 @@
+web: puma -b 'ssl://0.0.0.0:3002?cert=keys/server.crt&key=keys/server.key'

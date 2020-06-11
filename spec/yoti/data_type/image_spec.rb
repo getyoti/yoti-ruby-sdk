@@ -2,8 +2,8 @@ require 'base64'
 
 describe 'Yoti::Image' do
   describe 'abstract class' do
-    it 'should not be intatiated' do
-      expect { Yoti::Image.new('', '') }.to raise_error(TypeError, 'Image is an abstract class, so cannot be instantiated')
+    it 'should not be instantiated' do
+      expect { Yoti::Image.new('', '') }.to raise_error(TypeError, 'Yoti::Image is an abstract class, so cannot be instantiated')
     end
   end
 end

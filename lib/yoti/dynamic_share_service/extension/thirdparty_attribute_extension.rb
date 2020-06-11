@@ -38,7 +38,7 @@ module Yoti
       end
 
       #
-      # @param [String] *names
+      # @param [String] names
       #
       # @return [self]
       #

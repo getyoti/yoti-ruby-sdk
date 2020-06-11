@@ -49,7 +49,6 @@ attributes = [
 
 age_verifications = profile.age_verifications;
 unless age_verifications.nil?
-  puts age_verifications
   age_verifications.each do |age_verification|
     attributes.push({
       "label"=> "Age Verification",

@@ -10,8 +10,6 @@ require 'yoti'
 Yoti.configure do |config|
   config.client_sdk_id = ENV['YOTI_CLIENT_SDK_ID']
   config.key_file_path = ENV['YOTI_KEY_FILE_PATH']
-  config.api_url = ENV['YOTI_API_URL'] ||= 'https://api.yoti.com'
-  config.api_port = ENV['YOTI_API_PORT'] ||= '443'
 end
 
 get '/' do
@@ -53,8 +51,7 @@ get '/profile' do
 
     erb :profile, locals: {
       profile: profile,
-      user_id: yoti_activity_details.user_id,
-      age_verified: yoti_activity_details.age_verified,
+      remember_me_id: yoti_activity_details.remember_me_id,
       base64_selfie_uri: yoti_activity_details.base64_selfie_uri
     }
   else

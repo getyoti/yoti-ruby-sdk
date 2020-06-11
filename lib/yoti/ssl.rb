@@ -32,7 +32,7 @@ module Yoti
       end
 
       # Extracts the public key from pem key, converts it to a DER base 64 encoded value
-      # @return [String] base 64 encoded anthentication key
+      # @return [String] base 64 encoded authentication key
       def auth_key_from_pem
         public_key = private_key.public_key
         Base64.strict_encode64(public_key.to_der)
@@ -48,7 +48,7 @@ module Yoti
 
       # Uses the decrypted receipt key and the current user's iv to decode the text
       # @param key [String] base 64 decoded key
-      # @param iv [String] base 64 decoded iv
+      # @param user_iv [String] base 64 decoded iv
       # @param text [String] base 64 decoded cyphered text
       # @return [String] base 64 decoded deciphered text
       def decipher(key, user_iv, text)

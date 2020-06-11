@@ -37,7 +37,7 @@ module Yoti
     #
     # @param [String] name
     #
-    # @returns [Array]
+    # @return [Array]
     #
     def find_attributes_starting_with(name)
       @attributes.select { |key| key.to_s.start_with?(name) }

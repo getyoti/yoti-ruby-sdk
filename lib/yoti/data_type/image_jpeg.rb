@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Yoti
   class ImageJpeg < Image
     def initialize(content)

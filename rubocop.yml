@@ -4,6 +4,8 @@ AllCops:
   TargetRubyVersion: 2.4
   Exclude:
     - 'examples/rails/config/**/*'
+    - 'examples/doc_scan/config/**/*'
+    - 'examples/doc_scan/bin/**/*'
     - 'lib/yoti/protobuf/attrpubapi/*'
     - 'lib/yoti/protobuf/compubapi/*'
     - 'lib/yoti/protobuf/sharepubapi/*'
@@ -26,7 +28,7 @@ Metrics/ClassLength:
   Enabled: false
   Max: 115
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
@@ -55,3 +57,9 @@ Naming/MethodName:
 Naming/PredicateName:
   Exclude:
     - lib/yoti/util/age_processor.rb
+
+Metrics/ParameterLists:
+  Exclude:
+    - lib/yoti/doc_scan/session/create/sdk_config.rb
+    - lib/yoti/doc_scan/session/create/session_specification.rb
+    - spec/yoti/doc_scan/client_spec.rb

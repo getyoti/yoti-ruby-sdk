@@ -37,7 +37,7 @@ module Yoti
     attr_reader :age
 
     #
-    # @param [Yoti::Attribute]
+    # @param [Yoti::Attribute] attribute
     #
     def initialize(attribute)
       raise(ArgumentError, "'#{attribute.name}' is not a valid age verification") unless /^[^:]+:(?!.*:)[0-9]+$/.match?(attribute.name)

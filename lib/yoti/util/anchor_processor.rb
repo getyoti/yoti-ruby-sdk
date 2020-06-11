@@ -7,7 +7,7 @@ module Yoti
   #
   class AnchorProcessor
     #
-    # @param [Array<Yoti::Protobuf::Attrpubapi::Anchor>]
+    # @param [Array<Yoti::Protobuf::Attrpubapi::Anchor>] anchors_list
     #
     def initialize(anchors_list)
       @anchors_list = anchors_list

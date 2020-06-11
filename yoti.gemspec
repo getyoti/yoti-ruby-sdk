@@ -26,12 +26,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'google-protobuf', '~> 3.7'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'coveralls', '~> 0.8'
   spec.add_development_dependency 'dotenv', '~> 2.2'
   spec.add_development_dependency 'generator_spec', '~> 0.9'
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rspec', '~> 3.5'
-  spec.add_development_dependency 'simplecov', '~> 0.13'
+  spec.add_development_dependency 'simplecov', '~> 0.17.1'
   spec.add_development_dependency 'webmock', '~> 3.3'
   spec.add_development_dependency 'yard', '~> 0.9'
   spec.add_development_dependency 'yardstick', '~> 0.9'

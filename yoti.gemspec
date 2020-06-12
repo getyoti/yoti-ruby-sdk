@@ -5,8 +5,8 @@ require 'yoti/version'
 Gem::Specification.new do |spec|
   spec.name          = 'yoti'
   spec.version       = Yoti::VERSION
-  spec.authors       = ['Sebastian Zaremba']
-  spec.email         = ['tech@yoti.com']
+  spec.authors       = ['Yoti']
+  spec.email         = ['websdk@yoti.com']
 
   spec.summary       = 'Yoti Ruby SDK for back-end integration.'
   spec.description = <<-DESC
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/getyoti/yoti-ruby-sdk'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|examples)/|^sonar-project.properties$|^.dependabot/config.yml$|^.travis.yml$}) }
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|examples|docs)/|^sonar-project.properties$|^.dependabot/config.yml$|^.travis.yml$}) }
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.4'

@@ -51,7 +51,7 @@ Verifies the documentation with [Yardstick][] and generates the `measurement/rep
 bundle exec rake yard
 ```
 
-Generates [YARD][] documentation in the doc folder.
+Generates [YARD][] documentation in the `./yardoc` folder.
 
 ### Git
 

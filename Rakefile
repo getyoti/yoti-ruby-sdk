@@ -6,13 +6,15 @@ require 'yaml'
 # Tests                        #
 ################################
 
-RSpec::Core::RakeTask.new(:spec) do |t|
+RSpec::Core::RakeTask.new(:test_yoti) do |t|
   t.pattern = ['spec/yoti']
 end
 
 RSpec::Core::RakeTask.new(:test_generators) do |t|
   t.pattern = ['spec/generators']
 end
+
+RSpec::Core::RakeTask.new(:spec)
 
 ################################
 # Rubocop                      #
@@ -43,4 +45,5 @@ end
 # Defaults                     #
 ################################
 
-task default: %i[spec test_generators rubocop]
+task default: %i[spec rubocop]
+task test: %i[test_yoti test_generators rubocop]

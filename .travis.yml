@@ -13,7 +13,7 @@ jobs:
       install:
         - bundle install
       script:
-        - bundle exec rake
+        - bundle exec rake test
     - <<: *test
       rvm: 2.6
     - <<: *test
@@ -31,5 +31,5 @@ jobs:
           organization: "getyoti"
       if: type == pull_request OR branch = master
       script:
-        - bundle exec rake
+        - bundle exec rake spec
         - sonar-scanner

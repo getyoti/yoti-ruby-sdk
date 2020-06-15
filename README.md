@@ -1,10 +1,10 @@
 # Yoti Ruby SDK
 
 [![Build Status](https://travis-ci.com/getyoti/yoti-ruby-sdk.svg?branch=master)](https://travis-ci.com/getyoti/yoti-ruby-sdk)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=getyoti_yoti-ruby-sdk&metric=coverage)](https://sonarcloud.io/dashboard?id=getyoti_yoti-ruby-sdk)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=getyoti_yoti-ruby-sdk&metric=bugs)](https://sonarcloud.io/dashboard?id=getyoti_yoti-ruby-sdk)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=getyoti_yoti-ruby-sdk&metric=code_smells)](https://sonarcloud.io/dashboard?id=getyoti_yoti-ruby-sdk)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=getyoti_yoti-ruby-sdk&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=getyoti_yoti-ruby-sdk)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=getyoti%3Aruby&metric=coverage)](https://sonarcloud.io/dashboard?id=getyoti%3Aruby)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=getyoti%3Aruby&metric=bugs)](https://sonarcloud.io/dashboard?id=getyoti%3Aruby)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=getyoti%3Aruby&metric=code_smells)](https://sonarcloud.io/dashboard?id=getyoti%3Aruby)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=getyoti%3Aruby&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=getyoti%3Aruby)
 
 Welcome to the Yoti Ruby SDK. This repository contains the tools you need to quickly integrate your Ruby back-end with Yoti so that your users can share their identity details with your application in a secure and trusted way.
 

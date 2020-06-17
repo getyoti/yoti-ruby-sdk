@@ -1,4 +1,5 @@
 require 'securerandom'
+require 'cgi'
 
 module Yoti
   # Manage the API's HTTPS requests

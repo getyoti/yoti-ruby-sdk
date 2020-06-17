@@ -31,6 +31,7 @@ end
 
 require 'yard'
 YARD::Rake::YardocTask.new do |t|
+  t.options = ['--output-dir', './yardoc']
   t.stats_options = ['--list-undoc']
 end
 

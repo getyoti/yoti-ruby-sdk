@@ -1,4 +1,4 @@
-### Doc Scan Example - Ruby on Rails
+# Doc Scan Example - _Ruby on Rails_
 
 1. Create your application in the [Yoti Hub](https://hub.yoti.com)
 1. Set the application domain of your app to `localhost:3002`

@@ -51,6 +51,7 @@ require_relative 'yoti/share/attribute_issuance_details'
 
 require_relative 'yoti/doc_scan/client'
 require_relative 'yoti/doc_scan/constants'
+require_relative 'yoti/doc_scan/errors'
 
 require_relative 'yoti/doc_scan/session/create/create_session_result'
 require_relative 'yoti/doc_scan/session/create/requested_check'

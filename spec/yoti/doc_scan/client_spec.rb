@@ -21,12 +21,8 @@ def stub_doc_scan_api_request(
 end
 
 describe 'Yoti::DocScan::Client' do
-  context '.create_session' do
-    before(:context) do
-      stub_doc_scan_api_request(method: :post, endpoint: 'sessions')
-    end
-
-    it 'creates a create session result' do
+  describe '.create_session' do
+    let(:spec) do
       some_sdk_config = Yoti::DocScan::Session::Create::SdkConfig
                         .builder
                         .with_allows_camera
@@ -42,116 +38,220 @@ describe 'Yoti::DocScan::Client' do
                                 .builder
                                 .build
 
-      spec = Yoti::DocScan::Session::Create::SessionSpecification
-             .builder
-             .with_client_session_token_ttl(400)
-             .with_resources_ttl(86840)
-             .with_user_tracking_id('some-tracking-id')
-             .with_sdk_config(some_sdk_config)
-             .with_requested_check(some_authenticity_check)
-             .with_notifications(some_notification_config)
-             .build
+      Yoti::DocScan::Session::Create::SessionSpecification
+        .builder
+        .with_client_session_token_ttl(400)
+        .with_resources_ttl(86840)
+        .with_user_tracking_id('some-tracking-id')
+        .with_sdk_config(some_sdk_config)
+        .with_requested_check(some_authenticity_check)
+        .with_notifications(some_notification_config)
+        .build
+    end
 
-      result = Yoti::DocScan::Client.create_session(spec)
+    context 'when response is success' do
+      before(:context) do
+        stub_doc_scan_api_request(method: :post, endpoint: 'sessions')
+      end
 
-      expect(result).to be_a(Yoti::DocScan::Session::Create::CreateSessionResult)
+      it 'creates a create session result' do
+        result = Yoti::DocScan::Client.create_session(spec)
+
+        expect(result).to be_a(Yoti::DocScan::Session::Create::CreateSessionResult)
+      end
+    end
+
+    context 'when response is failure' do
+      before(:context) do
+        stub_doc_scan_api_request(method: :post, endpoint: 'sessions', status: 400)
+      end
+
+      it 'raises Yoti::DocScan::Error' do
+        expect { Yoti::DocScan::Client.create_session(spec) }
+          .to raise_error(Yoti::DocScan::Error)
+      end
     end
   end
 
-  context '.get_session' do
-    before(:context) do
-      stub_doc_scan_api_request(
-        method: :get,
-        endpoint: 'sessions/some-id\?nonce=.*&sdkId=.*&timestamp=.*',
-        query: hash_including(
-          sdkId: Yoti.configuration.client_sdk_id,
-          nonce: /.*/,
-          timestamp: /.*/
+  describe '.get_session' do
+    context 'when response is success' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :get,
+          endpoint: 'sessions/some-id\?nonce=.*&sdkId=.*&timestamp=.*',
+          query: hash_including(
+            sdkId: Yoti.configuration.client_sdk_id,
+            nonce: /.*/,
+            timestamp: /.*/
+          )
         )
-      )
+      end
+
+      it 'gets a session result' do
+        result = Yoti::DocScan::Client.get_session('some-id')
+
+        expect(result).to be_a(Yoti::DocScan::Session::Retrieve::GetSessionResult)
+      end
     end
 
-    it 'gets a session result' do
-      result = Yoti::DocScan::Client.get_session('some-id')
+    context 'when response is failure' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :get,
+          endpoint: 'sessions/some-id',
+          status: 400
+        )
+      end
 
-      expect(result).to be_a(Yoti::DocScan::Session::Retrieve::GetSessionResult)
+      it 'raises Yoti::DocScan::Error' do
+        expect { Yoti::DocScan::Client.get_session('some-id') }
+          .to raise_error(Yoti::DocScan::Error)
+      end
     end
   end
 
-  context '.delete_session' do
-    before(:context) do
-      stub_doc_scan_api_request(
-        method: :delete,
-        endpoint: 'sessions/some-id',
-        query: hash_including(
-          sdkId: Yoti.configuration.client_sdk_id,
-          nonce: /.*/,
-          timestamp: /.*/
+  describe '.delete_session' do
+    context 'when response is success' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :delete,
+          endpoint: 'sessions/some-id',
+          query: hash_including(
+            sdkId: Yoti.configuration.client_sdk_id,
+            nonce: /.*/,
+            timestamp: /.*/
+          )
         )
-      )
+      end
+
+      it 'deletes a session' do
+        expect { Yoti::DocScan::Client.delete_session('some-id') }.not_to raise_error
+      end
     end
 
-    it 'deletes a session' do
-      expect { Yoti::DocScan::Client.delete_session('some-id') }.not_to raise_error
+    context 'when response is failure' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :delete,
+          endpoint: 'sessions/some-id',
+          status: 400
+        )
+      end
+
+      it 'raises Yoti::DocScan::Error' do
+        expect { Yoti::DocScan::Client.delete_session('some-id') }
+          .to raise_error(Yoti::DocScan::Error)
+      end
     end
   end
 
-  context '.get_media_content' do
-    before(:context) do
-      stub_doc_scan_api_request(
-        method: :get,
-        endpoint: 'sessions/some-id/media/some-media-id/content',
-        query: hash_including(
-          sdkId: Yoti.configuration.client_sdk_id,
-          nonce: /.*/,
-          timestamp: /.*/
+  describe '.get_media_content' do
+    context 'when response is success' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :get,
+          endpoint: 'sessions/some-id/media/some-media-id/content',
+          query: hash_including(
+            sdkId: Yoti.configuration.client_sdk_id,
+            nonce: /.*/,
+            timestamp: /.*/
+          )
         )
-      )
+      end
+
+      it 'gets media content' do
+        media = Yoti::DocScan::Client.get_media_content('some-id', 'some-media-id')
+
+        expect(media).to be_a(Yoti::Media)
+        expect(media.content).to be('{}')
+        expect(media.mime_type).to be('application/json')
+      end
     end
 
-    it 'gets media content' do
-      media = Yoti::DocScan::Client.get_media_content('some-id', 'some-media-id')
+    context 'when response is failure' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :get,
+          endpoint: 'sessions/some-id/media/some-media-id/content',
+          status: 400
+        )
+      end
 
-      expect(media).to be_a(Yoti::Media)
-      expect(media.content).to be('{}')
-      expect(media.mime_type).to be('application/json')
+      it 'raises Yoti::DocScan::Error' do
+        expect { Yoti::DocScan::Client.get_media_content('some-id', 'some-media-id') }
+          .to raise_error(Yoti::DocScan::Error)
+      end
     end
   end
 
-  context '.delete_media_content' do
-    before(:context) do
-      stub_doc_scan_api_request(
-        method: :delete,
-        endpoint: 'sessions/some-id/media/some-media-id/content',
-        query: hash_including(
-          sdkId: Yoti.configuration.client_sdk_id,
-          nonce: /.*/,
-          timestamp: /.*/
+  describe '.delete_media_content' do
+    context 'when response is success' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :delete,
+          endpoint: 'sessions/some-id/media/some-media-id/content',
+          query: hash_including(
+            sdkId: Yoti.configuration.client_sdk_id,
+            nonce: /.*/,
+            timestamp: /.*/
+          )
         )
-      )
+      end
+
+      it 'deletes media content' do
+        expect { Yoti::DocScan::Client.delete_media_content('some-id', 'some-media-id') }.not_to raise_error
+      end
     end
 
-    it 'deletes media content' do
-      expect { Yoti::DocScan::Client.delete_media_content('some-id', 'some-media-id') }.not_to raise_error
+    context 'when response is failure' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :delete,
+          endpoint: 'sessions/some-id/media/some-media-id/content',
+          status: 400
+        )
+      end
+
+      it 'raises Yoti::DocScan::Error' do
+        expect { Yoti::DocScan::Client.delete_media_content('some-id', 'some-media-id') }
+          .to raise_error(Yoti::DocScan::Error)
+      end
     end
   end
 
-  context '.supported_documents' do
-    before(:context) do
-      stub_doc_scan_api_request(
-        method: :get,
-        endpoint: 'supported-documents',
-        query: hash_including(
-          nonce: /.*/,
-          timestamp: /.*/
+  describe '.supported_documents' do
+    context 'when response is success' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :get,
+          endpoint: 'supported-documents',
+          query: hash_including(
+            nonce: /.*/,
+            timestamp: /.*/
+          )
         )
-      )
+      end
+
+      it 'gets supported documents' do
+        documents = Yoti::DocScan::Client.supported_documents
+
+        expect(documents).to be_a(Yoti::DocScan::Support::SupportedDocumentsResponse)
+      end
     end
 
-    it 'gets supported documents' do
-      documents = Yoti::DocScan::Client.supported_documents
+    context 'when response is failure' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :get,
+          endpoint: 'supported-documents',
+          status: 400
+        )
+      end
 
-      expect(documents).to be_a(Yoti::DocScan::Support::SupportedDocumentsResponse)
+      it 'raises Yoti::DocScan::Error' do
+        expect { Yoti::DocScan::Client.supported_documents }
+          .to raise_error(Yoti::DocScan::Error)
+      end
     end
   end
 end

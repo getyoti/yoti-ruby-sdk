@@ -7,16 +7,14 @@ module Yoti
     attr_reader :response
 
     def initialize(message, response = nil)
-      super(append_response_message(message, response))
+      super(message)
       @response = response
     end
 
-    private
+    def message
+      return super if @response.nil? || @response.body.empty?
 
-    def append_response_message(message, response)
-      return message if response.nil? || response.body.empty?
-
-      "#{message}: #{response.body}"
+      "#{super}: #{@response.body}"
     end
   end
 

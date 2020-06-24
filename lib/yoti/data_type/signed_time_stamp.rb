@@ -5,7 +5,7 @@ module Yoti
 
     def initialize(version, time_stamp)
       @version = version
-      @time_stamp = time_stamp
+      @time_stamp = time_stamp.utc
     end
   end
 end

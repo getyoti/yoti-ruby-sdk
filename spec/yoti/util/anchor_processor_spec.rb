@@ -10,9 +10,13 @@ end
 describe 'Yoti::AnchorProcessor' do
   describe '.process' do
     context 'when processing DL Source Anchor data' do
-      dl_source_anchor = File.read('spec/sample-data/anchors/dl-source.txt')
-      yoti_anchors = process_anchors_list(dl_source_anchor)
-      dl_first_anchor = yoti_anchors['sources'][0]
+      let(:dl_first_anchor) do
+        dl_source_anchor = File.read('spec/sample-data/anchors/dl-source.txt')
+        yoti_anchors = process_anchors_list(dl_source_anchor)
+        yoti_anchors['sources'][0]
+      end
+
+      let(:expected_time) { Time.utc(2018, 4, 11, 12, 13, 3.923537) }
 
       it 'should return DRIVING_LICENCE as value' do
         expected_value = 'DRIVING_LICENCE'
@@ -24,9 +28,15 @@ describe 'Yoti::AnchorProcessor' do
       end
 
       it 'should return 2018-04-11 13:13:03.923537 as timestamp' do
-        expected_value = Time.utc(2018, 4, 11, 12, 13, 3.923537).strftime('%Y-%m-%d %H:%M:%S.%6N')
+        expected_value = expected_time.strftime('%Y-%m-%d %H:%M:%S.%6N')
         date_time_str = dl_first_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S.%6N')
         expect(date_time_str).to eql(expected_value)
+      end
+
+      it 'should return timestamp as UTC' do
+        time_stamp = dl_first_anchor.signed_time_stamp.time_stamp
+        expect(time_stamp.to_s).to eql(expected_time.to_s)
+        expect(time_stamp.utc?).to be true
       end
 
       it 'should return 46131813624213904216516051554755262812 as cert serial' do
@@ -37,9 +47,13 @@ describe 'Yoti::AnchorProcessor' do
     end
 
     context 'when processing Verifier Anchor data' do
-      dl_verifier_anchor = File.read('spec/sample-data/anchors/dl-verifier.txt')
-      yoti_anchors = process_anchors_list(dl_verifier_anchor)
-      verifier_first_anchor = yoti_anchors['verifiers'][0]
+      let(:verifier_first_anchor) do
+        dl_source_anchor = File.read('spec/sample-data/anchors/dl-verifier.txt')
+        yoti_anchors = process_anchors_list(dl_source_anchor)
+        yoti_anchors['verifiers'][0]
+      end
+
+      let(:expected_time) { Time.utc(2018, 4, 11, 12, 13, 4.095238) }
 
       it 'should return YOTI_ADMIN as value' do
         expected_value = 'YOTI_ADMIN'
@@ -51,9 +65,15 @@ describe 'Yoti::AnchorProcessor' do
       end
 
       it 'should return 2018-04-11 13:13:04.095238 as timestamp' do
-        expected_value = Time.utc(2018, 4, 11, 12, 13, 4.095238).strftime('%Y-%m-%d %H:%M:%S.%6N')
+        expected_value = expected_time.strftime('%Y-%m-%d %H:%M:%S.%6N')
         date_time_str = verifier_first_anchor.signed_time_stamp.time_stamp.utc.strftime('%Y-%m-%d %H:%M:%S.%6N')
         expect(date_time_str).to eql(expected_value)
+      end
+
+      it 'should return timestamp as UTC' do
+        time_stamp = verifier_first_anchor.signed_time_stamp.time_stamp
+        expect(time_stamp.to_s).to eql(expected_time.to_s)
+        expect(time_stamp.utc?).to be true
       end
 
       it 'should return 256616937783084706710155170893983549581 as cert serial' do

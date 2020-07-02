@@ -21,6 +21,10 @@ describe 'Yoti::ProfileRequest' do
       expect(yoti_request.http_method).to eql('GET')
       expect(yoti_request.endpoint).to eql("profile/#{Yoti::SSL.decrypt_token(encrypted_connect_token)}")
     end
+
+    it 'sets max retries to 0' do
+      expect(yoti_request.max_retries).to eql(0)
+    end
   end
 
   describe '#receipt', type: :api_with_profile do

@@ -24,6 +24,7 @@ module Yoti
         .with_endpoint("profile/#{Yoti::SSL.decrypt_token(@encrypted_connect_token)}")
         .with_query_param('appId', Yoti.configuration.client_sdk_id)
         .with_header('X-Yoti-Auth-Key', Yoti::SSL.auth_key_from_pem)
+        .with_max_retries(0)
         .build
     end
   end

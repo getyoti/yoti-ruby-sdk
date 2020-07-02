@@ -24,6 +24,9 @@ module Yoti
     # @return [#to_json,String] the body sent with the request
     attr_accessor :payload
 
+    # @return [Integer, nil] the maximum number of retries
+    attr_accessor :max_retries
+
     def initialize
       @headers = {}
     end
@@ -55,6 +58,7 @@ module Yoti
 
       http_res = Net::HTTP.start(uri.hostname, Yoti.configuration.api_port, use_ssl: https_uri?) do |http|
         signed_request = SignedRequest.new(unsigned_request, path, @payload).sign
+        http.max_retries = @max_retries unless @max_retries.nil? || !http.respond_to?(:max_retries)
         http.request(signed_request)
       end
 
@@ -283,6 +287,19 @@ module Yoti
     end
 
     #
+    # Sets the maximum number of retries
+    #
+    # @param [Integer] retries
+    #
+    # @return [self]
+    #
+    def with_max_retries(retries)
+      Validation.assert_is_a(Integer, retries, 'retries')
+      @max_retries = retries
+      self
+    end
+
+    #
     # @return [Request]
     #
     def build
@@ -292,6 +309,7 @@ module Yoti
       request.query_params = @query_params
       request.http_method = @http_method
       request.payload = @payload
+      request.max_retries = @max_retries
       @headers.map { |k, v| request.add_header(k, v) }
       request
     end

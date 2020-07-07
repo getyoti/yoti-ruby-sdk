@@ -195,6 +195,27 @@
                 </div>
                 <% end %>
 
+                <% if document.document_id_photo %>
+                <div class="card">
+                    <div class="card-header" id="document-photo-<%= doc_num %>">
+                        <h4 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                data-target="#collapse-document-photo-<%= doc_num %>" aria-expanded="true"
+                                aria-controls="collapse-document-photo-<%= doc_num %>">
+                                Document ID Photo
+                            </button>
+                        </h4>
+                    </div>
+                    <div id="collapse-document-photo-<%= doc_num %>" class="collapse" aria-labelledby="document-photo-<%= doc_num %>">
+                        <div class="card-body">
+                            <% unless document.document_id_photo.media.nil? %>
+                            <img class="card-img-top" src="/media?mediaId=<%= document.document_id_photo.media.id %>" />
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+
                 <% if document.text_extraction_tasks.count.positive? %>
                 <div class="card">
                     <div class="card-header" id="text-extraction-tasks-<%= doc_num %>">

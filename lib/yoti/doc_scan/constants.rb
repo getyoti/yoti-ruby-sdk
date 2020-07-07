@@ -15,6 +15,8 @@ module Yoti
       EXCLUDE = 'BLACKLIST'
       ALWAYS = 'ALWAYS'
       FALLBACK = 'FALLBACK'
+      DESIRED = 'DESIRED'
+      IGNORE = 'IGNORE'
       NEVER = 'NEVER'
       ZOOM = 'ZOOM'
       CAMERA = 'CAMERA'

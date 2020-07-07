@@ -8,6 +8,7 @@ describe 'Yoti::DocScan::Session::Retrieve::IdDocumentResourceResponse' do
       'pages' => [{
         'someDetail' => 'some-value'
       }],
+      'document_id_photo' => {},
       'document_fields' => {},
       'tasks' => [
         {
@@ -42,6 +43,12 @@ describe 'Yoti::DocScan::Session::Retrieve::IdDocumentResourceResponse' do
   describe '.document_fields' do
     it 'should return document fields' do
       expect(resource_response.document_fields).to be_a(Yoti::DocScan::Session::Retrieve::DocumentFieldsResponse)
+    end
+  end
+
+  describe '.document_id_photo' do
+    it 'should return document ID photo' do
+      expect(resource_response.document_id_photo).to be_a(Yoti::DocScan::Session::Retrieve::DocumentIdPhotoResponse)
     end
   end
 

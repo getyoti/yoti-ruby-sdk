@@ -33,16 +33,22 @@ module Yoti
           #
           # @param [String] manual_check
           #   Describes the manual fallback behaviour applied to each Task
+          # @param [String, nil] chip_data
+          #   Describes the chip data requirement for each Task
           #
-          def initialize(manual_check)
+          def initialize(manual_check, chip_data)
             Validation.assert_is_a(String, manual_check, 'manual_check')
             @manual_check = manual_check
+
+            Validation.assert_is_a(String, chip_data, 'chip_data', true)
+            @chip_data = chip_data
           end
 
           def as_json(*_args)
             {
-              manual_check: @manual_check
-            }
+              manual_check: @manual_check,
+              chip_data: @chip_data
+            }.compact
           end
         end
 
@@ -81,10 +87,26 @@ module Yoti
           end
 
           #
+          # @return [self]
+          #
+          def with_chip_data_desired
+            @chip_data = Constants::DESIRED
+            self
+          end
+
+          #
+          # @return [self]
+          #
+          def with_chip_data_ignore
+            @chip_data = Constants::IGNORE
+            self
+          end
+
+          #
           # @return [RequestedTextExtractionTask]
           #
           def build
-            config = RequestedTextExtractionTaskConfig.new(@manual_check)
+            config = RequestedTextExtractionTaskConfig.new(@manual_check, @chip_data)
             RequestedTextExtractionTask.new(config)
           end
         end

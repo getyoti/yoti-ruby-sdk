@@ -94,18 +94,21 @@ module Yoti
       #
       # @param [String] name
       # @param [Array<SourceConstraint>] constraints
+      # @param [Bool] accept_self_asserted
       #
-      def with_wanted_attribute_by_name(name, constraints: nil)
+      def with_wanted_attribute_by_name(name, constraints: nil, accept_self_asserted: nil)
         attribute_builder = WantedAttribute.builder.with_name(name)
         constraints&.each do |constraint|
           attribute_builder.with_constraint constraint
         end
+        attribute_builder.with_accept_self_asserted(accept_self_asserted) unless accept_self_asserted.nil?
         attribute = attribute_builder.build
         with_wanted_attribute attribute
       end
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_family_name(options = {})
         with_wanted_attribute_by_name Attribute::FAMILY_NAME, **options
@@ -113,6 +116,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_given_names(options = {})
         with_wanted_attribute_by_name Attribute::GIVEN_NAMES, **options
@@ -120,6 +124,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_full_name(options = {})
         with_wanted_attribute_by_name Attribute::FULL_NAME, **options
@@ -127,6 +132,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_date_of_birth(options = {})
         with_wanted_attribute_by_name Attribute::DATE_OF_BIRTH, **options
@@ -149,6 +155,7 @@ module Yoti
       #
       # @param [Integer] age
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_age_over(age, options = {})
         with_age_derived_attribute(Attribute::AGE_OVER + age.to_s, **options)
@@ -157,6 +164,7 @@ module Yoti
       #
       # @param [Integer] age
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_age_under(age, options = {})
         with_age_derived_attribute(Attribute::AGE_UNDER + age.to_s, **options)
@@ -164,6 +172,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_gender(options = {})
         with_wanted_attribute_by_name Attribute::GENDER, **options
@@ -171,6 +180,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_postal_address(options = {})
         with_wanted_attribute_by_name(Attribute::POSTAL_ADDRESS, **options)
@@ -178,6 +188,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_structured_postal_address(options = {})
         with_wanted_attribute_by_name(Attribute::STRUCTURED_POSTAL_ADDRESS, **options)
@@ -185,6 +196,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_nationality(options = {})
         with_wanted_attribute_by_name(Attribute::NATIONALITY, **options)
@@ -192,6 +204,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_phone_number(options = {})
         with_wanted_attribute_by_name(Attribute::PHONE_NUMBER, **options)
@@ -199,6 +212,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_selfie(options = {})
         with_wanted_attribute_by_name(Attribute::SELFIE, **options)
@@ -206,6 +220,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_email(options = {})
         with_wanted_attribute_by_name(Attribute::EMAIL_ADDRESS, **options)
@@ -213,6 +228,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_document_details(options = {})
         with_wanted_attribute_by_name(Attribute::DOCUMENT_DETAILS, **options)
@@ -220,6 +236,7 @@ module Yoti
 
       #
       # @option options [Array<SourceConstraint>] :constraints
+      # @option options [Bool] :accept_self_asserted
       #
       def with_document_images(options = {})
         with_wanted_attribute_by_name(Attribute::DOCUMENT_IMAGES, **options)

@@ -24,13 +24,14 @@ class YotiController < ApplicationController
                    .with_requested_check(
                      Yoti::DocScan::Session::Create::RequestedFaceMatchCheck
                      .builder
-                     .with_manual_check_fallback
+                     .with_manual_check_never
                      .build
                    )
                    .with_requested_task(
                      Yoti::DocScan::Session::Create::RequestedTextExtractionTask
                      .builder
-                     .with_manual_check_always
+                     .with_manual_check_never
+                     .with_chip_data_desired
                      .build
                    )
                    .with_sdk_config(

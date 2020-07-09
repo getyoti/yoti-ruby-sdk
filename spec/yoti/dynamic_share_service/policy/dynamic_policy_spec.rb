@@ -52,6 +52,7 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
         it 'adds an attribute' do
           expect(policy.wanted.length).to eql 1
           expect(policy.wanted.first.name).to eql attribute_name
+          expect(policy.wanted.first.accept_self_asserted).to eql false
         end
       end
 
@@ -77,6 +78,40 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
           expect(policy.wanted.first.constraints.first.anchors).to eql []
         end
       end
+
+      context 'with accept self asserted true' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_wanted_attribute_by_name(
+              attribute_name,
+              accept_self_asserted: true
+            )
+            .build
+        end
+
+        it 'requests an attribute with accept self asserted true' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.accept_self_asserted).to eql true
+        end
+      end
+
+      context 'with accept self asserted false' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_wanted_attribute_by_name(
+              attribute_name,
+              accept_self_asserted: false
+            )
+            .build
+        end
+
+        it 'requests an attribute with accept self asserted false' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.accept_self_asserted).to eql false
+        end
+      end
     end
 
     describe '.with_family_name' do
@@ -89,10 +124,7 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
         let :policy do
           Yoti::DynamicSharingService::DynamicPolicy
             .builder
-            .with_wanted_attribute_by_name(
-              attribute_name,
-              constraints: [source_constraint]
-            )
+            .with_family_name(constraints: [source_constraint])
             .build
         end
         it 'requests family name with a source constraint' do
@@ -111,6 +143,20 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
         it 'requests family name' do
           expect(policy.wanted.length).to eql 1
           expect(policy.wanted.first.name).to eql Yoti::Attribute::FAMILY_NAME
+          expect(policy.wanted.first.accept_self_asserted).to eql false
+        end
+      end
+      context 'with accept self asserted' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_family_name(accept_self_asserted: true)
+            .build
+        end
+
+        it 'requests an attribute with accept self asserted true' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.accept_self_asserted).to eql true
         end
       end
     end
@@ -330,16 +376,76 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
     end
 
     describe '.with_document_details' do
-      let :policy do
-        Yoti::DynamicSharingService::DynamicPolicy
-          .builder
-          .with_document_details
-          .build
+      context 'without a source constraint' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_document_details
+            .build
+        end
+
+        it 'requests document details' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.name).to eql Yoti::Attribute::DOCUMENT_DETAILS
+        end
       end
 
-      it 'requests document details' do
-        expect(policy.wanted.length).to eql 1
-        expect(policy.wanted.first.name).to eql Yoti::Attribute::DOCUMENT_DETAILS
+      context 'with a source constraint' do
+        let :source_constraint do
+          Yoti::DynamicSharingService::SourceConstraint
+            .builder
+            .build
+        end
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_document_details(constraints: [source_constraint])
+            .build
+        end
+
+        it 'requests document details with a source constraint' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.name).to eql Yoti::Attribute::DOCUMENT_DETAILS
+          expect(policy.wanted.first.constraints.first)
+            .to be_a(Yoti::DynamicSharingService::SourceConstraint)
+        end
+      end
+    end
+
+    describe '.with_document_images' do
+      context 'without a source constraint' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_document_images
+            .build
+        end
+
+        it 'requests document images' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.name).to eql Yoti::Attribute::DOCUMENT_IMAGES
+        end
+      end
+
+      context 'with a source constraint' do
+        let :source_constraint do
+          Yoti::DynamicSharingService::SourceConstraint
+            .builder
+            .build
+        end
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_document_images(constraints: [source_constraint])
+            .build
+        end
+
+        it 'requests document images with a source constraint' do
+          expect(policy.wanted.length).to eql 1
+          expect(policy.wanted.first.name).to eql Yoti::Attribute::DOCUMENT_IMAGES
+          expect(policy.wanted.first.constraints.first)
+            .to be_a(Yoti::DynamicSharingService::SourceConstraint)
+        end
       end
     end
 

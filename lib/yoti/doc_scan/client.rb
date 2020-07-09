@@ -18,15 +18,18 @@ module Yoti
             'session_specification'
           )
 
-          response = create_request
-                     .with_http_method('POST')
-                     .with_endpoint('sessions')
-                     .with_payload(session_specification)
-                     .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
-                     .build
-                     .execute
+          request = create_request
+                    .with_http_method('POST')
+                    .with_endpoint('sessions')
+                    .with_payload(session_specification)
+                    .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
+                    .build
 
-          Yoti::DocScan::Session::Create::CreateSessionResult.new(JSON.parse(response.body))
+          begin
+            Yoti::DocScan::Session::Create::CreateSessionResult.new(JSON.parse(request.execute.body))
+          rescue Yoti::RequestError => e
+            raise Yoti::DocScan::Error.wrap(e)
+          end
         end
 
         #
@@ -39,14 +42,17 @@ module Yoti
         def get_session(session_id)
           Validation.assert_is_a(String, session_id, 'session_id')
 
-          response = create_request
-                     .with_http_method('GET')
-                     .with_endpoint(session_path(session_id))
-                     .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
-                     .build
-                     .execute
+          request = create_request
+                    .with_http_method('GET')
+                    .with_endpoint(session_path(session_id))
+                    .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
+                    .build
 
-          Yoti::DocScan::Session::Retrieve::GetSessionResult.new(JSON.parse(response.body))
+          begin
+            Yoti::DocScan::Session::Retrieve::GetSessionResult.new(JSON.parse(request.execute.body))
+          rescue Yoti::RequestError => e
+            raise Yoti::DocScan::Error.wrap(e)
+          end
         end
 
         #
@@ -58,12 +64,17 @@ module Yoti
         def delete_session(session_id)
           Validation.assert_is_a(String, session_id, 'session_id')
 
-          create_request
-            .with_http_method('DELETE')
-            .with_endpoint(session_path(session_id))
-            .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
-            .build
-            .execute
+          request = create_request
+                    .with_http_method('DELETE')
+                    .with_endpoint(session_path(session_id))
+                    .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
+                    .build
+
+          begin
+            request.execute
+          rescue Yoti::RequestError => e
+            raise Yoti::DocScan::Error.wrap(e)
+          end
         end
 
         #
@@ -79,17 +90,22 @@ module Yoti
           Validation.assert_is_a(String, session_id, 'session_id')
           Validation.assert_is_a(String, media_id, 'media_id')
 
-          response = create_request
-                     .with_http_method('GET')
-                     .with_endpoint(media_path(session_id, media_id))
-                     .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
-                     .build
-                     .execute
+          request = create_request
+                    .with_http_method('GET')
+                    .with_endpoint(media_path(session_id, media_id))
+                    .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
+                    .build
 
-          Yoti::Media.new(
-            response.body,
-            response.get_fields('content-type')[0]
-          )
+          begin
+            response = request.execute
+
+            Yoti::Media.new(
+              response.body,
+              response.get_fields('content-type')[0]
+            )
+          rescue Yoti::RequestError => e
+            raise Yoti::DocScan::Error.wrap(e)
+          end
         end
 
         #
@@ -103,12 +119,17 @@ module Yoti
           Validation.assert_is_a(String, session_id, 'session_id')
           Validation.assert_is_a(String, media_id, 'media_id')
 
-          create_request
-            .with_http_method('DELETE')
-            .with_endpoint(media_path(session_id, media_id))
-            .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
-            .build
-            .execute
+          request = create_request
+                    .with_http_method('DELETE')
+                    .with_endpoint(media_path(session_id, media_id))
+                    .with_query_param('sdkId', Yoti.configuration.client_sdk_id)
+                    .build
+
+          begin
+            request.execute
+          rescue Yoti::RequestError => e
+            raise Yoti::DocScan::Error.wrap(e)
+          end
         end
 
         #
@@ -117,13 +138,16 @@ module Yoti
         # @return [Yoti::DocScan::Support::SupportedDocumentsResponse]
         #
         def supported_documents
-          response = create_request
-                     .with_http_method('GET')
-                     .with_endpoint('supported-documents')
-                     .build
-                     .execute
+          request = create_request
+                    .with_http_method('GET')
+                    .with_endpoint('supported-documents')
+                    .build
 
-          Yoti::DocScan::Support::SupportedDocumentsResponse.new(JSON.parse(response.body))
+          begin
+            Yoti::DocScan::Support::SupportedDocumentsResponse.new(JSON.parse(request.execute.body))
+          rescue Yoti::RequestError => e
+            raise Yoti::DocScan::Error.wrap(e)
+          end
         end
 
         private

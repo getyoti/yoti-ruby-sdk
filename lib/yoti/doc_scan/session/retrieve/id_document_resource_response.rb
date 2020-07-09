@@ -17,6 +17,9 @@ module Yoti
           # @return [DocumentFieldsResponse]
           attr_reader :document_fields
 
+          # @return [DocumentIdPhotoResponse]
+          attr_reader :document_id_photo
+
           #
           # @param [Hash] resource
           #
@@ -37,6 +40,8 @@ module Yoti
             end
 
             @document_fields = DocumentFieldsResponse.new(resource['document_fields']) unless resource['document_fields'].nil?
+
+            @document_id_photo = DocumentIdPhotoResponse.new(resource['document_id_photo']) unless resource['document_id_photo'].nil?
           end
 
           #

@@ -29,7 +29,7 @@ describe 'Yoti::Share::AttributeIssuanceDetails' do
       'tokenValue'
     end
     let :b64token do
-      Base64.strict_encode64 token
+      Base64.urlsafe_encode64(token, padding: false)
     end
     let :now do
       DateTime.now
@@ -52,6 +52,7 @@ describe 'Yoti::Share::AttributeIssuanceDetails' do
     end
     it 'sets the token value' do
       expect(attribute_issuance_details.token).to eql b64token
+      expect(Base64.urlsafe_decode64(attribute_issuance_details.token)).to eql token
     end
     it 'sets the expiry date' do
       expect(attribute_issuance_details.expiry_date).to eql now

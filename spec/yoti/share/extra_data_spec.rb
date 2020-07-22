@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 require 'yoti'
+require 'base64'
 
 def create_extra_data_proto(*rows)
   extra_data = Yoti::Protobuf::Sharepubapi::ExtraData.new
@@ -16,6 +17,12 @@ def create_extra_data_proto(*rows)
 end
 
 describe 'Yoti::Share::ExtraData' do
+  let :token do
+    'tokenValue1'
+  end
+  let :b64token do
+    Base64.urlsafe_encode64(token, padding: false)
+  end
   let :now do
     DateTime.now
   end
@@ -34,18 +41,12 @@ describe 'Yoti::Share::ExtraData' do
   end
 
   context 'with two third party attributes' do
-    let :token_value do
-      'tokenValue1'
-    end
-    let :b64token do
-      Base64.strict_encode64 token_value
-    end
     let :attribute_name do
       'attributeName1'
     end
     let :proto do
       create_extra_data_proto(
-        [token_value, now, attribute_name],
+        [token, now, attribute_name],
         ['tokenValue2', now, 'attributeName2']
       )
     end
@@ -67,12 +68,6 @@ describe 'Yoti::Share::ExtraData' do
   end
 
   context 'with multiple issuing attributes' do
-    let :token_value do
-      'tokenValue'
-    end
-    let :b64token do
-      Base64.strict_encode64 token_value
-    end
     let :attribute1 do
       'attribute1'
     end
@@ -81,7 +76,7 @@ describe 'Yoti::Share::ExtraData' do
     end
     let :proto do
       create_extra_data_proto(
-        [token_value, now, attribute1, attribute2]
+        [token, now, attribute1, attribute2]
       )
     end
     let :extra_data do
@@ -103,12 +98,6 @@ describe 'Yoti::Share::ExtraData' do
   end
 
   context 'with no expiry date' do
-    let :token do
-      'tokenValue'
-    end
-    let :b64token do
-      Base64.strict_encode64 token
-    end
     let :attribute do
       'attributeName'
     end
@@ -135,12 +124,6 @@ describe 'Yoti::Share::ExtraData' do
   end
 
   context 'with no issuing attributes' do
-    let :token do
-      'tokenValue'
-    end
-    let :b64token do
-      Base64.strict_encode64 token
-    end
     let :proto do
       create_extra_data_proto(
         [token, now]

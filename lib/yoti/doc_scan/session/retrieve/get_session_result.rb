@@ -83,6 +83,13 @@ module Yoti
             @checks.select { |check| check.is_a?(LivenessCheckResponse) }
           end
 
+          #
+          # @return [Array<IdDocumentComparisonCheckResponse>]
+          #
+          def id_document_comparison_checks
+            @checks.select { |check| check.is_a?(IdDocumentComparisonCheckResponse) }
+          end
+
           private
 
           #
@@ -95,6 +102,8 @@ module Yoti
               case check['type']
               when Constants::ID_DOCUMENT_AUTHENTICITY
                 AuthenticityCheckResponse.new(check)
+              when Constants::ID_DOCUMENT_COMPARISON
+                IdDocumentComparisonCheckResponse.new(check)
               when Constants::ID_DOCUMENT_FACE_MATCH
                 FaceMatchCheckResponse.new(check)
               when Constants::ID_DOCUMENT_TEXT_DATA_CHECK

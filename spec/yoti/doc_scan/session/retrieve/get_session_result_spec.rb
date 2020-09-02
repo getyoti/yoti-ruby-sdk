@@ -25,6 +25,9 @@ describe 'Yoti::DocScan::Session::Retrieve::GetSessionResult' do
         {
           'type' => 'ID_DOCUMENT_TEXT_DATA_CHECK'
         },
+        {
+          'type' => 'ID_DOCUMENT_COMPARISON'
+        },
         {}
       ]
     )
@@ -64,11 +67,12 @@ describe 'Yoti::DocScan::Session::Retrieve::GetSessionResult' do
     describe 'when checks are available' do
       it 'should return array of checks' do
         checks = session.checks
-        expect(checks.length).to eql(5)
+        expect(checks.length).to eql(6)
         expect(checks[0]).to be_a(Yoti::DocScan::Session::Retrieve::AuthenticityCheckResponse)
         expect(checks[1]).to be_a(Yoti::DocScan::Session::Retrieve::LivenessCheckResponse)
         expect(checks[2]).to be_a(Yoti::DocScan::Session::Retrieve::FaceMatchCheckResponse)
         expect(checks[3]).to be_a(Yoti::DocScan::Session::Retrieve::TextDataCheckResponse)
+        expect(checks[4]).to be_a(Yoti::DocScan::Session::Retrieve::IdDocumentComparisonCheckResponse)
         expect(checks).to all(be_a(Yoti::DocScan::Session::Retrieve::CheckResponse))
       end
     end
@@ -112,6 +116,14 @@ describe 'Yoti::DocScan::Session::Retrieve::GetSessionResult' do
       checks = session.face_match_checks
       expect(checks.length).to eql(1)
       expect(checks[0]).to be_a(Yoti::DocScan::Session::Retrieve::FaceMatchCheckResponse)
+    end
+  end
+
+  describe '.id_document_comparison_checks' do
+    it 'should return array of IdDocumentComparisonResponse)' do
+      checks = session.id_document_comparison_checks
+      expect(checks.length).to eql(1)
+      expect(checks[0]).to be_a(Yoti::DocScan::Session::Retrieve::IdDocumentComparisonCheckResponse)
     end
   end
 

@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   exclude_patterns = [
     '^(test|spec|features|examples|docs|.github)/',
     '^.gitignore$',
+    '^.pre-commit-config.yaml$',
     '^sonar-project.properties$',
     '^.dependabot/config.yml$',
     '^.travis.yml$',

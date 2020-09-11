@@ -1,5 +1,3 @@
-require 'base64'
-
 class YotiController < ApplicationController
   #
   # Create Session
@@ -73,15 +71,7 @@ class YotiController < ApplicationController
 
     media = Yoti::DocScan::Client.get_media_content(session[:DOC_SCAN_SESSION_ID], media_id)
 
-    body = media.content
-    content_type = media.mime_type
-
-    if request.query_parameters[:base64Zip] == '1' && content_type == 'application/octet-stream'
-      body = Base64.strict_decode64(body)
-      content_type = 'application/zip'
-    end
-
-    render body: body, content_type: content_type
+    render body: media.content, content_type: media.mime_type
   end
 
   #

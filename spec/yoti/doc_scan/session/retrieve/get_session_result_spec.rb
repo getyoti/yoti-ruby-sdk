@@ -8,6 +8,7 @@ describe 'Yoti::DocScan::Session::Retrieve::GetSessionResult' do
       'user_tracking_id' => 'some-user-id',
       'state' => 'some-state',
       'client_session_token' => 'some-token',
+      'biometric_consent' => '2006-02-02T22:04:05.123Z',
       'resources' => {
         'id_documents' => [],
         'liveness_capture' => []
@@ -130,6 +131,21 @@ describe 'Yoti::DocScan::Session::Retrieve::GetSessionResult' do
   describe '.resources' do
     it 'should return resource container' do
       expect(session.resources).to be_a(Yoti::DocScan::Session::Retrieve::ResourceContainer)
+    end
+  end
+
+  describe '.biometric_consent_timestamp' do
+    context 'when consent is provided' do
+      it 'should return timestamp as DateTime' do
+        biometric_consent_timestamp = session.biometric_consent_timestamp
+        expect(biometric_consent_timestamp).to eql(DateTime.new(2006, 2, 2, 22, 4, 5.123))
+      end
+    end
+    context 'when consent is not provided' do
+      it 'should return nil' do
+        session = Yoti::DocScan::Session::Retrieve::GetSessionResult.new({})
+        expect(session.biometric_consent_timestamp).to be_nil
+      end
     end
   end
 end

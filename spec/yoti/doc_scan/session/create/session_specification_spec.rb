@@ -80,4 +80,40 @@ describe 'Yoti::DocScan::Session::Create::SessionSpecification' do
 
     expect(spec.to_json).to eql expected.to_json
   end
+
+  context 'with block biometric consent true' do
+    it 'serializes correctly' do
+      spec = Yoti::DocScan::Session::Create::SessionSpecification
+             .builder
+             .with_block_biometric_consent(true)
+             .build
+
+      expected = {
+        requested_checks: [],
+        requested_tasks: [],
+        required_documents: [],
+        block_biometric_consent: true
+      }
+
+      expect(spec.to_json).to eql expected.to_json
+    end
+  end
+
+  context 'with block biometric consent false' do
+    it 'serializes correctly' do
+      spec = Yoti::DocScan::Session::Create::SessionSpecification
+             .builder
+             .with_block_biometric_consent(false)
+             .build
+
+      expected = {
+        requested_checks: [],
+        requested_tasks: [],
+        required_documents: [],
+        block_biometric_consent: false
+      }
+
+      expect(spec.to_json).to eql expected.to_json
+    end
+  end
 end

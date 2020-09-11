@@ -26,6 +26,9 @@ module Yoti
           # @return [ResourceContainer]
           attr_reader :resources
 
+          # @return [DateTime]
+          attr_reader :biometric_consent_timestamp
+
           #
           # @param [Hash] response
           #
@@ -53,6 +56,8 @@ module Yoti
             end
 
             @resources = ResourceContainer.new(response['resources']) unless response['resources'].nil?
+
+            @biometric_consent_timestamp = DateTime.parse(response['biometric_consent']) unless response['biometric_consent'].nil?
           end
 
           #

@@ -14,6 +14,7 @@ module Yoti
           # @param [Array<RequestedTask>] requested_tasks
           # @param [SdkConfig] sdk_config
           # @param [Array<RequiredDocument>] required_documents
+          # @param [Boolean] block_biometric_consent
           #
           def initialize(
             client_session_token_ttl,
@@ -23,7 +24,8 @@ module Yoti
             requested_checks,
             requested_tasks,
             sdk_config,
-            required_documents
+            required_documents,
+            block_biometric_consent = nil
           )
             Validation.assert_is_a(Integer, client_session_token_ttl, 'client_session_token_ttl', true)
             @client_session_token_ttl = client_session_token_ttl
@@ -48,6 +50,8 @@ module Yoti
 
             Validation.assert_is_a(Array, required_documents, 'required_documents', true)
             @required_documents = required_documents
+
+            @block_biometric_consent = block_biometric_consent
           end
 
           def to_json(*_args)
@@ -63,7 +67,8 @@ module Yoti
               requested_checks: @requested_checks.map(&:as_json),
               requested_tasks: @requested_tasks.map(&:as_json),
               sdk_config: @sdk_config,
-              required_documents: @required_documents.map(&:as_json)
+              required_documents: @required_documents.map(&:as_json),
+              block_biometric_consent: @block_biometric_consent
             }.compact
           end
 
@@ -182,6 +187,18 @@ module Yoti
           end
 
           #
+          # Whether or not to block the collection of biometric consent
+          #
+          # @param [Boolean] block_biometric_consent
+          #
+          # @return [self]
+          #
+          def with_block_biometric_consent(block_biometric_consent)
+            @block_biometric_consent = block_biometric_consent
+            self
+          end
+
+          #
           # @return [SessionSpecification]
           #
           def build
@@ -193,7 +210,8 @@ module Yoti
               @requested_checks,
               @requested_tasks,
               @sdk_config,
-              @required_documents
+              @required_documents,
+              @block_biometric_consent
             )
           end
         end

@@ -63,7 +63,7 @@ module Yoti
           end
 
           #
-          # Requires that a manual follow-up check is performed only on failed Checks,
+          # Requires that a manual follow-up check is performed only on failed checks,
           # and those with a low level of confidence
           #
           # @return [self]
@@ -74,7 +74,7 @@ module Yoti
           end
 
           #
-          # Requires that only an automated Check is performed.  No manual follow-up
+          # Requires that only an automated check is performed.  No manual follow-up
           # Check will ever be initiated
           #
           # @return [self]

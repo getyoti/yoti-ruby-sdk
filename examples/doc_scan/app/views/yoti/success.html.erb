@@ -338,39 +338,6 @@
 
             <div class="accordion mt-3">
 
-                <% unless liveness_resource.facemap.nil? %>
-                <div class="card">
-                    <div class="card-header" id="liveness-<%= liveness_num %>-facemap">
-                        <h3 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                data-target="#collapse-liveness-<%= liveness_num %>-facemap" aria-expanded="true"
-                                aria-controls="collapse-liveness-<%= liveness_num %>-facemap">
-                                Face Map
-                            </button>
-                        </h3>
-                    </div>
-                    <div id="collapse-liveness-<%= liveness_num %>-facemap" class="collapse" aria-labelledby="liveness-<%= liveness_num %>-facemap">
-                        <div class="card-body">
-                            <% unless liveness_resource.facemap.media.nil? %>
-                            <h4>Media</h4>
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <td>ID</td>
-                                        <td>
-                                            <a href="/media?mediaId=<%= liveness_resource.facemap.media.id %>&base64Zip=1">
-                                                <%= liveness_resource.facemap.media.id %>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <% end %>
-                        </div>
-                    </div>
-                </div>
-                <% end %>
-
                 <% if liveness_resource.frames.count.positive? %>
                 <div class="card">
                     <div class="card-header" id="liveness-<%= liveness_num %>-frames">

@@ -25,6 +25,11 @@ class YotiController < ApplicationController
                      .with_manual_check_never
                      .build
                    )
+                   .with_requested_check(
+                     Yoti::DocScan::Session::Create::RequestedIdDocumentComparisonCheck
+                     .builder
+                     .build
+                   )
                    .with_requested_task(
                      Yoti::DocScan::Session::Create::RequestedTextExtractionTask
                      .builder
@@ -43,6 +48,28 @@ class YotiController < ApplicationController
                      .with_preset_issuing_country('GBR')
                      .with_success_url("#{request.base_url}/success")
                      .with_error_url("#{request.base_url}/error")
+                     .build
+                   )
+                   .with_required_document(
+                     Yoti::DocScan::Session::Create::RequiredIdDocument
+                     .builder
+                     .with_filter(
+                       Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
+                       .builder
+                       .with_included_document_types(['PASSPORT'])
+                       .build
+                     )
+                     .build
+                   )
+                   .with_required_document(
+                     Yoti::DocScan::Session::Create::RequiredIdDocument
+                     .builder
+                     .with_filter(
+                       Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
+                       .builder
+                       .with_included_document_types(['DRIVING_LICENCE'])
+                       .build
+                     )
                      .build
                    )
                    .build

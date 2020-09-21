@@ -34,6 +34,14 @@
                         <td>User Tracking ID</td>
                         <td><%= @session_result.user_tracking_id %></td>
                     </tr>
+                    <% if @session_result.biometric_consent_timestamp %>
+                    <tr>
+                        <td>Biometric Consent Timestamp</td>
+                        <td>
+                            <%= @session_result.biometric_consent_timestamp %>
+                        </td>
+                    </tr>
+                    <% end %>
                 </tbody>
             </table>
         </div>
@@ -137,6 +145,29 @@
                     </div>
                 </div>
                 <% end %>
+
+                <% if @session_result.id_document_comparison_checks.count.positive? %>
+                <div class="card">
+                    <div class="card-header" id="comparison-checks">
+                        <h3 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                data-target="#collapse-comparison-checks" aria-expanded="true"
+                                aria-controls="collapse-comparison-checks">
+                                ID Document Comparison Checks
+                            </button>
+                        </h3>
+                    </div>
+
+                    <div id="collapse-comparison-checks" class="collapse" aria-labelledby="comparison-checks">
+                        <div class="card-body">
+                            <% @session_result.id_document_comparison_checks.each do |check| %>
+                            <%= render partial: "check", locals: {check: check} %>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+
             </div>
         </div>
     </div>
@@ -337,39 +368,6 @@
             </table>
 
             <div class="accordion mt-3">
-
-                <% unless liveness_resource.facemap.nil? %>
-                <div class="card">
-                    <div class="card-header" id="liveness-<%= liveness_num %>-facemap">
-                        <h3 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                data-target="#collapse-liveness-<%= liveness_num %>-facemap" aria-expanded="true"
-                                aria-controls="collapse-liveness-<%= liveness_num %>-facemap">
-                                Face Map
-                            </button>
-                        </h3>
-                    </div>
-                    <div id="collapse-liveness-<%= liveness_num %>-facemap" class="collapse" aria-labelledby="liveness-<%= liveness_num %>-facemap">
-                        <div class="card-body">
-                            <% unless liveness_resource.facemap.media.nil? %>
-                            <h4>Media</h4>
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <td>ID</td>
-                                        <td>
-                                            <a href="/media?mediaId=<%= liveness_resource.facemap.media.id %>&base64Zip=1">
-                                                <%= liveness_resource.facemap.media.id %>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <% end %>
-                        </div>
-                    </div>
-                </div>
-                <% end %>
 
                 <% if liveness_resource.frames.count.positive? %>
                 <div class="card">

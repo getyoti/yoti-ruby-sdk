@@ -29,6 +29,10 @@ describe 'Yoti::DocScan::Session::Create::SessionSpecification' do
                               .builder
                               .build
 
+    some_comparison_check = Yoti::DocScan::Session::Create::RequestedIdDocumentComparisonCheck
+                            .builder
+                            .build
+
     some_document = Yoti::DocScan::Session::Create::RequiredIdDocument
                     .builder
                     .with_filter(
@@ -48,6 +52,7 @@ describe 'Yoti::DocScan::Session::Create::SessionSpecification' do
            .with_requested_check(some_face_match_check)
            .with_requested_check(some_liveness_check)
            .with_requested_check(some_authenticity_check)
+           .with_requested_check(some_comparison_check)
            .with_requested_task(some_text_extraction_task)
            .with_notifications(some_notification_config)
            .with_required_document(some_document)
@@ -61,7 +66,8 @@ describe 'Yoti::DocScan::Session::Create::SessionSpecification' do
       requested_checks: [
         some_face_match_check,
         some_liveness_check,
-        some_authenticity_check
+        some_authenticity_check,
+        some_comparison_check
       ],
       requested_tasks: [
         some_text_extraction_task
@@ -73,5 +79,41 @@ describe 'Yoti::DocScan::Session::Create::SessionSpecification' do
     }
 
     expect(spec.to_json).to eql expected.to_json
+  end
+
+  context 'with block biometric consent true' do
+    it 'serializes correctly' do
+      spec = Yoti::DocScan::Session::Create::SessionSpecification
+             .builder
+             .with_block_biometric_consent(true)
+             .build
+
+      expected = {
+        requested_checks: [],
+        requested_tasks: [],
+        required_documents: [],
+        block_biometric_consent: true
+      }
+
+      expect(spec.to_json).to eql expected.to_json
+    end
+  end
+
+  context 'with block biometric consent false' do
+    it 'serializes correctly' do
+      spec = Yoti::DocScan::Session::Create::SessionSpecification
+             .builder
+             .with_block_biometric_consent(false)
+             .build
+
+      expected = {
+        requested_checks: [],
+        requested_tasks: [],
+        required_documents: [],
+        block_biometric_consent: false
+      }
+
+      expect(spec.to_json).to eql expected.to_json
+    end
   end
 end

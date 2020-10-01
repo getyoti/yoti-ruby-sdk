@@ -305,34 +305,53 @@
                 <% end %>
 
 
-                <% if document.pages.count.positive? %>
+                <%
+                page_num = 0
+                document.pages.each do |page|
+                page_num += 1
+                %>
+
                 <div class="card">
-                    <div class="card-header" id="document-pages-<%= doc_num %>">
+                    <div class="card-header" id="document-pages-<%= doc_num %>-<%= page_num %>">
                         <h4 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
-                                data-target="#collapse-document-pages-<%= doc_num %>" aria-expanded="true"
-                                aria-controls="collapse-document-pages-<%= doc_num %>">
-                                Pages
+                                data-target="#collapse-document-pages-<%= doc_num %>-<%= page_num %>" aria-expanded="true"
+                                aria-controls="collapse-document-pages-<%= doc_num %>-<%= page_num %>">
+                                Page <%= page_num %>
                             </button>
                         </h4>
                     </div>
-                    <div id="collapse-document-pages-<%= doc_num %>" class="collapse" aria-labelledby="document-pages-<%= doc_num %>">
-                        <div class="card-body">
-                            <div class="card-group">
-                                <% document.pages.each do |page| %>
-                                <% unless page.media.nil? %>
-                                <div class="card" style="width: 18rem;">
-                                    <img class="card-img-top" src="/media?mediaId=<%= page.media.id %>" />
-                                    <div class="card-body">
-                                        <p>Method: <%= page.capture_method %></p>
-                                    </div>
+                    <div id="collapse-document-pages-<%= doc_num %>-<%= page_num %>" class="collapse" aria-labelledby="document-pages-<%= doc_num %>-<%= page_num %>">
+
+                        <% unless page.media.nil? %>
+                        <div class="card-group">
+                            <div class="card">
+                                <img class="card-img-top" src="/media?mediaId=<%= page.media.id %>" />
+                                <div class="card-body">
+                                    <p>Method: <%= page.capture_method %></p>
                                 </div>
-                                <% end %>
-                                <% end %>
                             </div>
                         </div>
+                        <% end %>
+
+                        <% if page.frames.count.positive? %>
+                        <div class="card-group">
+                            <% page.frames.each do |frame| %>
+                            <% unless frame.media.nil? %>
+                            <div class="card">
+                                <img class="card-img-top" src="/media?mediaId=<%= frame.media.id %>" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Frame</h5>
+                                </div>
+                            </div>
+                            <% end %>
+                            <% end %>
+                        </div>
+                        <% end %>
+
                     </div>
                 </div>
+
                 <% end %>
 
             </div>

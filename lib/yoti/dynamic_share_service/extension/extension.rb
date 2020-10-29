@@ -3,7 +3,10 @@
 module Yoti
   module DynamicSharingService
     class Extension
+      # @return [String]
       attr_reader :type
+
+      # @return [#to_json]
       attr_reader :content
 
       def to_json(*_args)

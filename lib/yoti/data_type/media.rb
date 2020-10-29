@@ -4,7 +4,10 @@ require 'base64'
 
 module Yoti
   class Media
+    # @return [String|bin]
     attr_reader :content
+
+    # @return [String]
     attr_reader :mime_type
 
     def initialize(content, mime_type)

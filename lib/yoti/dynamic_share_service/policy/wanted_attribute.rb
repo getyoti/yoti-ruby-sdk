@@ -4,8 +4,13 @@ module Yoti
   module DynamicSharingService
     # Describes a wanted attribute in a dynamic sharing policy
     class WantedAttribute
+      # @return [String]
       attr_reader :name
+
+      # @return [String]
       attr_reader :derivation
+
+      # @return [Array<#as_json>]
       attr_reader :constraints
 
       def initialize

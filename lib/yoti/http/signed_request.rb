@@ -40,7 +40,7 @@ module Yoti
 
       payload_string = @payload.is_a?(String) ? @payload : @payload.to_json
 
-      '&' + Base64.strict_encode64(payload_string)
+      "&#{Base64.strict_encode64(payload_string)}"
     end
   end
 end

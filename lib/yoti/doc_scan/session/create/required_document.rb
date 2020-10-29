@@ -9,7 +9,7 @@ module Yoti
           # @param [String] type
           #
           def initialize(type)
-            raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequiredDocument
+            raise(TypeError, "#{self.class} cannot be instantiated") if instance_of?(RequiredDocument)
 
             Validation.assert_is_a(String, type, 'type')
             @type = type

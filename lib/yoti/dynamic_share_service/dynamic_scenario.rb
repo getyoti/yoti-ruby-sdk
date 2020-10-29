@@ -4,8 +4,13 @@ module Yoti
   module DynamicSharingService
     # Describes a dynamic share
     class DynamicScenario
+      # @return [Yoti::DynamicSharingService::DynamicPolicy]
       attr_reader :policy
+
+      # @return [Array<Yoti::DynamicSharingService::Extension>]
       attr_reader :extensions
+
+      # @return [String]
       attr_reader :callback_endpoint
 
       def initialize

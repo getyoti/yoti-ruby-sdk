@@ -20,7 +20,7 @@ module Yoti
     # @return [Array<Yoti::Anchor>]
     #
     def process
-      result_data = ANCHOR_LIST_KEYS.map { |key, _value| [key, []] }.to_h
+      result_data = ANCHOR_LIST_KEYS.transform_values { |_value| [] }
 
       @anchors_list.each do |anchor|
         x509_certs_list = convert_certs_list_to_X509(anchor.origin_server_certs)

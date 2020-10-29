@@ -18,7 +18,7 @@ describe 'Yoti::Request' do
 
     context 'when the API call is unsuccessful', type: :api_error do
       let(:response_body) { File.read('spec/sample-data/responses/profile_error.json') }
-      let(:error) { 'Unsuccessful Yoti API call: Error: ' + response_body }
+      let(:error) { "Unsuccessful Yoti API call: Error: #{response_body}" }
 
       it 'raises Yoti::RequestError with response body appended to message' do
         request.http_method = 'GET'

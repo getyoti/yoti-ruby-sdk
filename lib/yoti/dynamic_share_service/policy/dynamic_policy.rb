@@ -7,7 +7,10 @@ module Yoti
       SELFIE_AUTH_TYPE = 1
       PIN_AUTH_TYPE = 2
 
+      # @return [Array<Integer>]
       attr_reader :wanted_auth_types
+
+      # @return [Array<Yoti::DynamicSharingService::WantedAttribute>]
       attr_reader :wanted
 
       def wanted_remember_me

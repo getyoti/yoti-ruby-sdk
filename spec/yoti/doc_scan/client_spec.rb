@@ -11,7 +11,7 @@ def stub_doc_scan_api_request(
   query: nil,
   headers: { 'Content-Type' => 'application/json' }
 )
-  stub = stub_request(method, %r{https:\/\/api.yoti.com\/idverify\/v1\/#{endpoint}})
+  stub = stub_request(method, %r{https://api.yoti.com/idverify/v1/#{endpoint}})
   stub.with(body: request_body) unless request_body.nil?
   stub.with(query: query) unless query.nil?
   stub.to_return(

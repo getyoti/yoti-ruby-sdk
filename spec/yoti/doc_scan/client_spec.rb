@@ -8,7 +8,8 @@ def stub_doc_scan_api_request(
   response_body: '{}',
   status: 200,
   request_body: nil,
-  query: nil
+  query: nil,
+  headers: { 'Content-Type' => 'application/json' }
 )
   stub = stub_request(method, %r{https:\/\/api.yoti.com\/idverify\/v1\/#{endpoint}})
   stub.with(body: request_body) unless request_body.nil?
@@ -16,7 +17,7 @@ def stub_doc_scan_api_request(
   stub.to_return(
     status: status,
     body: response_body,
-    headers: { 'Content-Type' => 'application/json' }
+    headers: headers
   )
 end
 
@@ -165,6 +166,23 @@ describe 'Yoti::DocScan::Client' do
         expect(media).to be_a(Yoti::Media)
         expect(media.content).to be('{}')
         expect(media.mime_type).to be('application/json')
+      end
+    end
+
+    context 'when response has no content' do
+      before(:context) do
+        stub_doc_scan_api_request(
+          method: :get,
+          status: 204,
+          headers: {},
+          endpoint: 'sessions/some-id/media/some-media-id/content'
+        )
+      end
+
+      it 'returns nil' do
+        media = Yoti::DocScan::Client.get_media_content('some-id', 'some-media-id')
+
+        expect(media).to be_nil
       end
     end
 

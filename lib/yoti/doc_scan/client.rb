@@ -84,7 +84,7 @@ module Yoti
         # @param [String] session_id
         # @param [String] media_id
         #
-        # @return [Yoti::Media]
+        # @return [Yoti::Media|nil]
         #
         def get_media_content(session_id, media_id)
           Validation.assert_is_a(String, session_id, 'session_id')
@@ -99,9 +99,13 @@ module Yoti
           begin
             response = request.execute
 
+            content_type = response.get_fields('content-type')
+
+            return nil if response.code == 204 || content_type.nil?
+
             Yoti::Media.new(
               response.body,
-              response.get_fields('content-type')[0]
+              content_type[0]
             )
           rescue Yoti::RequestError => e
             raise Yoti::DocScan::Error.wrap(e)

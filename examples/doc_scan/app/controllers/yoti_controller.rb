@@ -64,12 +64,6 @@ class YotiController < ApplicationController
                    .with_required_document(
                      Yoti::DocScan::Session::Create::RequiredIdDocument
                      .builder
-                     .with_filter(
-                       Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
-                       .builder
-                       .with_included_document_types(['DRIVING_LICENCE'])
-                       .build
-                     )
                      .build
                    )
                    .build
@@ -98,7 +92,11 @@ class YotiController < ApplicationController
 
     media = Yoti::DocScan::Client.get_media_content(session[:DOC_SCAN_SESSION_ID], media_id)
 
-    render body: media.content, content_type: media.mime_type
+    if media.nil?
+      head :no_content
+    else
+      render body: media.content, content_type: media.mime_type
+    end
   end
 
   #

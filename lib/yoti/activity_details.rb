@@ -108,9 +108,7 @@ module Yoti
       @extended_user_profile = process_decrypted_profile(decrypted_profile)
       @extended_application_profile = process_decrypted_profile(decrypted_application_profile)
       @extra_data = extra_data
-      @user_profile = @extended_user_profile.map do |name, attribute|
-        [name, attribute.value]
-      end.to_h
+      @user_profile = @extended_user_profile.transform_values(&:value)
     end
 
     #

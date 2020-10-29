@@ -4,7 +4,10 @@ module Yoti
   module DynamicSharingService
     # A wanted anchor for a source based constraint
     class WantedAnchor
+      # @return [String]
       attr_reader :value
+
+      # @return [String]
       attr_reader :sub_type
 
       def initialize

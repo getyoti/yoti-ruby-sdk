@@ -3,12 +3,12 @@ $LOAD_PATH.unshift File.expand_path('./attrpubapi/', __dir__)
 require 'google/protobuf'
 require 'json'
 
-require_relative 'attrpubapi/List_pb.rb'
-require_relative 'compubapi/EncryptedData_pb.rb'
-require_relative 'compubapi/SignedTimestamp_pb.rb'
-require_relative 'sharepubapi/ExtraData_pb.rb'
-require_relative 'sharepubapi/IssuingAttributes_pb.rb'
-require_relative 'sharepubapi/ThirdPartyAttribute_pb.rb'
+require_relative 'attrpubapi/List_pb'
+require_relative 'compubapi/EncryptedData_pb'
+require_relative 'compubapi/SignedTimestamp_pb'
+require_relative 'sharepubapi/ExtraData_pb'
+require_relative 'sharepubapi/IssuingAttributes_pb'
+require_relative 'sharepubapi/ThirdPartyAttribute_pb'
 
 module Yoti
   module Protobuf
@@ -91,9 +91,9 @@ module Yoti
       private
 
       def convert_multi_value(value)
-        proto_multi_value = Yoti::Protobuf::Attrpubapi::MultiValue.decode(value)
+        proto_multi_values = Yoti::Protobuf::Attrpubapi::MultiValue.decode(value).values
         items = []
-        proto_multi_value.values.each do |item|
+        proto_multi_values.each do |item|
           items << value_based_on_content_type(item.data, item.content_type)
         end
         MultiValue.new(items)

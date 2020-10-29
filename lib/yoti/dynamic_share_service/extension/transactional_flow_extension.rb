@@ -5,7 +5,11 @@ module Yoti
     # Extension for transactional flows
     class TransactionalFlowExtension
       EXTENSION_TYPE = 'TRANSACTIONAL_FLOW'
+
+      # @return [#to_json]
       attr_reader :content
+
+      # @return [String]
       attr_reader :type
 
       def initialize

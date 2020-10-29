@@ -6,7 +6,10 @@ module Yoti
     class LocationConstraintExtension
       EXTENSION_TYPE = 'LOCATION_CONSTRAINT'
 
+      # @return [#to_json]
       attr_reader :content
+
+      # @return [String]
       attr_reader :type
 
       def initialize

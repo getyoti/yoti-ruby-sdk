@@ -5,25 +5,26 @@ describe 'Yoti::SSL' do
   after(:each) { clear_ssl }
 
   describe '.pem' do
-    SECRET_KEY = "-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIBAAKCAQEAs9zAY5K9O92zfmRhxBO0NX8Dg7UyyIaLE5GdbCMimlccew2p\n8LN6P8EDUoU7hiCbW1EQ/cp4iZVIp7UPA3AO/ecuejs2DjkFQOeMGnSlwD0pk74Z\nI3ammQtYm2ml47IWGrciMh4dPIPh0SOF+tVD0kHhAB9cMaj96Ij2De60Y7SeqvIX\nUHCtnoHId7Zk5I71mtewAnb9Gpx+wPnr2gpX/uUqkh+3ZHsF2eNCpw/ICvKj4UkN\nXopUyBemDp3n/s7u8TFyewp7ipPbFxDmxZKJT9SjZNFFe/jc2V/R2uC9qSFRKpTs\nxqmXggjiBlH46cpyg2SeYFj1p5bkpKZ10b3iOwIDAQABAoIBACr0ue4OCavWkxvI\nlaDio9Ny9j/qcqp5l5Wg3VwKOCVsUJ0C8mdONhAr5MM8lq698tyoS8qRJKCXSrbj\nAybrCGmTYQJISeyzqZGKu2dGHKAA+4ERkadqmvdKQms7nCb5TVYsDrqxfoIJbVEp\njsINVRlOKpKA6t/hYGK88yb4r5RwFB7t0qwLQRbI8MajTWmgk9SKFjSiOnFH5+Dl\nZiNDa39mHwY4fu9ZKjenZDq04/eh32mZSUkyQ4V3exqz/Xugl++mcBq9KIv1M489\nU4a1hXV+0biAuro6lgvyquHSKpYx9n1verjcBa5J0AWQhnwS2lcsfQIRssV8W0gd\nSVdd7QECgYEA4pVr7haKz+2p2GJpzCFGtI5T4FBS+1cCDDX0oPtReDIrPFqCnI6e\nnYzF8lbx24B91CoTk4rB4/NZOMI2KjyXo+EAe+yhDhMK2BKU15UVKqpXt2ur+VpY\nDBfoQuvZ91PT7f4sX53Y9lrJz6C3+xnI4K97o1GQh+2SAAgo72nZIdsCgYEAyzaH\n5rnVbSFFuYcAxUz3ClZH1shP2vnubnlFKTtV6NjvFGsswTVgeINCJhSxzTHX8VoJ\nAauOIxzr87T3RrH1BuN383ZQxlvEbHjbiBcnZrWklLXJEElRhLFcfgvtH01xSxuP\n/7WgLMsjnzJ/TE9tm96omf5iBygj5BSIOwclHyECgYEA36fCe6dAqfHcfzzVVatb\nEYqT/I0M/A9sdAUmTWkFh/FtgAuPdV3J75YvJgDwh0yT58MIw9BphsqEPWRm9tYM\nkLTeN3ThnPTq9VGSHiKIXC78mo7rmBy3YGiQ2M3Zvyq9vOPxhQhYSwRexFXOhUt0\nX2SYVCOE2MeGIAXt8jS3IZUCgYBO/cR4AHag9BUJWBwJlbBVuVI1gCniYdK36LXk\noCb12xWcJ0j/VYNJdSRKbzLqI1zgeXIUzx3yMjTZx9dzCIvJgLRI1A3z/QnubFBR\np0Zum179W2hrx0RDwznD2Vj0GQNYAb/I004O+2u+Xz+yZxGhTDzXl1V9mLHS39RQ\ntadNYQKBgQC+R83Yc4DFHluXa+k7jOIi5Zm9FwlLJZnIV9uZtAgMlO/o7BFBTQWx\nFgQBWR50cPxgzX9Jm8FvRUypAM4kvQtIM56+yVCxyk3J8Djv/VsF27a1Qer9s7TM\nhyqFfoWmTRQfYvWOsLxs4vcZABBaiidwTEMkod5rkoTHEgyDxAVJUA==\n-----END RSA PRIVATE KEY-----\n".freeze
+    let(:secret_key_path) { 'spec/sample-data/ruby-sdk-test.pem' }
+    let(:secret_key_content) { File.read(secret_key_path, encoding: 'utf-8') }
 
     context 'when Yoti receives a string as a pem key' do
       before do
-        Yoti.configuration.key = SECRET_KEY
+        Yoti.configuration.key = secret_key_content
       end
 
       it 'returns the secret key as a string' do
-        expect(Yoti::SSL.pem).to eql(SECRET_KEY)
+        expect(Yoti::SSL.pem).to eql(secret_key_content)
       end
     end
 
     context 'when Yoti receives a file as a pem key' do
       before do
-        Yoti.configuration.key_file_path = 'spec/sample-data/ruby-sdk-test.pem'
+        Yoti.configuration.key_file_path = secret_key_path
       end
 
       it 'returns the secret key as a string' do
-        expect(Yoti::SSL.pem).to eql(SECRET_KEY)
+        expect(Yoti::SSL.pem).to eql(secret_key_content)
       end
     end
   end
@@ -79,7 +80,7 @@ describe 'Yoti::SSL' do
 
   describe '.decipher' do
     text = 'cipher text'
-    cipher = OpenSSL::Cipher::AES.new(256, :CBC)
+    cipher = OpenSSL::Cipher.new('AES-256-CBC')
     cipher.encrypt
     let(:key) { cipher.random_key }
     let(:iv) { cipher.random_iv }

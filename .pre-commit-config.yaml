@@ -11,8 +11,10 @@ repos:
         entry: bundle exec rake rubocop
         language: system
         description: "Lint"
+        pass_filenames: false
       - id: test
         name: 'test'
         entry: bundle exec rake spec
         language: system
         description: "Test"
+        pass_filenames: false

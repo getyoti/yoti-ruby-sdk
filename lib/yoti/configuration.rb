@@ -56,7 +56,7 @@ module Yoti
 
       return if valid.any?
 
-      config_list = required_configs.map { |conf| '`' + conf + '`' }.join(', ')
+      config_list = required_configs.map { |conf| "`#{conf}`" }.join(', ')
       message = "At least one of the configuration values has to be set: #{config_list}."
       raise ConfigurationError, message
     end

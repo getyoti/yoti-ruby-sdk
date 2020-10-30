@@ -26,6 +26,8 @@ module Yoti
                 case task['type']
                 when Constants::ID_DOCUMENT_TEXT_DATA_EXTRACTION
                   TextExtractionTaskResponse.new(task)
+                when Constants::SUPPLEMENTARY_DOCUMENT_TEXT_DATA_EXTRACTION
+                  SupplementaryDocumentTextExtractionTaskResponse.new(task)
                 else
                   TaskResponse.new(task)
                 end

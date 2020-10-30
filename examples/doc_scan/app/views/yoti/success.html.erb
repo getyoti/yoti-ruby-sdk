@@ -77,14 +77,14 @@
                 </div>
                 <% end %>
 
-                <% if @session_result.text_data_checks.count.positive? %>
+                <% if @session_result.id_document_text_data_checks.count.positive? %>
                 <div class="card">
                     <div class="card-header" id="text-data-checks">
                         <h3 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
                                 data-target="#collapse-text-data-checks" aria-expanded="true"
                                 aria-controls="collapse-text-data-checks">
-                                Text Data Checks
+                                ID Document Text Data Checks
                             </button>
                         </h3>
 
@@ -92,7 +92,7 @@
 
                     <div id="collapse-text-data-checks" class="collapse" aria-labelledby="text-data-checks">
                         <div class="card-body">
-                            <% @session_result.text_data_checks.each do |check| %>
+                            <% @session_result.id_document_text_data_checks.each do |check| %>
                             <%= render partial: "check", locals: {check: check} %>
                             <% end %>
                         </div>
@@ -161,6 +161,29 @@
                     <div id="collapse-comparison-checks" class="collapse" aria-labelledby="comparison-checks">
                         <div class="card-body">
                             <% @session_result.id_document_comparison_checks.each do |check| %>
+                            <%= render partial: "check", locals: {check: check} %>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+
+                <% if @session_result.supplementary_document_text_data_checks.count.positive? %>
+                <div class="card">
+                    <div class="card-header" id="sup-doc-text-data-checks">
+                        <h3 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                data-target="#collapse-sup-doc-text-data-checks" aria-expanded="true"
+                                aria-controls="collapse-sup-doc-text-data-checks">
+                                Supplementary Document Text Data Checks
+                            </button>
+                        </h3>
+
+                    </div>
+
+                    <div id="collapse-sup-doc-text-data-checks" class="collapse" aria-labelledby="sup-doc-text-data-checks">
+                        <div class="card-body">
+                            <% @session_result.supplementary_document_text_data_checks.each do |check| %>
                             <%= render partial: "check", locals: {check: check} %>
                             <% end %>
                         </div>
@@ -322,6 +345,189 @@
                         </h4>
                     </div>
                     <div id="collapse-document-pages-<%= doc_num %>-<%= page_num %>" class="collapse" aria-labelledby="document-pages-<%= doc_num %>-<%= page_num %>">
+
+                        <% unless page.media.nil? %>
+                        <div class="card-group">
+                            <div class="card">
+                                <img class="card-img-top" src="/media?mediaId=<%= page.media.id %>" />
+                                <div class="card-body">
+                                    <p>Method: <%= page.capture_method %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <% end %>
+
+                        <% if page.frames.count.positive? %>
+                        <div class="card-group">
+                            <% page.frames.each do |frame| %>
+                            <% unless frame.media.nil? %>
+                            <div class="card">
+                                <img class="card-img-top" src="/media?mediaId=<%= frame.media.id %>" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Frame</h5>
+                                </div>
+                            </div>
+                            <% end %>
+                            <% end %>
+                        </div>
+                        <% end %>
+
+                    </div>
+                </div>
+
+                <% end %>
+
+            </div>
+
+        </div>
+    </div>
+
+    <% end %>
+    <% end %>
+
+
+    <% if @session_result.resources.supplementary_documents.count.positive? %>
+    <div class="row pt-4">
+        <div class="col">
+            <h2>Supplementary Documents</h2>
+        </div>
+    </div>
+
+    <%
+    doc_num = 0
+    @session_result.resources.supplementary_documents.each do |document|
+    doc_num += 1
+    %>
+    <div class="row pt-4">
+        <div class="col">
+
+            <h3><%= document.document_type %> <span class="badge badge-primary"><%= document.issuing_country %></span></h3>
+
+            <div class="accordion mt-3">
+
+                <% if document.document_fields %>
+                <div class="card">
+                    <div class="card-header" id="sup-doc-fields-<%= doc_num %>">
+                        <h4 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                data-target="#collapse-sup-doc-fields-<%= doc_num %>" aria-expanded="true"
+                                aria-controls="collapse-sup-doc-fields-<%= doc_num %>">
+                                Document Fields
+                            </button>
+                        </h4>
+                    </div>
+                    <div id="collapse-sup-doc-fields-<%= doc_num %>" class="collapse" aria-labelledby="sup-doc-fields-<%= doc_num %>">
+                        <div class="card-body">
+                            <% unless document.document_fields.media.nil? %>
+                            <h5>Media</h5>
+                            <table class="table table-striped table-light">
+                                <tbody>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>
+                                            <a
+                                                href="/media?mediaId=<%= document.document_fields.media.id %>">
+                                                <%= document.document_fields.media.id %>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+
+                <% if document.document_file %>
+                    <% unless document.document_file.media.nil? %>
+                        <div class="card">
+                            <div class="card-header" id="sup-doc-file-<%= doc_num %>">
+                                <h4 class="mb-0">
+                                    <a class="btn btn-link" href="/media?mediaId=<%= document.document_file.media.id %>">
+                                        Download File
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                    <% end %>
+                <% end %>
+
+                <% if document.text_extraction_tasks.count.positive? %>
+                <div class="card">
+                    <div class="card-header" id="text-extraction-tasks-<%= doc_num %>">
+                        <h4 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                data-target="#collapse-text-extraction-tasks-<%= doc_num %>" aria-expanded="true"
+                                aria-controls="collapse-text-extraction-tasks-<%= doc_num %>">
+                                Text Extraction Tasks
+                            </button>
+                        </h4>
+                    </div>
+                    <div id="collapse-text-extraction-tasks-<%= doc_num %>" class="collapse" aria-labelledby="text-extraction-tasks-<%= doc_num %>">
+                        <div class="card-body">
+                            <% document.text_extraction_tasks.each do |task| %>
+                            <%= render partial: "task", locals: {task: task} %>
+
+                            <% if task.generated_text_data_checks.count.positive? %>
+                            <h5>Generated Text Data Checks</h5>
+                            <% task.generated_text_data_checks.each do |check| %>
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td><%= check.id %></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <% end %>
+                            <% end %>
+
+                            <% if task.generated_media.count.positive? %>
+                            <h5>Generated Media</h5>
+
+                            <% task.generated_media.each do |media| %>
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>
+                                            <a href="/media?mediaId=<%= media.id %>"><%= media.id %></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td><%= media.type %></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <% end %>
+                            <% end %>
+
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+
+
+                <%
+                page_num = 0
+                document.pages.each do |page|
+                page_num += 1
+                %>
+
+                <div class="card">
+                    <div class="card-header" id="sup-doc-pages-<%= doc_num %>-<%= page_num %>">
+                        <h4 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                data-target="#collapse-sup-doc-pages-<%= doc_num %>-<%= page_num %>" aria-expanded="true"
+                                aria-controls="collapse-sup-doc-pages-<%= doc_num %>-<%= page_num %>">
+                                Page <%= page_num %>
+                            </button>
+                        </h4>
+                    </div>
+                    <div id="collapse-sup-doc-pages-<%= doc_num %>-<%= page_num %>" class="collapse" aria-labelledby="sup-doc-pages-<%= doc_num %>-<%= page_num %>">
 
                         <% unless page.media.nil? %>
                         <div class="card-group">

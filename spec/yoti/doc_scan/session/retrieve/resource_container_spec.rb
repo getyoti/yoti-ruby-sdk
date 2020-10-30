@@ -7,6 +7,10 @@ describe 'Yoti::DocScan::Session::Retrieve::ResourceContainer' do
         {},
         {}
       ],
+      'supplementary_documents' => [
+        {},
+        {}
+      ],
       'liveness_capture' => [
         {
           'liveness_type' => 'ZOOM'
@@ -31,6 +35,25 @@ describe 'Yoti::DocScan::Session::Retrieve::ResourceContainer' do
       it 'should return empty array' do
         resource_container = Yoti::DocScan::Session::Retrieve::ResourceContainer.new({})
         documents = resource_container.id_documents
+        expect(documents).to be_a(Array)
+        expect(documents.count).to eql(0)
+      end
+    end
+  end
+
+  describe '.supplementary_documents' do
+    describe 'when supplementary documents are available' do
+      it 'should return supplementary documents' do
+        documents = resource_container.supplementary_documents
+        expect(documents.count).to eql(2)
+        expect(documents).to all(be_a(Yoti::DocScan::Session::Retrieve::SupplementaryDocumentResourceResponse))
+      end
+    end
+
+    describe 'when supplementary documents are not available' do
+      it 'should return empty array' do
+        resource_container = Yoti::DocScan::Session::Retrieve::ResourceContainer.new({})
+        documents = resource_container.supplementary_documents
         expect(documents).to be_a(Array)
         expect(documents.count).to eql(0)
       end

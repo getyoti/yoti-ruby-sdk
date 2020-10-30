@@ -8,6 +8,9 @@ module Yoti
           # @return [Array<IdDocumentResourceResponse>]
           attr_reader :id_documents
 
+          # @return [Array<SupplementaryDocumentResourceResponse>]
+          attr_reader :supplementary_documents
+
           # @return [Array<LivenessResourceResponse>]
           attr_reader :liveness_capture
 
@@ -15,12 +18,8 @@ module Yoti
           # @param [Hash] resources
           #
           def initialize(resources)
-            if resources['id_documents'].nil?
-              @id_documents = []
-            else
-              Validation.assert_is_a(Array, resources['id_documents'], 'id_documents')
-              @id_documents = resources['id_documents'].map { |resource| IdDocumentResourceResponse.new(resource) }
-            end
+            @id_documents = parse_id_documents(resources)
+            @supplementary_documents = parse_supplementary_documents(resources)
 
             if resources['liveness_capture'].nil?
               @liveness_capture = []
@@ -42,6 +41,26 @@ module Yoti
           #
           def zoom_liveness_resources
             @liveness_capture.select { |resource| resource.is_a?(ZoomLivenessResourceResponse) }
+          end
+
+          private
+
+          def parse_id_documents(resources)
+            return [] if resources['id_documents'].nil?
+
+            Validation.assert_is_a(Array, resources['id_documents'], 'id_documents')
+            resources['id_documents'].map do |resource|
+              IdDocumentResourceResponse.new(resource)
+            end
+          end
+
+          def parse_supplementary_documents(resources)
+            return [] if resources['supplementary_documents'].nil?
+
+            Validation.assert_is_a(Array, resources['supplementary_documents'], 'supplementary_documents')
+            resources['supplementary_documents'].map do |resource|
+              SupplementaryDocumentResourceResponse.new(resource)
+            end
           end
         end
       end

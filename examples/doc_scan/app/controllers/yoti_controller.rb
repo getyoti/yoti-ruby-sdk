@@ -22,7 +22,7 @@ class YotiController < ApplicationController
                    .with_requested_check(
                      Yoti::DocScan::Session::Create::RequestedFaceMatchCheck
                      .builder
-                     .with_manual_check_never
+                     .with_manual_check_always
                      .build
                    )
                    .with_requested_check(
@@ -33,8 +33,14 @@ class YotiController < ApplicationController
                    .with_requested_task(
                      Yoti::DocScan::Session::Create::RequestedTextExtractionTask
                      .builder
-                     .with_manual_check_never
+                     .with_manual_check_always
                      .with_chip_data_desired
+                     .build
+                   )
+                   .with_requested_task(
+                     Yoti::DocScan::Session::Create::RequestedSupplementaryDocTextExtractionTask
+                     .builder
+                     .with_manual_check_always
                      .build
                    )
                    .with_sdk_config(
@@ -64,6 +70,16 @@ class YotiController < ApplicationController
                    .with_required_document(
                      Yoti::DocScan::Session::Create::RequiredIdDocument
                      .builder
+                     .build
+                   )
+                   .with_required_document(
+                     Yoti::DocScan::Session::Create::RequiredSupplementaryDocument
+                     .builder
+                     .with_objective(
+                       Yoti::DocScan::Session::Create::ProofOfAddressObjective
+                       .builder
+                       .build
+                     )
                      .build
                    )
                    .build

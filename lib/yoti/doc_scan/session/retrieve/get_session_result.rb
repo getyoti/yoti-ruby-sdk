@@ -75,10 +75,26 @@ module Yoti
           end
 
           #
+          # @deprecated replaced by id_document_text_data_checks
+          #
           # @return [Array<TextDataCheckResponse>]
           #
           def text_data_checks
+            id_document_text_data_checks
+          end
+
+          #
+          # @return [Array<TextDataCheckResponse>]
+          #
+          def id_document_text_data_checks
             @checks.select { |check| check.is_a?(TextDataCheckResponse) }
+          end
+
+          #
+          # @return [Array<SupplementaryDocumentTextDataCheckResponse>]
+          #
+          def supplementary_document_text_data_checks
+            @checks.select { |check| check.is_a?(SupplementaryDocumentTextDataCheckResponse) }
           end
 
           #
@@ -115,6 +131,8 @@ module Yoti
                 TextDataCheckResponse.new(check)
               when Constants::LIVENESS
                 LivenessCheckResponse.new(check)
+              when Constants::SUPPLEMENTARY_DOCUMENT_TEXT_DATA_CHECK
+                SupplementaryDocumentTextDataCheckResponse.new(check)
               else
                 CheckResponse.new(check)
               end

@@ -29,6 +29,9 @@ describe 'Yoti::DocScan::Session::Retrieve::GetSessionResult' do
         {
           'type' => 'ID_DOCUMENT_COMPARISON'
         },
+        {
+          'type' => 'SUPPLEMENTARY_DOCUMENT_TEXT_DATA_CHECK'
+        },
         {}
       ]
     )
@@ -68,12 +71,13 @@ describe 'Yoti::DocScan::Session::Retrieve::GetSessionResult' do
     describe 'when checks are available' do
       it 'should return array of checks' do
         checks = session.checks
-        expect(checks.length).to eql(6)
+        expect(checks.length).to eql(7)
         expect(checks[0]).to be_a(Yoti::DocScan::Session::Retrieve::AuthenticityCheckResponse)
         expect(checks[1]).to be_a(Yoti::DocScan::Session::Retrieve::LivenessCheckResponse)
         expect(checks[2]).to be_a(Yoti::DocScan::Session::Retrieve::FaceMatchCheckResponse)
         expect(checks[3]).to be_a(Yoti::DocScan::Session::Retrieve::TextDataCheckResponse)
         expect(checks[4]).to be_a(Yoti::DocScan::Session::Retrieve::IdDocumentComparisonCheckResponse)
+        expect(checks[5]).to be_a(Yoti::DocScan::Session::Retrieve::SupplementaryDocumentTextDataCheckResponse)
         expect(checks).to all(be_a(Yoti::DocScan::Session::Retrieve::CheckResponse))
       end
     end
@@ -109,6 +113,22 @@ describe 'Yoti::DocScan::Session::Retrieve::GetSessionResult' do
       checks = session.text_data_checks
       expect(checks.length).to eql(1)
       expect(checks[0]).to be_a(Yoti::DocScan::Session::Retrieve::TextDataCheckResponse)
+    end
+  end
+
+  describe '.id_document_text_data_checks' do
+    it 'should return array of TextDataCheckResponse' do
+      checks = session.id_document_text_data_checks
+      expect(checks.length).to eql(1)
+      expect(checks[0]).to be_a(Yoti::DocScan::Session::Retrieve::TextDataCheckResponse)
+    end
+  end
+
+  describe '.supplementary_document_text_data_checks' do
+    it 'should return array of SupplementaryDocumentTextDataCheckResponse' do
+      checks = session.supplementary_document_text_data_checks
+      expect(checks.length).to eql(1)
+      expect(checks[0]).to be_a(Yoti::DocScan::Session::Retrieve::SupplementaryDocumentTextDataCheckResponse)
     end
   end
 

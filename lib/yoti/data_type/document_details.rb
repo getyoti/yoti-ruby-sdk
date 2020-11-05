@@ -1,7 +1,7 @@
 module Yoti
   class DocumentDetails
     #
-    # @deprecated 2.0.0 pattern is no longer used for validation.
+    # @deprecated will be removed in 2.0.0 - pattern is no longer used for validation.
     #
     VALIDATION_PATTERN = '^([A-Za-z_]*) ([A-Za-z]{3}) ([A-Za-z0-9]{1}).*$'
 

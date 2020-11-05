@@ -61,7 +61,7 @@ module Yoti
     #
     # The age under/over attribute
     #
-    # @deprecated 2.0.0 - replaced by:
+    # @deprecated will be removed in 2.0.0 - replaced by:
     # - Yoti::Profile#age_verifications
     # - Yoti::Profile#find_age_over_verification
     # - Yoti::Profile#find_age_under_verification
@@ -193,7 +193,7 @@ module Yoti
     #
     # Processes age verification
     #
-    # @deprecated 2.0.0
+    # @deprecated will be removed in 2.0.0
     #
     # @param [Yoti::Protobuf::Attrpubapi::Attribute] attribute
     #

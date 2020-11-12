@@ -10,6 +10,7 @@ describe 'Yoti::DocScan::Session::Create::SdkConfig' do
              .with_success_url('some-success-url')
              .with_locale('some-url')
              .with_preset_issuing_country('some-country')
+             .with_privacy_policy_url('some-privacy-policy-url')
              .build
 
     expected = {
@@ -20,7 +21,8 @@ describe 'Yoti::DocScan::Session::Create::SdkConfig' do
       locale: 'some-url',
       preset_issuing_country: 'some-country',
       success_url: 'some-success-url',
-      error_url: 'some-error-url'
+      error_url: 'some-error-url',
+      privacy_policy_url: 'some-privacy-policy-url'
     }
 
     expect(config.to_json).to eql expected.to_json

@@ -14,6 +14,7 @@ module Yoti
           # @param [String] preset_issuing_country
           # @param [String] success_url
           # @param [String] error_url
+          # @param [String] privacy_policy_url
           #
           def initialize(
             allowed_capture_methods,
@@ -23,7 +24,8 @@ module Yoti
             locale,
             preset_issuing_country,
             success_url,
-            error_url
+            error_url,
+            privacy_policy_url = nil
           )
             Validation.assert_is_a(String, allowed_capture_methods, 'allowed_capture_methods', true)
             @allowed_capture_methods = allowed_capture_methods
@@ -48,6 +50,9 @@ module Yoti
 
             Validation.assert_is_a(String, error_url, 'error_url', true)
             @error_url = error_url
+
+            Validation.assert_is_a(String, privacy_policy_url, 'privacy_policy_url', true)
+            @privacy_policy_url = privacy_policy_url
           end
 
           def to_json(*_args)
@@ -63,7 +68,8 @@ module Yoti
               locale: @locale,
               preset_issuing_country: @preset_issuing_country,
               success_url: @success_url,
-              error_url: @error_url
+              error_url: @error_url,
+              privacy_policy_url: @privacy_policy_url
             }.compact
           end
 
@@ -200,6 +206,18 @@ module Yoti
           end
 
           #
+          # Sets the privacy policy URL
+          #
+          # @param [String] privacy_policy_url
+          #
+          # @return [self]
+          #
+          def with_privacy_policy_url(privacy_policy_url)
+            @privacy_policy_url = privacy_policy_url
+            self
+          end
+
+          #
           # @return [SdkConfig]
           #
           def build
@@ -211,7 +229,8 @@ module Yoti
               @locale,
               @preset_issuing_country,
               @success_url,
-              @error_url
+              @error_url,
+              @privacy_policy_url
             )
           end
         end

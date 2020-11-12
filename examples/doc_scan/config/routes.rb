@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   get '/success', to: 'yoti#success'
   get '/media', to: 'yoti#media'
   get '/error', to: 'yoti#error'
+  get '/privacy-policy', to: 'yoti#privacy'
 end

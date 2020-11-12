@@ -54,6 +54,7 @@ class YotiController < ApplicationController
                      .with_preset_issuing_country('GBR')
                      .with_success_url("#{request.base_url}/success")
                      .with_error_url("#{request.base_url}/error")
+                     .with_privacy_policy_url("#{request.base_url}/privacy-policy")
                      .build
                    )
                    .with_required_document(
@@ -127,4 +128,9 @@ class YotiController < ApplicationController
 
     render 'error'
   end
+
+  #
+  # Privacy Policy Page
+  #
+  def privacy; end
 end

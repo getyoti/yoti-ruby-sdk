@@ -13,7 +13,7 @@ module Yoti
           # @param [#as_json] config Configuration to apply to the Task
           #
           def initialize(type, config)
-            raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequestedTask
+            raise(TypeError, "#{self.class} cannot be instantiated") if instance_of?(RequestedTask)
 
             Validation.assert_is_a(String, type, 'type')
             @type = type

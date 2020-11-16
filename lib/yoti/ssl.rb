@@ -42,7 +42,7 @@ module Yoti
       # @param message [String] message to be signed
       # @return [String] signed message encoded in base 64
       def get_secure_signature(message)
-        digest = OpenSSL::Digest::SHA256.new
+        digest = OpenSSL::Digest.new('SHA256')
         Base64.strict_encode64(private_key.sign(digest, message))
       end
 
@@ -60,7 +60,7 @@ module Yoti
       end
 
       # Reset and reload the Private Key used for SSL functions
-      # @deprecated 2.0.0
+      # @deprecated will be removed in 2.0.0
       def reload!
         @private_key = nil
         @pem = nil

@@ -1,5 +1,5 @@
 def multi_value_items
-  items = [
+  [
     Yoti::ImageJpeg.new('image_1'),
     Yoti::ImagePng.new('image_2'),
     'test string',
@@ -22,7 +22,6 @@ def multi_value_items
       ]
     )
   ]
-  items
 end
 
 describe 'Yoti::MultiValue' do

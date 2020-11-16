@@ -5,6 +5,7 @@ require 'base64'
 module Yoti
   module Share
     class Definition
+      # @return [String]
       attr_reader :name
 
       #
@@ -18,8 +19,13 @@ module Yoti
     end
 
     class AttributeIssuanceDetails
+      # @return [String]
       attr_reader :token
+
+      # @return [Array<Yoti::Share::Definition>]
       attr_reader :attributes
+
+      # @return [DateTime|nil]
       attr_reader :expiry_date
 
       #

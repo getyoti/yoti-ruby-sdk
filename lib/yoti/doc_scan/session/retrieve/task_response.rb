@@ -75,6 +75,8 @@ module Yoti
               case check['type']
               when Constants::ID_DOCUMENT_TEXT_DATA_CHECK
                 GeneratedTextDataCheckResponse.new(check)
+              when Constants::SUPPLEMENTARY_DOCUMENT_TEXT_DATA_CHECK
+                GeneratedSupplementaryDocumentTextDataCheckResponse.new(check)
               else
                 GeneratedCheckResponse.new(check)
               end

@@ -13,7 +13,7 @@ module Yoti
           # @param [#as_json] config The configuration to apply to the Check
           #
           def initialize(type, config)
-            raise(TypeError, "#{self.class} cannot be instantiated") if self.class == RequestedCheck
+            raise(TypeError, "#{self.class} cannot be instantiated") if instance_of?(RequestedCheck)
 
             Validation.assert_is_a(String, type, 'type')
             @type = type

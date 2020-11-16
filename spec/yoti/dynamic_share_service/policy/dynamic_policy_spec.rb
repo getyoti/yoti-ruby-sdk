@@ -512,6 +512,17 @@ describe 'Yoti::DynamicSharingService::DynamicPolicy' do
           expect(policy.wanted_remember_me).to eql true
         end
       end
+      context 'when called with false' do
+        let :policy do
+          Yoti::DynamicSharingService::DynamicPolicy
+            .builder
+            .with_wanted_remember_me(false)
+            .build
+        end
+        it 'does not request a remember me id' do
+          expect(policy.wanted_remember_me).to eql false
+        end
+      end
       context 'by default' do
         let :policy do
           Yoti::DynamicSharingService::DynamicPolicy

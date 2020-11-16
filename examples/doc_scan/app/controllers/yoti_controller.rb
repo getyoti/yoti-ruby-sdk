@@ -22,7 +22,7 @@ class YotiController < ApplicationController
                    .with_requested_check(
                      Yoti::DocScan::Session::Create::RequestedFaceMatchCheck
                      .builder
-                     .with_manual_check_never
+                     .with_manual_check_always
                      .build
                    )
                    .with_requested_check(
@@ -33,8 +33,14 @@ class YotiController < ApplicationController
                    .with_requested_task(
                      Yoti::DocScan::Session::Create::RequestedTextExtractionTask
                      .builder
-                     .with_manual_check_never
+                     .with_manual_check_always
                      .with_chip_data_desired
+                     .build
+                   )
+                   .with_requested_task(
+                     Yoti::DocScan::Session::Create::RequestedSupplementaryDocTextExtractionTask
+                     .builder
+                     .with_manual_check_always
                      .build
                    )
                    .with_sdk_config(
@@ -64,10 +70,14 @@ class YotiController < ApplicationController
                    .with_required_document(
                      Yoti::DocScan::Session::Create::RequiredIdDocument
                      .builder
-                     .with_filter(
-                       Yoti::DocScan::Session::Create::OrthogonalRestrictionsFilter
+                     .build
+                   )
+                   .with_required_document(
+                     Yoti::DocScan::Session::Create::RequiredSupplementaryDocument
+                     .builder
+                     .with_objective(
+                       Yoti::DocScan::Session::Create::ProofOfAddressObjective
                        .builder
-                       .with_included_document_types(['DRIVING_LICENCE'])
                        .build
                      )
                      .build
@@ -98,7 +108,11 @@ class YotiController < ApplicationController
 
     media = Yoti::DocScan::Client.get_media_content(session[:DOC_SCAN_SESSION_ID], media_id)
 
-    render body: media.content, content_type: media.mime_type
+    if media.nil?
+      head :no_content
+    else
+      render body: media.content, content_type: media.mime_type
+    end
   end
 
   #

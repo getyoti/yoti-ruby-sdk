@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'generator_spec'
-require 'generators/yoti/install/install_generator.rb'
+require 'generators/yoti/install/install_generator'
 
 describe Yoti::Generators::InstallGenerator, type: :generator do
   destination File.expand_path('../../../tmp', __dir__)

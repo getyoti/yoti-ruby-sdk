@@ -4,7 +4,7 @@ module Yoti
   module Log
     class << self
       def logger
-        @logger || create_logger(STDOUT)
+        @logger || create_logger($stdout)
       end
 
       def output(output_stream)

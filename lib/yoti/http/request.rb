@@ -186,7 +186,7 @@ module Yoti
       end
 
       params.map do |k, v|
-        CGI.escape(k.to_s) + '=' + CGI.escape(v.to_s)
+        "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"
       end.join('&')
     end
   end

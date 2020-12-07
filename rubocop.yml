@@ -9,6 +9,7 @@ AllCops:
     - 'lib/yoti/protobuf/attrpubapi/*'
     - 'lib/yoti/protobuf/compubapi/*'
     - 'lib/yoti/protobuf/sharepubapi/*'
+    - 'vendor/**/*'
 
 Metrics/AbcSize:
   Enabled: false

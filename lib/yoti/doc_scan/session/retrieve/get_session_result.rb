@@ -111,6 +111,13 @@ module Yoti
             @checks.select { |check| check.is_a?(IdDocumentComparisonCheckResponse) }
           end
 
+          #
+          # @return [Array<ThirdPartyIdentityCheckResponse>]
+          #
+          def third_party_identity_checks
+            @checks.select { |check| check.is_a?(ThirdPartyIdentityCheckResponse) }
+          end
+
           private
 
           #
@@ -133,6 +140,8 @@ module Yoti
                 LivenessCheckResponse.new(check)
               when Constants::SUPPLEMENTARY_DOCUMENT_TEXT_DATA_CHECK
                 SupplementaryDocumentTextDataCheckResponse.new(check)
+              when Constants::THIRD_PARTY_IDENTITY
+                ThirdPartyIdentityCheckResponse.new(check)
               else
                 CheckResponse.new(check)
               end

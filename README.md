@@ -1,6 +1,6 @@
 # Yoti Ruby SDK
 
-[![Build Status](https://github.com/getyoti/yoti-ruby-sdk/workflows/Unit%20Test/badge.svg?branch=master)](https://github.com/getyoti/yoti-ruby-sdk/actions)
+[![Build Status](https://github.com/getyoti/yoti-ruby-sdk/workflows/Unit%20Tests/badge.svg?branch=master)](https://github.com/getyoti/yoti-ruby-sdk/actions)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=getyoti%3Aruby&metric=coverage)](https://sonarcloud.io/dashboard?id=getyoti%3Aruby)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=getyoti%3Aruby&metric=bugs)](https://sonarcloud.io/dashboard?id=getyoti%3Aruby)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=getyoti%3Aruby&metric=code_smells)](https://sonarcloud.io/dashboard?id=getyoti%3Aruby)

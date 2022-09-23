@@ -116,4 +116,34 @@ describe 'Yoti::DocScan::Session::Create::SessionSpecification' do
       expect(spec.to_json).to eql expected.to_json
     end
   end
+
+  context 'with identity_profile_requirements' do
+    it 'serializes correctly' do
+      spec = Yoti::DocScan::Session::Create::SessionSpecification
+             .builder
+             .with_identity_profile_requirements(
+               trust_framework: 'UK_TFIDA',
+               scheme: {
+                 type: 'DBS',
+                 objective: 'STANDARD'
+               }
+             )
+             .build
+
+      expected = {
+        requested_checks: [],
+        requested_tasks: [],
+        required_documents: [],
+        identity_profile_requirements: {
+          trust_framework: 'UK_TFIDA',
+          scheme: {
+            type: 'DBS',
+            objective: 'STANDARD'
+          }
+        }
+      }
+
+      expect(spec.to_json).to eql expected.to_json
+    end
+  end
 end

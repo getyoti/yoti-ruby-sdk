@@ -15,6 +15,7 @@ module Yoti
           # @param [SdkConfig] sdk_config
           # @param [Array<RequiredDocument>] required_documents
           # @param [Boolean] block_biometric_consent
+          # @param [Hash] identity_profile_requirements
           #
           def initialize(
             client_session_token_ttl,
@@ -25,7 +26,8 @@ module Yoti
             requested_tasks,
             sdk_config,
             required_documents,
-            block_biometric_consent = nil
+            block_biometric_consent = nil,
+            identity_profile_requirements = nil
           )
             Validation.assert_is_a(Integer, client_session_token_ttl, 'client_session_token_ttl', true)
             @client_session_token_ttl = client_session_token_ttl
@@ -52,6 +54,7 @@ module Yoti
             @required_documents = required_documents
 
             @block_biometric_consent = block_biometric_consent
+            @identity_profile_requirements = identity_profile_requirements
           end
 
           def to_json(*_args)
@@ -68,7 +71,8 @@ module Yoti
               requested_tasks: @requested_tasks.map(&:as_json),
               sdk_config: @sdk_config,
               required_documents: @required_documents.map(&:as_json),
-              block_biometric_consent: @block_biometric_consent
+              block_biometric_consent: @block_biometric_consent,
+              identity_profile_requirements: @identity_profile_requirements
             }.compact
           end
 
@@ -199,6 +203,18 @@ module Yoti
           end
 
           #
+          # Specify with_identity_profile_requirements
+          #
+          # @param [Hash] identity_profile_requirements
+          #
+          # @return [self]
+          #
+          def with_identity_profile_requirements(identity_profile_requirements)
+            @identity_profile_requirements = identity_profile_requirements
+            self
+          end
+
+          #
           # @return [SessionSpecification]
           #
           def build
@@ -211,7 +227,8 @@ module Yoti
               @requested_tasks,
               @sdk_config,
               @required_documents,
-              @block_biometric_consent
+              @block_biometric_consent,
+              @identity_profile_requirements
             )
           end
         end

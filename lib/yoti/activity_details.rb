@@ -156,12 +156,10 @@ module Yoti
 
       profile_data = {}
       decrypted_profile.attributes.each do |attribute|
-        begin
-          profile_data[attribute.name] = process_attribute(attribute)
-          process_age_verified(attribute)
-        rescue StandardError => e
-          Yoti::Log.logger.warn("#{e.message} (Attribute: #{attribute.name})")
-        end
+        profile_data[attribute.name] = process_attribute(attribute)
+        process_age_verified(attribute)
+      rescue StandardError => e
+        Yoti::Log.logger.warn("#{e.message} (Attribute: #{attribute.name})")
       end
       profile_data
     end

@@ -145,9 +145,7 @@ module Yoti
     # @return [String] the path with query string
     #
     def path
-      @path ||= begin
-        "/#{@endpoint}/#{token}".chomp('/') + "?#{query_string}"
-      end
+      @path ||= "/#{@endpoint}/#{token}".chomp('/') + "?#{query_string}"
     end
 
     #

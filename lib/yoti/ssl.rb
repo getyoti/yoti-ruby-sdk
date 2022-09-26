@@ -9,13 +9,11 @@ module Yoti
       # or a pem file (YOTI_KEY_FILE_PATH)
       # @return [String] the content of the private key
       def pem
-        @pem ||= begin
-          if Yoti.configuration.key.to_s.empty?
-            File.read(Yoti.configuration.key_file_path, encoding: 'utf-8')
-          else
-            Yoti.configuration.key
-          end
-        end
+        @pem ||= if Yoti.configuration.key.to_s.empty?
+                   File.read(Yoti.configuration.key_file_path, encoding: 'utf-8')
+                 else
+                   Yoti.configuration.key
+                 end
       end
 
       # Uses the pem key to decrypt an encrypted connect token
